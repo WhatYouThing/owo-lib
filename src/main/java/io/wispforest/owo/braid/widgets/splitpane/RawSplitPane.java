@@ -34,19 +34,19 @@ public class RawSplitPane extends StatefulWidget {
     public final List<SplitChild> children;
 
     public RawSplitPane(
-        LayoutAxis axis,
-        @Nullable SplitController controller,
-        @Nullable SplitPaneStyle style,
-        boolean enabled,
-        List<? extends Widget> children
+            LayoutAxis axis,
+            @Nullable SplitController controller,
+            @Nullable SplitPaneStyle style,
+            boolean enabled,
+            List<? extends Widget> children
     ) {
         //FIXME: this error message kinda sucks
         // Idk how to explain the actual problem
         if (controller != null) Preconditions.checkArgument(
-            (controller.ratios != null && controller.ratios.length == children.size() - 1),
-            "A SplitPane's controller must have exactly one less ratio than the number of panes: (%s ratio(s), %s pane(s))",
-            controller.ratios == null ? 0 : controller.ratios.length,
-            children.size()
+                (controller.ratios != null && controller.ratios.length == children.size() - 1),
+                "A SplitPane's controller must have exactly one less ratio than the number of panes: (%s ratio(s), %s pane(s))",
+                controller.ratios == null ? 0 : controller.ratios.length,
+                children.size()
         );
         this.axis = axis;
         this.controller = controller;
@@ -60,18 +60,18 @@ public class RawSplitPane extends StatefulWidget {
     }
 
     public RawSplitPane(
-        LayoutAxis axis,
-        @Nullable SplitPaneStyle style,
-        Widget... children
+            LayoutAxis axis,
+            @Nullable SplitPaneStyle style,
+            Widget... children
     ) {
         this(axis, null, style, true, Arrays.asList(children));
     }
 
     public RawSplitPane(
-        LayoutAxis axis,
-        SplitController controller,
-        @Nullable SplitPaneStyle style,
-        Widget... children
+            LayoutAxis axis,
+            SplitController controller,
+            @Nullable SplitPaneStyle style,
+            Widget... children
     ) {
         this(axis, controller, style, true, Arrays.asList(children));
     }
@@ -84,7 +84,8 @@ public class RawSplitPane extends StatefulWidget {
     public static class State extends WidgetState<RawSplitPane> {
 
         protected SplitController controller;
-        protected final Runnable controllerListener = () -> setState(() -> {});
+        protected final Runnable controllerListener = () -> setState(() -> {
+        });
 
         protected int draggingIndex = -1;
         protected double contentSpace = 0;
@@ -100,26 +101,26 @@ public class RawSplitPane extends StatefulWidget {
         public void init() {
             var widget = this.widget();
             this.controller = Objects.requireNonNullElseGet(
-                widget.controller,
-                () -> {
-                    var numDividers = widget.children.size() - 1;
-                    var result = new double[numDividers];
+                    widget.controller,
+                    () -> {
+                        var numDividers = widget.children.size() - 1;
+                        var result = new double[numDividers];
 
-                    var totalWeight = 0d;
-                    for (var child : widget.children) {
-                        if (child.size == null) totalWeight += child.weight;
+                        var totalWeight = 0d;
+                        for (var child : widget.children) {
+                            if (child.size == null) totalWeight += child.weight;
+                        }
+
+                        var position = 0d;
+                        for (var i = 0; i < widget.children.size(); i++) {
+                            var child = widget.children.get(i);
+                            var ratio = child.size != null ? child.size : (child.weight / totalWeight);
+                            position += ratio;
+                            if (i < numDividers) result[i] = position;
+                        }
+
+                        return new SplitController(result);
                     }
-
-                    var position = 0d;
-                    for (var i = 0; i < widget.children.size(); i++) {
-                        var child = widget.children.get(i);
-                        var ratio = child.size != null ? child.size : (child.weight / totalWeight);
-                        position += ratio;
-                        if (i < numDividers) result[i] = position;
-                    }
-
-                    return new SplitController(result);
-                }
             );
             this.controller.addListener(this.controllerListener);
         }
@@ -130,8 +131,8 @@ public class RawSplitPane extends StatefulWidget {
             if (newController != oldWidget.controller) {
                 this.controller.removeListener(this.controllerListener);
                 this.controller = newController != null
-                    ? newController
-                    : new SplitController(this.widget().children.size());
+                        ? newController
+                        : new SplitController(this.widget().children.size());
                 this.controller.addListener(this.controllerListener);
             }
             if (this.widget().style != oldWidget.style) this.prevContentSpace = -1;
@@ -172,11 +173,11 @@ public class RawSplitPane extends StatefulWidget {
                 for (var i = 0; i < children.size(); i++) {
                     var child = children.get(i).child;
                     var nextRatio = i < numDividers
-                        ? (this.ratiosInitialized ? this.controller.getRatio(i) : (i + 1.0) / children.size())
-                        : 1;
+                            ? (this.ratiosInitialized ? this.controller.getRatio(i) : (i + 1.0) / children.size())
+                            : 1;
                     var paneSize = i < children.size() - 1
-                        ? Math.floor(nextRatio * this.contentSpace) - Math.floor(prevRatio * this.contentSpace)
-                        : this.contentSpace - Math.floor(prevRatio * this.contentSpace);
+                            ? Math.floor(nextRatio * this.contentSpace) - Math.floor(prevRatio * this.contentSpace)
+                            : this.contentSpace - Math.floor(prevRatio * this.contentSpace);
 
                     var childConstraints = Constraints.tight(axis.createSize(paneSize, crossSize));
                     widgets.add(new Constrain(childConstraints, child).key(child.key()));
@@ -189,21 +190,21 @@ public class RawSplitPane extends StatefulWidget {
 
                         if (widget.enabled) {
                             divider = new MouseArea(
-                                w -> w
-                                    .dragStartCallback((button, modifiers) -> setState(() -> {
-                                        if (button != 0) return;
-                                        this.draggingIndex = dividerIndex;
-                                        this.dragRatio = this.controller.getRatio(dividerIndex);
-                                        this.firstDrag = true;
-                                    }))
-                                    .dragCallback((_, _, dx, dy) -> this.moveDivider(dividerIndex, axis.choose(dx, dy)))
-                                    .dragEndCallback(() -> setState(() -> updatePaneSizes(children)))
-                                    .cursorStyleSupplier((_, _) -> {
-                                        if (this.draggingCursorStyle == null)
-                                            this.draggingCursorStyle = CursorStyle.forDraggingAlong(axis, context.instance().computeGlobalTransform());
-                                        return this.draggingCursorStyle;
-                                    }),
-                                divider
+                                    w -> w
+                                            .dragStartCallback((button, modifiers) -> setState(() -> {
+                                                if (button != 0) return;
+                                                this.draggingIndex = dividerIndex;
+                                                this.dragRatio = this.controller.getRatio(dividerIndex);
+                                                this.firstDrag = true;
+                                            }))
+                                            .dragCallback((_, _, dx, dy) -> this.moveDivider(dividerIndex, axis.choose(dx, dy)))
+                                            .dragEndCallback(() -> setState(() -> updatePaneSizes(children)))
+                                            .cursorStyleSupplier((_, _) -> {
+                                                if (this.draggingCursorStyle == null)
+                                                    this.draggingCursorStyle = CursorStyle.forDraggingAlong(axis, context.instance().computeGlobalTransform());
+                                                return this.draggingCursorStyle;
+                                            }),
+                                    divider
                             );
                         }
                         widgets.add(new Constrain(dividerConstraints, divider).key(Key.of("divider-" + dividerIndex)));
@@ -221,8 +222,8 @@ public class RawSplitPane extends StatefulWidget {
             for (var j = 0; j < children.size(); j++) {
                 var next = j < children.size() - 1 ? this.controller.getRatio(j) : 1;
                 this.paneSizes[j] = (j < children.size() - 1
-                    ? Math.floor(next * this.contentSpace)
-                    : this.contentSpace) - Math.floor(previous * this.contentSpace);
+                        ? Math.floor(next * this.contentSpace)
+                        : this.contentSpace) - Math.floor(previous * this.contentSpace);
                 previous = next;
             }
         }
@@ -343,7 +344,8 @@ public class RawSplitPane extends StatefulWidget {
                 var step = pixelDelta < 0 ? -1 : 1;
                 var result = clickedIndex;
                 for (var j = clickedIndex; j + step >= 0 && j + step < children.size() - 1; j += step) {
-                    if ((controllerRatios[Math.max(j, j + step)] - controllerRatios[Math.min(j, j + step)]) * this.contentSpace > EPSILON) break;
+                    if ((controllerRatios[Math.max(j, j + step)] - controllerRatios[Math.min(j, j + step)]) * this.contentSpace > EPSILON)
+                        break;
                     result = j + step;
                 }
                 this.draggingIndex = result;

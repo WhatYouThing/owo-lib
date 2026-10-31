@@ -14,9 +14,9 @@ public class RawScrollView extends SingleChildInstanceWidget {
     public final ScrollController verticalController;
 
     public RawScrollView(
-        @Nullable ScrollController horizontalController,
-        @Nullable ScrollController verticalController,
-        Widget child
+            @Nullable ScrollController horizontalController,
+            @Nullable ScrollController verticalController,
+            Widget child
     ) {
         super(child);
         this.horizontalController = horizontalController;
@@ -50,9 +50,9 @@ public class RawScrollView extends SingleChildInstanceWidget {
             var maxVerticalOffset = this.widget.verticalController != null ? this.widget.verticalController.maxOffset() : 0;
 
             if (!(this.horizontalOffset == horizontalOffset
-                && this.maxHorizontalOffset == maxHorizontalOffset
-                && this.verticalOffset == verticalOffset
-                && this.maxVerticalOffset == maxVerticalOffset)) {
+                    && this.maxHorizontalOffset == maxHorizontalOffset
+                    && this.verticalOffset == verticalOffset
+                    && this.maxVerticalOffset == maxVerticalOffset)) {
 
                 this.horizontalOffset = horizontalOffset;
                 this.maxHorizontalOffset = maxHorizontalOffset;
@@ -68,12 +68,12 @@ public class RawScrollView extends SingleChildInstanceWidget {
         @Override
         protected void doLayout(Constraints constraints) {
             var childSize = this.child.layout(
-                Constraints.of(
-                    constraints.minWidth(),
-                    constraints.minHeight(),
-                    this.widget.horizontalController != null ? Double.POSITIVE_INFINITY : constraints.maxWidth(),
-                    this.widget.verticalController != null ? Double.POSITIVE_INFINITY : constraints.maxHeight()
-                )
+                    Constraints.of(
+                            constraints.minWidth(),
+                            constraints.minHeight(),
+                            this.widget.horizontalController != null ? Double.POSITIVE_INFINITY : constraints.maxWidth(),
+                            this.widget.verticalController != null ? Double.POSITIVE_INFINITY : constraints.maxHeight()
+                    )
             );
 
             var selfSize = childSize.constrained(constraints);

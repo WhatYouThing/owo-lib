@@ -31,13 +31,13 @@ public class CustomWidgetTransform extends WidgetTransform {
         if (this.toParent == null) {
             if (this.applyAtCenter) {
                 this.toParent = new Matrix3x2f()
-                    .translate((float) (this.x + this.width / 2), (float) (this.y + this.height / 2))
-                    .mul(this.matrix)
-                    .translate((float) (-this.width / 2), (float) (-this.height / 2));
+                        .translate((float) (this.x + this.width / 2), (float) (this.y + this.height / 2))
+                        .mul(this.matrix)
+                        .translate((float) (-this.width / 2), (float) (-this.height / 2));
             } else {
                 this.toParent = new Matrix3x2f()
-                    .translate((float) this.x, (float) this.y)
-                    .mul(this.matrix);
+                        .translate((float) this.x, (float) this.y)
+                        .mul(this.matrix);
             }
         }
 

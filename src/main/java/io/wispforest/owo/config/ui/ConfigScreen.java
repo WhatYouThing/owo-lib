@@ -1,6 +1,6 @@
 package io.wispforest.owo.config.ui;
 
-import net.minecraft.locale.Language;
+import com.mojang.blaze3d.platform.InputConstants;
 import io.wispforest.owo.Owo;
 import io.wispforest.owo.config.ConfigWrapper;
 import io.wispforest.owo.config.Option;
@@ -29,12 +29,12 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -67,7 +67,8 @@ public class ConfigScreen extends BaseUIModelScreen<FlowLayout> {
 
     protected final Screen parent;
     protected final ConfigWrapper<?> config;
-    @SuppressWarnings("rawtypes") protected final Map<Option, OptionValueProvider> options = new HashMap<>();
+    @SuppressWarnings("rawtypes")
+    protected final Map<Option, OptionValueProvider> options = new HashMap<>();
 
     protected String lastSearchFieldText = "";
     protected @Nullable SearchMatches currentMatches = null;
@@ -159,9 +160,9 @@ public class ConfigScreen extends BaseUIModelScreen<FlowLayout> {
 
                     this.currentMatchIndex = 0;
                     this.currentMatches = new SearchMatches(query, this.collectSearchAnchors(optionScroll)
-                        .stream()
-                        .filter(anchor -> Arrays.stream(splitQuery).allMatch(anchor.currentSearchText()::contains))
-                        .toList());
+                            .stream()
+                            .filter(anchor -> Arrays.stream(splitQuery).allMatch(anchor.currentSearchText()::contains))
+                            .toList());
                 }
 
                 if (this.currentMatches.matches.isEmpty()) {
@@ -209,7 +210,8 @@ public class ConfigScreen extends BaseUIModelScreen<FlowLayout> {
             if (option.backingField().hasAnnotation(ExcludeFromScreen.class)) return;
 
             var parentKey = option.key().parent();
-            if (!parentKey.isRoot() && this.config.fieldForKey(parentKey).isAnnotationPresent(ExcludeFromScreen.class)) return;
+            if (!parentKey.isRoot() && this.config.fieldForKey(parentKey).isAnnotationPresent(ExcludeFromScreen.class))
+                return;
 
             var factory = this.factoryForOption(option);
             if (factory == null) {
@@ -222,26 +224,26 @@ public class ConfigScreen extends BaseUIModelScreen<FlowLayout> {
 
             var expanded = !parentKey.isRoot() && this.config.fieldForKey(parentKey).isAnnotationPresent(Expanded.class);
             var container = containers.getOrDefault(
-                parentKey,
-                UIContainers.collapsible(
-                    Sizing.fill(100), Sizing.content(),
-                    Component.translatable("text.config." + this.config.name() + ".category." + parentKey.asString()),
-                    expanded
-                ).<CollapsibleContainer>configure(nestedContainer -> {
-                    final var categoryKey = "text.config." + this.config.name() + ".category." + parentKey.asString();
-                    if (Language.getInstance().has(categoryKey + ".tooltip")) {
-                        nestedContainer.titleLayout().tooltip(Component.translatable(categoryKey + ".tooltip"));
-                    }
+                    parentKey,
+                    UIContainers.collapsible(
+                            Sizing.fill(100), Sizing.content(),
+                            Component.translatable("text.config." + this.config.name() + ".category." + parentKey.asString()),
+                            expanded
+                    ).<CollapsibleContainer>configure(nestedContainer -> {
+                        final var categoryKey = "text.config." + this.config.name() + ".category." + parentKey.asString();
+                        if (Language.getInstance().has(categoryKey + ".tooltip")) {
+                            nestedContainer.titleLayout().tooltip(Component.translatable(categoryKey + ".tooltip"));
+                        }
 
-                    nestedContainer.titleLayout().child(new SearchAnchorComponent(
-                        nestedContainer.titleLayout(),
-                        option.key(),
-                        () -> I18n.get(categoryKey)
-                    ).highlightConfigurator(highlight ->
-                        highlight.positioning(Positioning.absolute(-5, -5))
-                            .verticalSizing(Sizing.fixed(19))
-                    ));
-                })
+                        nestedContainer.titleLayout().child(new SearchAnchorComponent(
+                                nestedContainer.titleLayout(),
+                                option.key(),
+                                () -> I18n.get(categoryKey)
+                        ).highlightConfigurator(highlight ->
+                                highlight.positioning(Positioning.absolute(-5, -5))
+                                        .verticalSizing(Sizing.fixed(19))
+                        ));
+                    })
             );
 
             if (!containers.containsKey(parentKey) && containers.containsKey(parentKey.parent())) {
@@ -255,8 +257,8 @@ public class ConfigScreen extends BaseUIModelScreen<FlowLayout> {
 
             if (option.detached()) {
                 result.baseComponent().tooltip(
-                    this.minecraft.font.split(Component.translatable("text.owo.config.managed_by_server"), Integer.MAX_VALUE)
-                        .stream().map(ClientTooltipComponent::create).toList()
+                        this.minecraft.font.split(Component.translatable("text.owo.config.managed_by_server"), Integer.MAX_VALUE)
+                                .stream().map(ClientTooltipComponent::create).toList()
                 );
             } else {
                 var tooltipText = new ArrayList<FormattedCharSequence>();
@@ -331,7 +333,7 @@ public class ConfigScreen extends BaseUIModelScreen<FlowLayout> {
 
     protected void appendSection(Map<UIComponent, Component> sections, Field field, FlowLayout container) {
         var translationKey = "text.config." + this.config.name() + ".section."
-            + field.getAnnotation(SectionHeader.class).value();
+                + field.getAnnotation(SectionHeader.class).value();
 
         final var header = this.model.expandTemplate(FlowLayout.class, "section-header", Map.of());
         header.childById(LabelComponent.class, "header").<LabelComponent>configure(label -> {
@@ -365,10 +367,10 @@ public class ConfigScreen extends BaseUIModelScreen<FlowLayout> {
 
     @Override
     public boolean keyPressed(KeyEvent input) {
-        if (input.key() == GLFW.GLFW_KEY_F && input.hasControlDown()) {
+        if (input.key() == InputConstants.KEY_F && input.hasControlDown()) {
             this.uiAdapter.rootComponent.focusHandler().focus(
-                this.uiAdapter.rootComponent.childById(UIComponent.class, "search-field"),
-                UIComponent.FocusSource.MOUSE_CLICK
+                    this.uiAdapter.rootComponent.childById(UIComponent.class, "search-field"),
+                    UIComponent.FocusSource.MOUSE_CLICK
             );
             return true;
         } else {
@@ -430,7 +432,8 @@ public class ConfigScreen extends BaseUIModelScreen<FlowLayout> {
         UIParsing.registerFactory("config-text-box", element -> new ConfigTextBox());
     }
 
-    protected record SearchMatches(String query, List<SearchAnchorComponent> matches) {}
+    protected record SearchMatches(String query, List<SearchAnchorComponent> matches) {
+    }
 
     public static class SearchHighlighterComponent extends BaseUIComponent {
 
@@ -452,16 +455,16 @@ public class ConfigScreen extends BaseUIModelScreen<FlowLayout> {
             int baseX = (int) ((this.x - segmentWidth) + (Easing.CUBIC.apply(this.age / 25)) * (this.width + segmentWidth * 2));
 
             graphics.drawGradientRect(
-                baseX - segmentWidth, this.y,
-                segmentWidth, this.height,
-                0, mainColor,
-                mainColor, 0
+                    baseX - segmentWidth, this.y,
+                    segmentWidth, this.height,
+                    0, mainColor,
+                    mainColor, 0
             );
             graphics.drawGradientRect(
-                baseX, this.y,
-                segmentWidth, this.height,
-                mainColor, 0,
-                0, mainColor
+                    baseX, this.y,
+                    segmentWidth, this.height,
+                    mainColor, 0,
+                    0, mainColor
             );
         }
 

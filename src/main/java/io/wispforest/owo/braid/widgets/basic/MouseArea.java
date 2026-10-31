@@ -23,8 +23,8 @@ public class MouseArea extends SingleChildInstanceWidget {
     private @Nullable CursorStyleSupplier cursorStyleSupplier;
 
     public MouseArea(
-        WidgetSetupCallback<MouseArea> setupCallback,
-        Widget child
+            WidgetSetupCallback<MouseArea> setupCallback,
+            Widget child
     ) {
         super(child);
         setupCallback.setup(this);

@@ -181,7 +181,7 @@ public class NbtSerializer extends RecursiveSerializer<Tag> implements SelfDescr
                 if (mayOmit && NbtSerializer.this.encodedOptionals.contains(element)) {
                     var nbtCompound = (CompoundTag) element;
 
-                    if(!nbtCompound.getBooleanOr("present", false)) return;
+                    if (!nbtCompound.getBooleanOr("present", false)) return;
 
                     element = nbtCompound.get("value");
                 }

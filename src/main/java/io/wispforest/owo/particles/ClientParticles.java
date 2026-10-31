@@ -26,7 +26,8 @@ public final class ClientParticles {
     private static double randomVelocityScalar = 0;
     private static Direction.Axis randomizationAxis = null;
 
-    private ClientParticles() {}
+    private ClientParticles() {
+    }
 
     /**
      * Marks the values set by {@link ClientParticles#setParticleCount(int)} and {@link ClientParticles#setVelocity(Vec3)} to be persistent

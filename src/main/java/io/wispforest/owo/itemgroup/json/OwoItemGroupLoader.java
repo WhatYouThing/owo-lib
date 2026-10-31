@@ -36,7 +36,8 @@ public class OwoItemGroupLoader implements ModDataConsumer {
 
     private static final Map<Identifier, JsonObject> BUFFERED_GROUPS = new HashMap<>();
 
-    private OwoItemGroupLoader() {}
+    private OwoItemGroupLoader() {
+    }
 
     public static void onGroupCreated(CreativeModeTab group) {
         var groupId = BuiltInRegistries.CREATIVE_MODE_TAB.getKey(group);

@@ -36,13 +36,14 @@ public class ReiWidgetComponent extends BaseUIComponent {
         this.applyToWidget();
     }
 
-        @Override
+    @Override
     public void draw(OwoUIGraphics graphics, int mouseX, int mouseY, float partialTicks, float delta) {
         this.widget.render(GuiGraphics.of(graphics), mouseX, mouseY, partialTicks);
     }
 
     @Override
-    public void drawFocusHighlight(OwoUIGraphics context, int mouseX, int mouseY, float partialTicks, float delta) {}
+    public void drawFocusHighlight(OwoUIGraphics context, int mouseX, int mouseY, float partialTicks, float delta) {
+    }
 
     @Override
     protected int determineHorizontalContentSize(Sizing sizing) {

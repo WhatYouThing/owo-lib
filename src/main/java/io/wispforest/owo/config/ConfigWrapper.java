@@ -59,8 +59,10 @@ public abstract class ConfigWrapper<C> {
     protected boolean loading = false;
     protected final Jankson jankson;
 
-    @SuppressWarnings("rawtypes") protected final Map<Option.Key, Option> options = new LinkedHashMap<>();
-    @SuppressWarnings("rawtypes") protected final Map<Option.Key, Option> optionsView = Collections.unmodifiableMap(options);
+    @SuppressWarnings("rawtypes")
+    protected final Map<Option.Key, Option> options = new LinkedHashMap<>();
+    @SuppressWarnings("rawtypes")
+    protected final Map<Option.Key, Option> optionsView = Collections.unmodifiableMap(options);
 
     protected final ReflectiveEndecBuilder builder;
 
@@ -70,7 +72,8 @@ public abstract class ConfigWrapper<C> {
     }
 
     protected ConfigWrapper(Class<C> clazz) {
-        this(clazz, (SerializationBuilder builder) -> {});
+        this(clazz, (SerializationBuilder builder) -> {
+        });
     }
 
     protected ConfigWrapper(Class<C> clazz, BuilderConsumer consumer) {

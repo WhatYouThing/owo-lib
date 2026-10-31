@@ -15,7 +15,8 @@ public class ConfigToggleButton extends ButtonComponent implements OptionValuePr
     protected boolean enabled = false;
 
     public ConfigToggleButton() {
-        super(Component.empty(), button -> {});
+        super(Component.empty(), button -> {
+        });
         this.verticalSizing(Sizing.fixed(20));
         this.updateMessage();
     }

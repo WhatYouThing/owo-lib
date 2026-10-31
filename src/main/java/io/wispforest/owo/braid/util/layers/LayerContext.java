@@ -41,14 +41,15 @@ public class LayerContext extends StatefulWidget {
 
         @Override
         public void init() {
-            this.streamListen(widget -> widget.refreshEvents, unit -> this.setState(() -> {}));
+            this.streamListen(widget -> widget.refreshEvents, unit -> this.setState(() -> {
+            }));
         }
 
         @Override
         public Widget build(BuildContext context) {
             return new LayerContextScope(
-                this.widget().child,
-                this.widget().contextScreen
+                    this.widget().child,
+                    this.widget().contextScreen
             );
         }
     }
@@ -91,8 +92,8 @@ public class LayerContext extends StatefulWidget {
         if (!(screen instanceof AbstractContainerScreenAccessor containerScreen)) return null;
 
         return new Vector2d(
-            containerScreen.owo$getRootX(),
-            containerScreen.owo$getRootY()
+                containerScreen.owo$getRootX(),
+                containerScreen.owo$getRootY()
         );
     }
 

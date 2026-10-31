@@ -7,6 +7,7 @@ import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import io.wispforest.owo.util.RecipeRemainderStorage;
 import net.minecraft.core.NonNullList;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.item.ItemStack;
@@ -30,41 +31,41 @@ public abstract class ResultSlotMixin {
     private Player player;
 
     @Inject(
-        method = "onTake",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/world/inventory/CraftingContainer;setItem(ILnet/minecraft/world/item/ItemStack;)V",
-            ordinal = 1
-        )
+            method = "onTake",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/inventory/CraftingContainer;setItem(ILnet/minecraft/world/item/ItemStack;)V",
+                    ordinal = 1
+            )
     )
     private void fixRemainderStacking(
-        Player player,
-        ItemStack stack,
-        CallbackInfo ci,
-        @Local(ordinal = 2) ItemStack remainderStack
+            Player player,
+            ItemStack carried,
+            CallbackInfo ci,
+            @Local(name = "replacement") ItemStack remainderStack
     ) {
         if (remainderStack.getCount() > remainderStack.getMaxStackSize()) {
             int excess = remainderStack.getCount() - remainderStack.getMaxStackSize();
             remainderStack.shrink(excess);
 
-            this.player.getInventory().placeItemBackInInventory(remainderStack.copyWithCount(excess));
+            this.player.getInventory().placeItemBackInInventory(remainderStack.copyWithCount(excess), Prediction.PREDICTED);
         }
     }
 
     @WrapOperation(
-        method = "getRemainingItems",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/world/item/crafting/RecipeManager;getRecipeFor(Lnet/minecraft/world/item/crafting/RecipeType;Lnet/minecraft/world/item/crafting/RecipeInput;Lnet/minecraft/world/level/Level;)Ljava/util/Optional;"
-        )
+            method = "getRemainingItems",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/item/crafting/RecipeManager;getRecipeFor(Lnet/minecraft/world/item/crafting/RecipeType;Lnet/minecraft/world/item/crafting/RecipeInput;Lnet/minecraft/world/level/Level;)Ljava/util/Optional;"
+            )
     )
     private <I extends RecipeInput, T extends Recipe<I>> Optional<RecipeHolder<T>> captureRecipeEntry(
-        RecipeManager instance,
-        RecipeType<T> type,
-        I input,
-        Level world,
-        Operation<Optional<RecipeHolder<T>>> original,
-        @Share(value = "recipe_entry") LocalRef<Optional<RecipeHolder<T>>> recipeEntry
+            RecipeManager instance,
+            RecipeType<T> type,
+            I input,
+            Level world,
+            Operation<Optional<RecipeHolder<T>>> original,
+            @Share(value = "recipe_entry") LocalRef<Optional<RecipeHolder<T>>> recipeEntry
     ) {
         var entry = original.call(instance, type, input, world);
 
@@ -74,37 +75,37 @@ public abstract class ResultSlotMixin {
     }
 
     @WrapOperation(
-        method = "getRemainingItems",
-        at = @At(
-            value = "INVOKE",
-            target = "Ljava/util/Optional;map(Ljava/util/function/Function;)Ljava/util/Optional;"
-        )
+            method = "getRemainingItems",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Ljava/util/Optional;map(Ljava/util/function/Function;)Ljava/util/Optional;"
+            )
     )
     private <I extends RecipeInput, T extends Recipe<I>> Optional<NonNullList<ItemStack>> addRecipeSpecificRemainders(
-        Optional<T> instance,
-        Function<? super T, ? extends NonNullList<ItemStack>> mapper,
-        Operation<Optional<NonNullList<ItemStack>>> original,
-        @Share(value = "recipe_entry") LocalRef<Optional<RecipeHolder<?>>> recipeEntry,
-        @Local(argsOnly = true) CraftingInput input
+            Optional<T> instance,
+            Function<? super T, ? extends NonNullList<ItemStack>> mapper,
+            Operation<Optional<NonNullList<ItemStack>>> original,
+            @Share(value = "recipe_entry") LocalRef<Optional<RecipeHolder<?>>> recipeEntry,
+            @Local(argsOnly = true) CraftingInput input
     ) {
         var recipeEntryOptional = recipeEntry.get();
 
         return original.call(instance, mapper)
-            .map(remainders -> {
-                var recipeId = recipeEntryOptional.get().id().identifier();
+                .map(remainders -> {
+                    var recipeId = recipeEntryOptional.get().id().identifier();
 
-                if (RecipeRemainderStorage.has(recipeId)) {
-                    var owoRemainders = RecipeRemainderStorage.get(recipeId);
+                    if (RecipeRemainderStorage.has(recipeId)) {
+                        var owoRemainders = RecipeRemainderStorage.get(recipeId);
 
-                    for (int i = 0; i < remainders.size(); ++i) {
-                        var item = input.getItem(i).getItem();
-                        if (!owoRemainders.containsKey(item)) continue;
+                        for (int i = 0; i < remainders.size(); ++i) {
+                            var item = input.getItem(i).getItem();
+                            if (!owoRemainders.containsKey(item)) continue;
 
-                        remainders.set(i, owoRemainders.get(item).create());
+                            remainders.set(i, owoRemainders.get(item).create());
+                        }
                     }
-                }
 
-                return remainders;
-            });
+                    return remainders;
+                });
     }
 }

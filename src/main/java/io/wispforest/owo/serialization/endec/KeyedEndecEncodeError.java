@@ -7,7 +7,8 @@ import net.minecraft.util.ProblemReporter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public record KeyedEndecEncodeError(KeyedEndec<?> key, Object obj, Exception exception, boolean encodedDefaultValue, boolean sendEntireException) implements ProblemReporter.Problem {
+public record KeyedEndecEncodeError(KeyedEndec<?> key, Object obj, Exception exception, boolean encodedDefaultValue,
+                                    boolean sendEntireException) implements ProblemReporter.Problem {
 
     public KeyedEndecEncodeError(KeyedEndec<?> key, Object obj, Exception exception, boolean encodedDefaultValue) {
         this(key, obj, exception, encodedDefaultValue, Owo.DEBUG);

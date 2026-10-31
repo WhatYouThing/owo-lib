@@ -37,4 +37,5 @@ class FocusStateProvider<F extends Focusable.State<?>> extends InheritedWidget {
     }
 }
 
-record InheritedKey(Class<?> stateClass) {}
+record InheritedKey(Class<?> stateClass) {
+}

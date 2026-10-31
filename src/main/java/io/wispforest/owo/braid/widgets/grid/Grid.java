@@ -1,6 +1,5 @@
 package io.wispforest.owo.braid.widgets.grid;
 
-import net.minecraft.resources.Identifier;
 import io.wispforest.owo.braid.core.*;
 import io.wispforest.owo.braid.framework.instance.InspectorProperty;
 import io.wispforest.owo.braid.framework.instance.MultiChildWidgetInstance;
@@ -9,10 +8,10 @@ import io.wispforest.owo.braid.framework.widget.MultiChildInstanceWidget;
 import io.wispforest.owo.braid.framework.widget.Widget;
 import io.wispforest.owo.braid.widgets.basic.Padding;
 import io.wispforest.owo.ui.core.OwoUIGraphics;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FontDescription;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
 
@@ -65,8 +64,8 @@ public class Grid extends MultiChildInstanceWidget {
         @Override
         public void setWidget(Grid widget) {
             if (this.widget.mainAxis == widget.mainAxis
-                && this.widget.crossAxisCells == widget.crossAxisCells
-                && this.widget.cellFit.equals(widget.cellFit)) {
+                    && this.widget.crossAxisCells == widget.crossAxisCells
+                    && this.widget.cellFit.equals(widget.cellFit)) {
                 return;
             }
 
@@ -100,8 +99,8 @@ public class Grid extends MultiChildInstanceWidget {
 
             for (int mainAxisIdx = 0; mainAxisIdx < mainAxisCells; mainAxisIdx++) {
                 var maxMainAxisChildSize = mustMeasureMainAxis
-                    ? dynamicMainAxisCellSizes[mainAxisIdx]
-                    : fixedMainAxisCellSize;
+                        ? dynamicMainAxisCellSizes[mainAxisIdx]
+                        : fixedMainAxisCellSize;
 
                 var firstChildIdx = mainAxisIdx * this.widget.crossAxisCells;
                 var lastChildIdx = Math.min(this.children.size(), firstChildIdx + this.widget.crossAxisCells) - 1;
@@ -110,15 +109,15 @@ public class Grid extends MultiChildInstanceWidget {
                     var child = this.children.get(childIdx);
 
                     var maxCrossAxisChildSize = mustMeasureCrossAxis
-                        ? dynamicCrossAxisCellSizes[childIdx % this.widget.crossAxisCells]
-                        : fixedCrossAxisCellSize;
+                            ? dynamicCrossAxisCellSizes[childIdx % this.widget.crossAxisCells]
+                            : fixedCrossAxisCellSize;
 
                     var maxWidth = mainAxis == LayoutAxis.VERTICAL ? maxCrossAxisChildSize : maxMainAxisChildSize;
                     var maxHeight = mainAxis == LayoutAxis.VERTICAL ? maxMainAxisChildSize : maxCrossAxisChildSize;
 
                     var childConstraints = this.widget.cellFit.isTight()
-                        ? Constraints.tightOnAxis(maxWidth, maxHeight)
-                        : Constraints.loose(Size.of(maxWidth, maxHeight));
+                            ? Constraints.tightOnAxis(maxWidth, maxHeight)
+                            : Constraints.loose(Size.of(maxWidth, maxHeight));
 
                     child.layout(childConstraints);
                 }
@@ -141,8 +140,8 @@ public class Grid extends MultiChildInstanceWidget {
             }
 
             var alignment = this.widget.cellFit instanceof CellFit.Loose loose
-                ? loose.alignment
-                : Alignment.TOP_LEFT;
+                    ? loose.alignment
+                    : Alignment.TOP_LEFT;
 
             var mainAxisPos = 0d;
             for (var mainAxisCell = 0; mainAxisCell < mainAxisCells; mainAxisCell++) {
@@ -167,16 +166,16 @@ public class Grid extends MultiChildInstanceWidget {
             this.debugMainAxisSizes = actualMainAxisSizes;
 
             this.transform.setSize(
-                mainAxis == LayoutAxis.VERTICAL
-                    ? Size.of(DoubleStream.of(actualCrossAxisSizes).sum(), DoubleStream.of(actualMainAxisSizes).sum())
-                    : Size.of(DoubleStream.of(actualMainAxisSizes).sum(), DoubleStream.of(actualCrossAxisSizes).sum())
+                    mainAxis == LayoutAxis.VERTICAL
+                            ? Size.of(DoubleStream.of(actualCrossAxisSizes).sum(), DoubleStream.of(actualMainAxisSizes).sum())
+                            : Size.of(DoubleStream.of(actualMainAxisSizes).sum(), DoubleStream.of(actualCrossAxisSizes).sum())
             );
         }
 
         @Override
         public List<InspectorProperty> debugListInspectorProperties() {
             return List.of(
-                new InspectorProperty("Main Axis", this.widget.mainAxis.toString())
+                    new InspectorProperty("Main Axis", this.widget.mainAxis.toString())
             );
         }
 
@@ -189,31 +188,31 @@ public class Grid extends MultiChildInstanceWidget {
         protected void debugDrawVisualizers(BraidGraphics graphics) {
             var frameColor = Color.rgb(0xFFD65A);
             graphics.drawRectOutline(
-                0, 0, (int) this.transform.width(), (int) this.transform.height(), frameColor.argb()
+                    0, 0, (int) this.transform.width(), (int) this.transform.height(), frameColor.argb()
             );
 
             var verticalSizes = this.widget.mainAxis == LayoutAxis.VERTICAL
-                ? this.debugMainAxisSizes
-                : this.debugCrossAxisSizes;
+                    ? this.debugMainAxisSizes
+                    : this.debugCrossAxisSizes;
 
             var horizontalSizes = this.widget.mainAxis == LayoutAxis.VERTICAL
-                ? this.debugCrossAxisSizes
-                : this.debugMainAxisSizes;
+                    ? this.debugCrossAxisSizes
+                    : this.debugMainAxisSizes;
 
             var verticalPos = 0.0;
             for (int i = 0; i < verticalSizes.length; i++) {
                 if (i > 0) {
                     graphics.drawDashedLine(
-                        RenderPipelines.GUI,
-                        0, verticalPos, this.transform.width(), verticalPos,
-                        1, 2, frameColor
+                            RenderPipelines.GUI,
+                            0, verticalPos, this.transform.width(), verticalPos,
+                            1, 2, frameColor
                     );
                 }
 
                 graphics.drawText(
-                    Component.literal(verticalSizes[i] + "px").withStyle(style -> style.withFont(new FontDescription.Resource(Identifier.withDefaultNamespace("uniform")))),
-                    0, (float) verticalPos, 1f, Color.WHITE.argb(),
-                    OwoUIGraphics.TextAnchor.TOP_RIGHT
+                        Component.literal(verticalSizes[i] + "px").withStyle(style -> style.withFont(new FontDescription.Resource(Identifier.withDefaultNamespace("uniform")))),
+                        0, (float) verticalPos, 1f, Color.WHITE.argb(),
+                        OwoUIGraphics.TextAnchor.TOP_RIGHT
                 );
 
                 verticalPos += verticalSizes[i];
@@ -223,16 +222,16 @@ public class Grid extends MultiChildInstanceWidget {
             for (int i = 0; i < horizontalSizes.length; i++) {
                 if (i > 0) {
                     graphics.drawDashedLine(
-                        RenderPipelines.GUI,
-                        horizontalPos, 0, horizontalPos, this.transform.height(),
-                        1, 2, frameColor
+                            RenderPipelines.GUI,
+                            horizontalPos, 0, horizontalPos, this.transform.height(),
+                            1, 2, frameColor
                     );
                 }
 
                 graphics.drawText(
-                    Component.literal(horizontalSizes[i] + "px").withStyle(style -> style.withFont(new FontDescription.Resource(Identifier.withDefaultNamespace("uniform")))),
-                    (float) horizontalPos, 0, 1f, Color.WHITE.argb(),
-                    OwoUIGraphics.TextAnchor.BOTTOM_LEFT
+                        Component.literal(horizontalSizes[i] + "px").withStyle(style -> style.withFont(new FontDescription.Resource(Identifier.withDefaultNamespace("uniform")))),
+                        (float) horizontalPos, 0, 1f, Color.WHITE.argb(),
+                        OwoUIGraphics.TextAnchor.BOTTOM_LEFT
                 );
 
                 horizontalPos += horizontalSizes[i];
@@ -242,22 +241,22 @@ public class Grid extends MultiChildInstanceWidget {
         @Override
         protected double measureIntrinsicWidth(double height) {
             return this.widget.mainAxis == LayoutAxis.VERTICAL
-                ? DoubleStream.of(this.measureCrossAxis(height)).sum()
-                : DoubleStream.of(this.measureMainAxis(height)).sum();
+                    ? DoubleStream.of(this.measureCrossAxis(height)).sum()
+                    : DoubleStream.of(this.measureMainAxis(height)).sum();
         }
 
         @Override
         protected double measureIntrinsicHeight(double width) {
             return this.widget.mainAxis == LayoutAxis.VERTICAL
-                ? DoubleStream.of(this.measureMainAxis(width)).sum()
-                : DoubleStream.of(this.measureCrossAxis(width)).sum();
+                    ? DoubleStream.of(this.measureMainAxis(width)).sum()
+                    : DoubleStream.of(this.measureCrossAxis(width)).sum();
         }
 
         protected double[] measureCrossAxis(double mainAxisCellSize) {
             var crossAxisCells = this.widget.crossAxisCells;
             var measureFunction = this.widget.mainAxis.opposite().<ToDoubleFunction<WidgetInstance<?>>>chooseCompute(
-                () -> child -> child.getIntrinsicWidth(mainAxisCellSize),
-                () -> child -> child.getIntrinsicHeight(mainAxisCellSize)
+                    () -> child -> child.getIntrinsicWidth(mainAxisCellSize),
+                    () -> child -> child.getIntrinsicHeight(mainAxisCellSize)
             );
 
             var intrinsics = this.children.stream().mapToDouble(measureFunction).toArray();
@@ -281,8 +280,8 @@ public class Grid extends MultiChildInstanceWidget {
             var mainAxisCells = Mth.ceil(this.children.size() / (double) this.widget.crossAxisCells);
 
             var measureFunction = this.widget.mainAxis.<ToDoubleFunction<WidgetInstance<?>>>chooseCompute(
-                () -> child -> child.getIntrinsicWidth(crossAxisCellSize),
-                () -> child -> child.getIntrinsicHeight(crossAxisCellSize)
+                    () -> child -> child.getIntrinsicWidth(crossAxisCellSize),
+                    () -> child -> child.getIntrinsicHeight(crossAxisCellSize)
             );
 
             var intrinsics = this.children.stream().mapToDouble(measureFunction).toArray();
@@ -338,7 +337,10 @@ public class Grid extends MultiChildInstanceWidget {
 
         public static final class Loose extends CellFit {
             public final Alignment alignment;
-            public Loose(Alignment alignment) {this.alignment = alignment;}
+
+            public Loose(Alignment alignment) {
+                this.alignment = alignment;
+            }
 
             @Override
             public boolean isTight() {

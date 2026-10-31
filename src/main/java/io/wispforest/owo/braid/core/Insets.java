@@ -8,7 +8,8 @@ public record Insets(double top, double bottom, double left, double right) {
 
     @ApiStatus.Internal
     @Deprecated(forRemoval = true)
-    public Insets {}
+    public Insets {
+    }
 
     // ---
 

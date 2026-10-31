@@ -17,11 +17,11 @@ public class SplitPane extends StatelessWidget {
     public final List<? extends Widget> children;
 
     public SplitPane(
-        LayoutAxis axis,
-        @Nullable SplitController controller,
-        @Nullable SplitPaneStyle style,
-        boolean enabled,
-        List<? extends Widget> children
+            LayoutAxis axis,
+            @Nullable SplitController controller,
+            @Nullable SplitPaneStyle style,
+            boolean enabled,
+            List<? extends Widget> children
     ) {
         this.axis = axis;
         this.controller = controller;

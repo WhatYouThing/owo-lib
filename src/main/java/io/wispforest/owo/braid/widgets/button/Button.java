@@ -58,21 +58,21 @@ public class Button extends StatelessWidget {
         }
 
         Widget content = new Padding(
-            effectiveStyle.padding() != null
-                ? effectiveStyle.padding()
-                : Insets.all(5),
-            this.child
+                effectiveStyle.padding() != null
+                        ? effectiveStyle.padding()
+                        : Insets.all(5),
+                this.child
         );
 
         var disabled = this.onClick == null || ControlsOverride.controlsDisabled(context);
         content = effectiveStyle.builder() != null
-            ? effectiveStyle.builder().build(!disabled, content)
-            : new ButtonPanel(!disabled, content);
+                ? effectiveStyle.builder().build(!disabled, content)
+                : new ButtonPanel(!disabled, content);
 
         return new Clickable(
-            this.onClick,
-            effectiveStyle.clickSound(),
-            content
+                this.onClick,
+                effectiveStyle.clickSound(),
+                content
         );
     }
 }

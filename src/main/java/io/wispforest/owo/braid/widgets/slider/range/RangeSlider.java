@@ -36,10 +36,10 @@ public class RangeSlider extends StatefulWidget {
     public final @Nullable RangeSliderCallback onChanged;
 
     public RangeSlider(
-        double minValue,
-        double maxValue,
-        @Nullable WidgetSetupCallback<RangeSlider> setupCallback,
-        @Nullable RangeSliderCallback onChanged
+            double minValue,
+            double maxValue,
+            @Nullable WidgetSetupCallback<RangeSlider> setupCallback,
+            @Nullable RangeSliderCallback onChanged
     ) {
         this.minValue = minValue;
         this.maxValue = maxValue;
@@ -48,16 +48,16 @@ public class RangeSlider extends StatefulWidget {
     }
 
     public RangeSlider(
-        double minValue,
-        double maxValue,
-        @Nullable WidgetSetupCallback<RangeSlider> setupCallback,
-        boolean active,
-        RangeSliderCallback onChanged
+            double minValue,
+            double maxValue,
+            @Nullable WidgetSetupCallback<RangeSlider> setupCallback,
+            boolean active,
+            RangeSliderCallback onChanged
     ) {
         this(
-            minValue, maxValue,
-            setupCallback,
-            active ? onChanged : null
+                minValue, maxValue,
+                setupCallback,
+                active ? onChanged : null
         );
     }
 
@@ -201,8 +201,8 @@ public class RangeSlider extends StatefulWidget {
             var trueMin = Math.min(widget.min, widget.max);
             var trueMax = Math.max(widget.min, widget.max);
             this.incrementStep = widget.incrementStep != null
-                ? widget.sliderFunction.normalize(widget.incrementStep, trueMin, trueMax)
-                : widget.step != null
+                    ? widget.sliderFunction.normalize(widget.incrementStep, trueMin, trueMax)
+                    : widget.step != null
                     ? widget.sliderFunction.normalize(widget.step, trueMin, trueMax)
                     : 0.01;
         }
@@ -235,85 +235,88 @@ public class RangeSlider extends StatefulWidget {
                 var rangeExtent = Math.ceil((constraints.maxOnAxis(widget.axis) - combinedHandleSize) * (this.normalizedMax - this.normalizedMin));
 
                 var content = new Stack(
-                    widget.axis.choose(Alignment.LEFT, Alignment.TOP),
-                    new Sized(constraints.maxWidth(), constraints.maxHeight(), track),
-                    new Padding(
-                        widget.axis.chooseCompute(
-                            () -> Insets.left(this.minHandleSize + Math.floor((constraints.maxWidth() - this.minHandleSize * 2) * this.normalizedMin) - 1),
-                            () -> Insets.top(this.minHandleSize + Math.floor((constraints.maxHeight() - this.minHandleSize * 2) * this.normalizedMin) - 1)
+                        widget.axis.choose(Alignment.LEFT, Alignment.TOP),
+                        new Sized(constraints.maxWidth(), constraints.maxHeight(), track),
+                        new Padding(
+                                widget.axis.chooseCompute(
+                                        () -> Insets.left(this.minHandleSize + Math.floor((constraints.maxWidth() - this.minHandleSize * 2) * this.normalizedMin) - 1),
+                                        () -> Insets.top(this.minHandleSize + Math.floor((constraints.maxHeight() - this.minHandleSize * 2) * this.normalizedMin) - 1)
+                                ),
+                                new Center(
+                                        1.0, null,
+                                        widget.axis.chooseCompute(
+                                                () -> new Sized(rangeExtent + 2, constraints.maxHeight(), rangeIndicator),
+                                                () -> new Sized(constraints.maxWidth(), rangeExtent + 2, rangeIndicator)
+                                        )
+                                )
                         ),
-                        new Center(
-                            1.0, null,
-                            widget.axis.chooseCompute(
-                                () -> new Sized(rangeExtent + 2, constraints.maxHeight(), rangeIndicator),
-                                () -> new Sized(constraints.maxWidth(), rangeExtent + 2, rangeIndicator)
-                            )
-                        )
-                    ),
-                    new Padding(
-                        widget.axis.chooseCompute(
-                            () -> Insets.left(Math.floor((constraints.maxWidth() - this.minHandleSize * 2) * this.normalizedMin)),
-                            () -> Insets.top(Math.floor((constraints.maxHeight() - this.minHandleSize * 2) * this.normalizedMin))
+                        new Padding(
+                                widget.axis.chooseCompute(
+                                        () -> Insets.left(Math.floor((constraints.maxWidth() - this.minHandleSize * 2) * this.normalizedMin)),
+                                        () -> Insets.top(Math.floor((constraints.maxHeight() - this.minHandleSize * 2) * this.normalizedMin))
+                                ),
+                                widget.axis.chooseCompute(
+                                        () -> new Sized(this.minHandleSize, constraints.maxHeight(), minHandle),
+                                        () -> new Sized(constraints.maxWidth(), this.minHandleSize, minHandle)
+                                )
                         ),
-                        widget.axis.chooseCompute(
-                            () -> new Sized(this.minHandleSize, constraints.maxHeight(), minHandle),
-                            () -> new Sized(constraints.maxWidth(), this.minHandleSize, minHandle)
+                        new Padding(
+                                widget.axis.chooseCompute(
+                                        () -> Insets.left(this.maxHandleSize + Math.floor((constraints.maxWidth() - this.maxHandleSize * 2) * this.normalizedMax)),
+                                        () -> Insets.top(this.maxHandleSize + Math.floor((constraints.maxHeight() - this.maxHandleSize * 2) * this.normalizedMax))
+                                ),
+                                widget.axis.chooseCompute(
+                                        () -> new Sized(this.maxHandleSize, constraints.maxHeight(), maxHandle),
+                                        () -> new Sized(constraints.maxWidth(), this.maxHandleSize, maxHandle)
+                                )
                         )
-                    ),
-                    new Padding(
-                        widget.axis.chooseCompute(
-                            () -> Insets.left(this.maxHandleSize + Math.floor((constraints.maxWidth() - this.maxHandleSize * 2) * this.normalizedMax)),
-                            () -> Insets.top(this.maxHandleSize + Math.floor((constraints.maxHeight() - this.maxHandleSize * 2) * this.normalizedMax))
-                        ),
-                        widget.axis.chooseCompute(
-                            () -> new Sized(this.maxHandleSize, constraints.maxHeight(), maxHandle),
-                            () -> new Sized(constraints.maxWidth(), this.maxHandleSize, maxHandle)
-                        )
-                    )
                 );
 
                 return new Center(
-                    widget.onChanged == null || ControlsOverride.controlsDisabled(context)
-                        ? content
-                        : new Incrementor(
-                            widget.axis,
-                            this::increment,
-                            new MouseArea(
-                                mousearea -> mousearea
-                                    .clickCallback((x, y, button, modifiers) -> {
-                                        if (button != 0) return false;
+                        widget.onChanged == null || ControlsOverride.controlsDisabled(context)
+                                ? content
+                                : new Incrementor(
+                                widget.axis,
+                                this::increment,
+                                new MouseArea(
+                                        mousearea -> mousearea
+                                                .clickCallback((x, y, button, modifiers) -> {
+                                                    if (button != 0) return false;
 
-                                        if (widget.axis == LayoutAxis.VERTICAL) y = constraints.maxFiniteOrMinOnAxis(widget.axis) - y;
-                                        this.grabbedHandle = this.handleAt(constraints, x, y);
-                                        if (this.grabbedHandle == Handle.BOTH && !this.isInRange(constraints, x, y)) {
-                                            this.grabbedHandle = this.nearestHandle(constraints, x, y);
-                                        }
-                                        var initialDragValue = this.grabbedHandle == Handle.MAX ? this.normalizedMax : this.normalizedMin;
+                                                    if (widget.axis == LayoutAxis.VERTICAL)
+                                                        y = constraints.maxFiniteOrMinOnAxis(widget.axis) - y;
+                                                    this.grabbedHandle = this.handleAt(constraints, x, y);
+                                                    if (this.grabbedHandle == Handle.BOTH && !this.isInRange(constraints, x, y)) {
+                                                        this.grabbedHandle = this.nearestHandle(constraints, x, y);
+                                                    }
+                                                    var initialDragValue = this.grabbedHandle == Handle.MAX ? this.normalizedMax : this.normalizedMin;
 
-                                        if (!this.isInHandle(constraints, x, y) && this.grabbedHandle != Handle.BOTH) {
-                                            initialDragValue = this.setAbsolute(constraints, x, y);
-                                        }
+                                                    if (!this.isInHandle(constraints, x, y) && this.grabbedHandle != Handle.BOTH) {
+                                                        initialDragValue = this.setAbsolute(constraints, x, y);
+                                                    }
 
-                                        this.dragWidth = this.normalizedMax - this.normalizedMin;
-                                        this.dragValue = initialDragValue;
-                                        this.dragging = true;
-                                        return true;
-                                    })
-                                    .dragCallback((x, y, dx, dy) -> this.move(constraints, dx, widget.axis == LayoutAxis.VERTICAL ? -dy : dy))
-                                    .dragEndCallback(() -> {
-                                        this.dragging = false;
-                                        if (confirmSound != null) {
-                                            UISounds.play(confirmSound);
-                                        }
-                                    })
-                                    .cursorStyleSupplier((x, y) -> {
-                                        if (!isInHandle(constraints, x, constraints.maxHeight() - y) && !isInRange(constraints, x, constraints.maxHeight() - y) && !dragging) return CursorStyle.HAND;
-                                        if (this.isInRange(constraints, x, y)) return CursorStyle.MOVE;
-                                        if (this.draggingCursorStyle == null) this.draggingCursorStyle = CursorStyle.forDraggingAlong(widget.axis, context.instance().computeGlobalTransform());
-                                        return this.draggingCursorStyle;
-                                    }),
-                                content
-                            )
+                                                    this.dragWidth = this.normalizedMax - this.normalizedMin;
+                                                    this.dragValue = initialDragValue;
+                                                    this.dragging = true;
+                                                    return true;
+                                                })
+                                                .dragCallback((x, y, dx, dy) -> this.move(constraints, dx, widget.axis == LayoutAxis.VERTICAL ? -dy : dy))
+                                                .dragEndCallback(() -> {
+                                                    this.dragging = false;
+                                                    if (confirmSound != null) {
+                                                        UISounds.play(confirmSound);
+                                                    }
+                                                })
+                                                .cursorStyleSupplier((x, y) -> {
+                                                    if (!isInHandle(constraints, x, constraints.maxHeight() - y) && !isInRange(constraints, x, constraints.maxHeight() - y) && !dragging)
+                                                        return CursorStyle.HAND;
+                                                    if (this.isInRange(constraints, x, y)) return CursorStyle.MOVE;
+                                                    if (this.draggingCursorStyle == null)
+                                                        this.draggingCursorStyle = CursorStyle.forDraggingAlong(widget.axis, context.instance().computeGlobalTransform());
+                                                    return this.draggingCursorStyle;
+                                                }),
+                                        content
+                                )
                         )
                 );
             });
@@ -380,7 +383,8 @@ public class RangeSlider extends StatefulWidget {
         }
 
         protected double setAbsolute(Constraints constraints, double x, double y) {
-            if (this.widget().onChanged == null) return this.grabbedHandle == Handle.MAX ? this.normalizedMax : this.normalizedMin;
+            if (this.widget().onChanged == null)
+                return this.grabbedHandle == Handle.MAX ? this.normalizedMax : this.normalizedMin;
             var normalizedValue = this.normalizedValueAt(constraints, x, y, this.grabbedHandle);
             var newNormalizedMin = this.normalizedMin;
             var newNormalizedMax = this.normalizedMax;

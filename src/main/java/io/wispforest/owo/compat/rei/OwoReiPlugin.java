@@ -45,8 +45,8 @@ public class OwoReiPlugin implements REIClientPlugin {
 
         zones.register(BaseOwoContainerScreen.class, screen -> {
             return ((BaseOwoContainerScreen<?, ?>) screen).componentsForExclusionAreas()
-                .map(rect -> new Rectangle(rect.x(), rect.y(), rect.width(), rect.height()))
-                .toList();
+                    .map(rect -> new Rectangle(rect.x(), rect.y(), rect.width(), rect.height()))
+                    .toList();
         });
 
         zones.register(BraidScreen.class, screen -> {

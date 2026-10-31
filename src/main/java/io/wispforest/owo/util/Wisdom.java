@@ -9,7 +9,8 @@ import java.util.List;
 
 public final class Wisdom {
 
-    private Wisdom() {}
+    private Wisdom() {
+    }
 
     private static final RandomSource CRYSTAL_BALL = RandomSource.create();
     public static final List<String> ALL_THE_WISDOM = ImmutableList.of(

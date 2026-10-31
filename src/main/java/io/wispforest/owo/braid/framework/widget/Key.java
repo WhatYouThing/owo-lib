@@ -12,7 +12,7 @@ public class Key {
     }
 
     public static Key of(@NotNull String value) {
-        Preconditions.checkNotNull(value ,"the value of a key must never be null");
+        Preconditions.checkNotNull(value, "the value of a key must never be null");
         return new Key(value);
     }
 

@@ -16,12 +16,12 @@ import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 
 public record BraidEntityElement(
-    EntityRenderState entityState,
-    Matrix4f transform,
-    Matrix3x2f pose,
-    double width,
-    double height,
-    ScreenRectangle scissorArea
+        EntityRenderState entityState,
+        Matrix4f transform,
+        Matrix3x2f pose,
+        double width,
+        double height,
+        ScreenRectangle scissorArea
 ) implements PictureInPictureRenderState {
 
     @Override
@@ -64,8 +64,8 @@ public record BraidEntityElement(
         var bounds = new ScreenRectangle(0, 0, (int) this.width, (int) this.height).transformMaxBounds(this.pose);
 
         return this.scissorArea != null
-            ? this.scissorArea.intersection(bounds)
-            : bounds;
+                ? this.scissorArea.intersection(bounds)
+                : bounds;
     }
 
     public static class Renderer extends PictureInPictureRenderer<BraidEntityElement> {

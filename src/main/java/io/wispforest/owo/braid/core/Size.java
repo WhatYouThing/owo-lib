@@ -10,7 +10,8 @@ public record Size(double width, double height) {
 
     @ApiStatus.Internal
     @Deprecated(forRemoval = true)
-    public Size {}
+    public Size {
+    }
 
     // ---
 
@@ -57,8 +58,8 @@ public record Size(double width, double height) {
 
     public Size constrained(Constraints constraints) {
         return new Size(
-            Mth.clamp(this.width, constraints.minWidth(), constraints.maxWidth()),
-            Mth.clamp(this.height, constraints.minHeight(), constraints.maxHeight())
+                Mth.clamp(this.width, constraints.minWidth(), constraints.maxWidth()),
+                Mth.clamp(this.height, constraints.minHeight(), constraints.maxHeight())
         );
     }
 }

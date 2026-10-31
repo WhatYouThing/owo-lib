@@ -9,7 +9,8 @@ import net.minecraft.world.phys.Vec3;
  */
 public final class VectorRandomUtils {
 
-    private VectorRandomUtils() {}
+    private VectorRandomUtils() {
+    }
 
     /**
      * Generates a random point centered on the given block

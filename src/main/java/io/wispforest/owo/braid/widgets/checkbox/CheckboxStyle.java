@@ -11,15 +11,15 @@ import net.minecraft.sounds.SoundEvent;
 import org.jetbrains.annotations.Nullable;
 
 public record CheckboxStyle(
-    @Nullable BackgroundBuilder backgroundBuilder,
-    @Nullable Widget checkmark,
-    @Nullable SoundEvent clickSound
+        @Nullable BackgroundBuilder backgroundBuilder,
+        @Nullable Widget checkmark,
+        @Nullable SoundEvent clickSound
 ) {
     public CheckboxStyle overriding(CheckboxStyle other) {
         return new CheckboxStyle(
-            this.backgroundBuilder != null ? this.backgroundBuilder : other.backgroundBuilder,
-            this.checkmark != null ? this.checkmark : other.checkmark,
-            this.clickSound != null ? this.clickSound : other.clickSound
+                this.backgroundBuilder != null ? this.backgroundBuilder : other.backgroundBuilder,
+                this.checkmark != null ? this.checkmark : other.checkmark,
+                this.clickSound != null ? this.clickSound : other.clickSound
         );
     }
 
@@ -33,18 +33,18 @@ public record CheckboxStyle(
     // ---
 
     public static final SpriteId BRAID_BACKGROUND_TEXTURE = new SpriteId(
-        SpriteWidget.GUI_ATLAS_ID,
-        Owo.id("braid_checkbox")
+            SpriteWidget.GUI_ATLAS_ID,
+            Owo.id("braid_checkbox")
     );
 
     public static final SpriteId BRAID_BACKGROUND_FOCUSED_TEXTURE = new SpriteId(
-        SpriteWidget.GUI_ATLAS_ID,
-        Owo.id("braid_checkbox_focused")
+            SpriteWidget.GUI_ATLAS_ID,
+            Owo.id("braid_checkbox_focused")
     );
 
     public static final SpriteId BRAID_CHECKMARK_TEXTURE = new SpriteId(
-        SpriteWidget.GUI_ATLAS_ID,
-        Owo.id("braid_checkmark")
+            SpriteWidget.GUI_ATLAS_ID,
+            Owo.id("braid_checkmark")
     );
 
     private static final Widget BRAID_BACKGROUND = new Builder(context -> {
@@ -54,8 +54,8 @@ public record CheckboxStyle(
     private static final Widget BRAID_CHECKMARK = new Center(new SpriteWidget(BRAID_CHECKMARK_TEXTURE));
 
     public static final CheckboxStyle BRAID = new CheckboxStyle(
-        active -> BRAID_BACKGROUND,
-        BRAID_CHECKMARK,
-        null
+            active -> BRAID_BACKGROUND,
+            BRAID_CHECKMARK,
+            null
     );
 }

@@ -88,8 +88,8 @@ public final class SharedStateProvider<T extends ShareableState> extends Inherit
             var dependency = this.dependenciesByDependent.get(dependent);
             if (dependency instanceof List<?>) {
                 return Iterables.any(
-                    (List<StateAspect<T>>) dependency,
-                    element -> !Objects.equals(element.capturedValue(), element.selector().apply(((SharedStateProvider<T>) this.widget()).state.state))
+                        (List<StateAspect<T>>) dependency,
+                        element -> !Objects.equals(element.capturedValue(), element.selector().apply(((SharedStateProvider<T>) this.widget()).state.state))
                 );
             } else {
                 return true;
@@ -104,6 +104,9 @@ public final class SharedStateProvider<T extends ShareableState> extends Inherit
     }
 }
 
-record InheritedKey(Class<?> stateClass) {}
+record InheritedKey(Class<?> stateClass) {
+}
 
-record StateAspect<T>(Class<T> stateClass, @Nullable Object capturedValue, Function<T, ? extends @Nullable Object> selector) {}
+record StateAspect<T>(Class<T> stateClass, @Nullable Object capturedValue,
+                      Function<T, ? extends @Nullable Object> selector) {
+}

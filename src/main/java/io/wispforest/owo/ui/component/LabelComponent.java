@@ -178,17 +178,17 @@ public class LabelComponent extends BaseUIComponent {
     @Override
     public void draw(OwoUIGraphics graphics, int mouseX, int mouseY, float partialTicks, float delta) {
         graphics
-            .push()
-            .translate(0, 1f / Minecraft.getInstance().getWindow().getGuiScale());
+                .push()
+                .translate(0, 1f / Minecraft.getInstance().getWindow().getGuiScale());
 
         this.drawText((renderX, renderY, text, shadow, color) -> {
             graphics.text(
-                Minecraft.getInstance().font,
-                text,
-                renderX,
-                renderY,
-                color.argb(),
-                shadow
+                    Minecraft.getInstance().font,
+                    text,
+                    renderX,
+                    renderY,
+                    color.argb(),
+                    shadow
             );
         });
 

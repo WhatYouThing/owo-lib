@@ -32,14 +32,15 @@ public final class DisplayQuad {
         var heightSquared = this.left.lengthSqr();
 
         var point = new Vector2d(
-            candidatePoint.dot(this.top) / widthSquared,
-            candidatePoint.dot(this.left) / heightSquared
+                candidatePoint.dot(this.top) / widthSquared,
+                candidatePoint.dot(this.left) / heightSquared
         );
 
         return point.x > 0 && point.x < 1 && point.y > 0 && point.y < 1
-            ? new HitTestResult(point, t)
-            : null;
+                ? new HitTestResult(point, t)
+                : null;
     }
 
-    public record HitTestResult(Vector2dc point, double t) {}
+    public record HitTestResult(Vector2dc point, double t) {
+    }
 }

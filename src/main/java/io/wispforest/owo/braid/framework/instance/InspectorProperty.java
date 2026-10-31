@@ -16,9 +16,9 @@ public record InspectorProperty(Component name, Component value) {
     public static String rounded(double value, int precision) {
         if (Double.isNaN(value) || Double.isInfinite(value)) return String.valueOf(value);
         return BigDecimal.valueOf(value)
-            .setScale(precision, RoundingMode.HALF_UP)
-            .stripTrailingZeros()
-            .toPlainString();
+                .setScale(precision, RoundingMode.HALF_UP)
+                .stripTrailingZeros()
+                .toPlainString();
     }
 
     public static String rounded(double value) {
@@ -27,7 +27,7 @@ public record InspectorProperty(Component name, Component value) {
 
     public static String roundedWithCommas(double... values) {
         return Arrays.stream(values)
-            .mapToObj(InspectorProperty::rounded)
-            .collect(Collectors.joining(", "));
+                .mapToObj(InspectorProperty::rounded)
+                .collect(Collectors.joining(", "));
     }
 }

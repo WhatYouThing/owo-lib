@@ -1,7 +1,7 @@
 package io.wispforest.owo.braid.core.element;
 
-import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import io.wispforest.owo.braid.core.Color;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.TextureSetup;
@@ -10,13 +10,13 @@ import org.joml.Matrix3x2f;
 import org.joml.Vector2d;
 
 public record BraidDashedLineElement(
-    Color color,
-    double thiccness,
-    double segmentLength,
-    RenderPipeline pipeline,
-    Matrix3x2f pose,
-    ScreenRectangle bounds,
-    ScreenRectangle scissorArea
+        Color color,
+        double thiccness,
+        double segmentLength,
+        RenderPipeline pipeline,
+        Matrix3x2f pose,
+        ScreenRectangle bounds,
+        ScreenRectangle scissorArea
 ) implements GuiElementRenderState {
 
     @Override

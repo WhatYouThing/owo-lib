@@ -77,8 +77,8 @@ public class TextureWidget extends OptionalChildInstanceWidget {
         private void refreshTextureSize() {
             var texture = this.host().client().getTextureManager().getTexture(widget.texture).getTexture();
             var newTextureSize = Size.of(
-                texture.getWidth(0),
-                texture.getHeight(0)
+                    texture.getWidth(0),
+                    texture.getHeight(0)
             );
 
             if (!newTextureSize.equals(this.textureSize)) {
@@ -97,8 +97,8 @@ public class TextureWidget extends OptionalChildInstanceWidget {
         protected void doLayout(Constraints constraints) {
             if (this.child == null) {
                 var size = this.textureSize != null
-                    ? AspectRatio.applyAspectRatio(constraints, this.textureSize)
-                    : constraints.maxFiniteOrMinSize();
+                        ? AspectRatio.applyAspectRatio(constraints, this.textureSize)
+                        : constraints.maxFiniteOrMinSize();
 
                 this.transform.setSize(size);
             } else {
@@ -109,8 +109,8 @@ public class TextureWidget extends OptionalChildInstanceWidget {
         @Override
         protected double measureIntrinsicWidth(double height) {
             return this.child != null
-                ? this.child.getIntrinsicWidth(height)
-                : this.textureSize != null
+                    ? this.child.getIntrinsicWidth(height)
+                    : this.textureSize != null
                     ? Double.isFinite(height) ? height * this.imageAspectRatio() : this.textureSize.width()
                     : 0;
         }
@@ -118,8 +118,8 @@ public class TextureWidget extends OptionalChildInstanceWidget {
         @Override
         protected double measureIntrinsicHeight(double width) {
             return this.child != null
-                ? this.child.getIntrinsicHeight(width)
-                : this.textureSize != null
+                    ? this.child.getIntrinsicHeight(width)
+                    : this.textureSize != null
                     ? Double.isFinite(width) ? width / this.imageAspectRatio() : this.textureSize.height()
                     : 0;
         }
@@ -152,12 +152,12 @@ public class TextureWidget extends OptionalChildInstanceWidget {
             };
 
             graphics.blit(
-                pipeline,
-                this.widget.texture,
-                0, 0, 0, 0,
-                quadWidth, quadHeight,
-                textureWidth, textureHeight,
-                this.widget.color.argb()
+                    pipeline,
+                    this.widget.texture,
+                    0, 0, 0, 0,
+                    quadWidth, quadHeight,
+                    textureWidth, textureHeight,
+                    this.widget.color.argb()
             );
 
             if (stretch) {

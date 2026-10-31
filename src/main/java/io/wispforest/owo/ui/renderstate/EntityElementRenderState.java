@@ -15,10 +15,10 @@ import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 
 public record EntityElementRenderState(
-    EntityRenderState entityState,
-    Matrix4f transform,
-    ScreenRectangle bounds,
-    ScreenRectangle scissorArea
+        EntityRenderState entityState,
+        Matrix4f transform,
+        ScreenRectangle bounds,
+        ScreenRectangle scissorArea
 ) implements PictureInPictureRenderState {
 
     @Override

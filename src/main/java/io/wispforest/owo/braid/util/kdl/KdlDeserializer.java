@@ -1,7 +1,6 @@
 package io.wispforest.owo.braid.util.kdl;
 
 import dev.kdl.KdlNode;
-import dev.kdl.KdlValue;
 import io.wispforest.endec.*;
 import io.wispforest.endec.util.RecursiveDeserializer;
 import org.jspecify.annotations.Nullable;
@@ -27,8 +26,10 @@ public class KdlDeserializer extends RecursiveDeserializer<KdlElement> implement
     }
 
     private final Endec<KdlElement> elementEndec = Endec.of(
-        this::decodeElement,
-        (ctx, deserializer) -> { throw new AssertionError("unreachable"); }
+            this::decodeElement,
+            (ctx, deserializer) -> {
+                throw new AssertionError("unreachable");
+            }
     );
 
     private void decodeElement(SerializationContext ctx, Serializer<?> visitor, KdlElement element) {
@@ -127,8 +128,8 @@ public class KdlDeserializer extends RecursiveDeserializer<KdlElement> implement
     public <V> Optional<V> readOptional(SerializationContext ctx, Endec<V> endec) {
         var value = this.getValue();
         return !(value instanceof KdlElement.KdlValueElement(var kdlValue) && kdlValue.isNull())
-            ? Optional.of(endec.decode(ctx, this))
-            : Optional.empty();
+                ? Optional.of(endec.decode(ctx, this))
+                : Optional.empty();
     }
 
     private <K extends KdlElement> K expectElement(SerializationContext ctx, Class<K> clazz) {
@@ -188,8 +189,8 @@ public class KdlDeserializer extends RecursiveDeserializer<KdlElement> implement
 
             var javaMoment = element;
             return KdlDeserializer.this.frame(
-                () -> javaMoment,
-                () -> endec.decode(ctx, KdlDeserializer.this)
+                    () -> javaMoment,
+                    () -> endec.decode(ctx, KdlDeserializer.this)
             );
         }
 
@@ -238,8 +239,8 @@ public class KdlDeserializer extends RecursiveDeserializer<KdlElement> implement
             var value = this.iterator.next();
 
             return KdlDeserializer.this.frame(
-                () -> value,
-                () -> this.elementEndec.decode(this.ctx, KdlDeserializer.this)
+                    () -> value,
+                    () -> this.elementEndec.decode(this.ctx, KdlDeserializer.this)
             );
         }
     }

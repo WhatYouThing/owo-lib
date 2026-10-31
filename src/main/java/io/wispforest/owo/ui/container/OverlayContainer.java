@@ -24,7 +24,8 @@ public class OverlayContainer<C extends UIComponent> extends WrappingParentUICom
     }
 
     @Override
-    public void drawFocusHighlight(OwoUIGraphics context, int mouseX, int mouseY, float partialTicks, float delta) {}
+    public void drawFocusHighlight(OwoUIGraphics context, int mouseX, int mouseY, float partialTicks, float delta) {
+    }
 
     @Override
     public void mount(ParentUIComponent parent, int x, int y) {

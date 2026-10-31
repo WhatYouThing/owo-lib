@@ -12,7 +12,8 @@ import net.minecraft.resources.Identifier;
 @SuppressWarnings("unchecked")
 public final class FieldRegistrationHandler {
 
-    private FieldRegistrationHandler() {}
+    private FieldRegistrationHandler() {
+    }
 
     /**
      * Applies the given processor to all applicable fields of the targeted class
@@ -73,7 +74,8 @@ public final class FieldRegistrationHandler {
         if (recurseIntoInnerClasses) {
             ReflectionUtils.forApplicableSubclasses(clazz, AutoRegistryContainer.class, subclass -> {
                 var classModId = namespace;
-                if (subclass.isAnnotationPresent(RegistryNamespace.class)) classModId = subclass.getAnnotation(RegistryNamespace.class).value();
+                if (subclass.isAnnotationPresent(RegistryNamespace.class))
+                    classModId = subclass.getAnnotation(RegistryNamespace.class).value();
                 register((Class<? extends AutoRegistryContainer<T>>) subclass, classModId, true);
             });
         }

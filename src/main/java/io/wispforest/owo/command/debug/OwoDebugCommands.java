@@ -46,10 +46,10 @@ import static net.minecraft.commands.Commands.literal;
 public class OwoDebugCommands {
 
     private static final EnumArgumentType<Level> LEVEL_ARGUMENT_TYPE =
-        EnumArgumentType.create(Level.class, "'{}' is not a valid logging level");
+            EnumArgumentType.create(Level.class, "'{}' is not a valid logging level");
 
     private static final SuggestionProvider<CommandSourceStack> POI_TYPES =
-        (context, builder) -> SharedSuggestionProvider.suggestResource(BuiltInRegistries.POINT_OF_INTEREST_TYPE.keySet(), builder);
+            (context, builder) -> SharedSuggestionProvider.suggestResource(BuiltInRegistries.POINT_OF_INTEREST_TYPE.keySet(), builder);
 
     private static final SimpleCommandExceptionType NO_POI_TYPE = new SimpleCommandExceptionType(Component.nullToEmpty("Invalid POI type"));
     public static final int GENERAL_PURPLE = 0xB983FF;
@@ -68,35 +68,35 @@ public class OwoDebugCommands {
             })));
 
             dispatcher.register(literal("query-poi").then(argument("poi_type", IdentifierArgument.id()).suggests(POI_TYPES)
-                .then(argument("radius", IntegerArgumentType.integer()).executes(context -> {
-                    var player = context.getSource().getPlayer();
-                    var poiType = BuiltInRegistries.POINT_OF_INTEREST_TYPE.getOptional(IdentifierArgument.getId(context, "poi_type"))
-                        .orElseThrow(NO_POI_TYPE::create);
+                    .then(argument("radius", IntegerArgumentType.integer()).executes(context -> {
+                        var player = context.getSource().getPlayer();
+                        var poiType = BuiltInRegistries.POINT_OF_INTEREST_TYPE.getOptional(IdentifierArgument.getId(context, "poi_type"))
+                                .orElseThrow(NO_POI_TYPE::create);
 
-                    var entries = ((ServerLevel) player.level()).getPoiManager().getInRange(type -> type.value() == poiType,
-                        player.blockPosition(), IntegerArgumentType.getInteger(context, "radius"), PoiManager.Occupancy.ANY).toList();
+                        var entries = ((ServerLevel) player.level()).getPoiManager().getInRange(type -> type.value() == poiType,
+                                player.blockPosition(), IntegerArgumentType.getInteger(context, "radius"), PoiManager.Occupancy.ANY).toList();
 
-                    player.sendSystemMessage(TextOps.concat(Owo.PREFIX, TextOps.withColor("Found §" + entries.size() + " §entr" + (entries.size() == 1 ? "y" : "ies"),
-                        TextOps.color(ChatFormatting.GRAY), GENERAL_PURPLE, TextOps.color(ChatFormatting.GRAY))), false);
+                        player.sendSystemMessage(TextOps.concat(Owo.PREFIX, TextOps.withColor("Found §" + entries.size() + " §entr" + (entries.size() == 1 ? "y" : "ies"),
+                                TextOps.color(ChatFormatting.GRAY), GENERAL_PURPLE, TextOps.color(ChatFormatting.GRAY))), false);
 
-                    for (var entry : entries) {
+                        for (var entry : entries) {
 
-                        final var entryPos = entry.getPos();
-                        final var blockId = BuiltInRegistries.BLOCK.getKey(player.level().getBlockState(entryPos).getBlock()).toString();
-                        final var posString = "(" + entryPos.getX() + " " + entryPos.getY() + " " + entryPos.getZ() + ")";
+                            final var entryPos = entry.getPos();
+                            final var blockId = BuiltInRegistries.BLOCK.getKey(player.level().getBlockState(entryPos).getBlock()).toString();
+                            final var posString = "(" + entryPos.getX() + " " + entryPos.getY() + " " + entryPos.getZ() + ")";
 
-                        final var message = TextOps.withColor("-> §" + blockId + " §" + posString,
-                            TextOps.color(ChatFormatting.GRAY), KEY_BLUE, VALUE_BLUE);
+                            final var message = TextOps.withColor("-> §" + blockId + " §" + posString,
+                                    TextOps.color(ChatFormatting.GRAY), KEY_BLUE, VALUE_BLUE);
 
-                        message.withStyle(style -> style.withClickEvent(new ClickEvent.SuggestCommand(
-                                "/tp " + entryPos.getX() + " " + entryPos.getY() + " " + entryPos.getZ()))
-                            .withHoverEvent(new HoverEvent.ShowText(Component.nullToEmpty("Click to teleport"))));
+                            message.withStyle(style -> style.withClickEvent(new ClickEvent.SuggestCommand(
+                                            "/tp " + entryPos.getX() + " " + entryPos.getY() + " " + entryPos.getZ()))
+                                    .withHoverEvent(new HoverEvent.ShowText(Component.nullToEmpty("Click to teleport"))));
 
-                        player.sendSystemMessage(message, false);
-                    }
+                            player.sendSystemMessage(message, false);
+                        }
 
-                    return entries.size();
-                }))));
+                        return entries.size();
+                    }))));
 
             dispatcher.register(literal("dumpfield").then(argument("field_name", StringArgumentType.string()).executes(context -> {
                 final var targetField = StringArgumentType.getString(context, "field_name");
@@ -148,46 +148,46 @@ public class OwoDebugCommands {
     public static class Client {
 
         private static final SuggestionProvider<FabricClientCommandSource> LOADED_UI_MODELS =
-            (context, builder) -> SharedSuggestionProvider.suggestResource(UIModelLoader.allLoadedModels(), builder);
+                (context, builder) -> SharedSuggestionProvider.suggestResource(UIModelLoader.allLoadedModels(), builder);
 
         private static final SimpleCommandExceptionType NO_SUCH_UI_MODEL = new SimpleCommandExceptionType(Component.literal("No such UI model is loaded"));
 
         public static void register() {
             ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
                 dispatcher.register(ClientCommands.literal("owo-hud-inspect")
-                    .executes(context -> {
-                        Minecraft.getInstance().setScreenAndShow(new HudInspectorScreen());
-                        return 0;
-                    }));
+                        .executes(context -> {
+                            Minecraft.getInstance().setScreenAndShow(new HudInspectorScreen());
+                            return 0;
+                        }));
 
                 dispatcher.register(ClientCommands.literal("owo-ui-set-reload-path")
-                    .then(ClientCommands.argument("model-id", IdentifierArgument.id()).suggests(LOADED_UI_MODELS).executes(context -> {
-                        var modelId = context.getArgument("model-id", Identifier.class);
-                        if (UIModelLoader.getPreloaded(modelId) == null) throw NO_SUCH_UI_MODEL.create();
+                        .then(ClientCommands.argument("model-id", IdentifierArgument.id()).suggests(LOADED_UI_MODELS).executes(context -> {
+                            var modelId = context.getArgument("model-id", Identifier.class);
+                            if (UIModelLoader.getPreloaded(modelId) == null) throw NO_SUCH_UI_MODEL.create();
 
-                        Minecraft.getInstance().setScreenAndShow(new ConfigureHotReloadScreen(modelId, null));
-                        return 0;
-                    })));
+                            Minecraft.getInstance().setScreenAndShow(new ConfigureHotReloadScreen(modelId, null));
+                            return 0;
+                        })));
 
                 if (RenderDoc.isAvailable()) {
                     dispatcher.register(ClientCommands.literal("renderdoc").executes(context -> {
                         Minecraft.getInstance().setScreenAndShow(new RenderdocScreen());
                         return 1;
                     }).then(ClientCommands.literal("comment")
-                        .then(ClientCommands.argument("capture_index", IntegerArgumentType.integer(0))
-                            .then(ClientCommands.argument("comment", StringArgumentType.greedyString())
-                                .executes(context -> {
-                                    var capture = RenderDoc.getCapture(IntegerArgumentType.getInteger(context, "capture_index"));
-                                    if (capture == null) {
-                                        context.getSource().sendError(TextOps.concat(Owo.PREFIX, Component.nullToEmpty("no such capture")));
-                                        return 0;
-                                    }
+                            .then(ClientCommands.argument("capture_index", IntegerArgumentType.integer(0))
+                                    .then(ClientCommands.argument("comment", StringArgumentType.greedyString())
+                                            .executes(context -> {
+                                                var capture = RenderDoc.getCapture(IntegerArgumentType.getInteger(context, "capture_index"));
+                                                if (capture == null) {
+                                                    context.getSource().sendError(TextOps.concat(Owo.PREFIX, Component.nullToEmpty("no such capture")));
+                                                    return 0;
+                                                }
 
-                                    RenderDoc.setCaptureComments(capture, StringArgumentType.getString(context, "comment"));
-                                    context.getSource().sendFeedback(TextOps.concat(Owo.PREFIX, Component.nullToEmpty("comment updated")));
+                                                RenderDoc.setCaptureComments(capture, StringArgumentType.getString(context, "comment"));
+                                                context.getSource().sendFeedback(TextOps.concat(Owo.PREFIX, Component.nullToEmpty("comment updated")));
 
-                                    return 1;
-                                })))));
+                                                return 1;
+                                            })))));
                 }
             });
         }

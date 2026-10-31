@@ -17,8 +17,8 @@ public class DefaultSliderHandle extends StatelessWidget {
     @Override
     public Widget build(BuildContext context) {
         return new ButtonPanel(
-            this.active,
-            EmptyWidget.INSTANCE
+                this.active,
+                EmptyWidget.INSTANCE
         );
     }
 }

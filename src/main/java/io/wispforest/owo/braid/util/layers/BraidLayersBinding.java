@@ -79,18 +79,18 @@ public class BraidLayersBinding {
 
         var refreshEvents = new BraidEventStream<Unit>();
         var app = new AppState(
-            null,
-            "BraidLayersBinding",
-            Minecraft.getInstance(),
-            new LayerSurface(),
-            new EventBinding.Default(),
-            new LayerContext(
-                refreshEvents.source(),
-                screen,
-                new Overlay(
-                    new Stack(widgets)
+                null,
+                "BraidLayersBinding",
+                Minecraft.getInstance(),
+                new LayerSurface(),
+                new EventBinding.Default(),
+                new LayerContext(
+                        refreshEvents.source(),
+                        screen,
+                        new Overlay(
+                                new Stack(widgets)
+                        )
                 )
-            )
         );
 
         ((OwoScreenExtension) screen).owo$setBraidLayersState(new LayersState(app, refreshEvents));
@@ -102,10 +102,12 @@ public class BraidLayersBinding {
 
     private static final List<Layer> LAYERS = new ArrayList<>();
 
-    private record Layer(Predicate<Screen> screenPredicate, Widget widget) {}
+    private record Layer(Predicate<Screen> screenPredicate, Widget widget) {
+    }
 
     @ApiStatus.Internal
-    public record LayersState(AppState app, BraidEventStream<Unit> refreshEvents) {}
+    public record LayersState(AppState app, BraidEventStream<Unit> refreshEvents) {
+    }
 
     private static class LayerSurface extends Surface.Default {
 
@@ -123,14 +125,14 @@ public class BraidLayersBinding {
     }
 
     private static final Supplier<Map<CursorStyle, CursorType>> CURSOR_MAPPINGS = Suppliers.memoize(() -> Map.of(
-        CursorStyle.POINTER, CursorTypes.ARROW,
-        CursorStyle.TEXT, CursorTypes.IBEAM,
-        CursorStyle.CROSSHAIR, CursorTypes.CROSSHAIR,
-        CursorStyle.HAND, CursorTypes.POINTING_HAND,
-        CursorStyle.VERTICAL_RESIZE, CursorTypes.RESIZE_NS,
-        CursorStyle.HORIZONTAL_RESIZE, CursorTypes.RESIZE_EW,
-        CursorStyle.MOVE, CursorTypes.RESIZE_ALL,
-        CursorStyle.NOT_ALLOWED, CursorTypes.NOT_ALLOWED
+            CursorStyle.POINTER, CursorTypes.ARROW,
+            CursorStyle.TEXT, CursorTypes.IBEAM,
+            CursorStyle.CROSSHAIR, CursorTypes.CROSSHAIR,
+            CursorStyle.HAND, CursorTypes.POINTING_HAND,
+            CursorStyle.VERTICAL_RESIZE, CursorTypes.RESIZE_NS,
+            CursorStyle.HORIZONTAL_RESIZE, CursorTypes.RESIZE_EW,
+            CursorStyle.MOVE, CursorTypes.RESIZE_ALL,
+            CursorStyle.NOT_ALLOWED, CursorTypes.NOT_ALLOWED
     ));
 
     // ---
@@ -138,7 +140,7 @@ public class BraidLayersBinding {
     static {
         ScreenEvents.AFTER_INIT.addPhaseOrdering(Event.DEFAULT_PHASE, INIT_PHASE);
         ScreenEvents.AFTER_INIT.register(INIT_PHASE, (client, screeen, scaledWidth, scaledHeight) -> {
-            if (((OwoScreenExtension)screeen).owo$getBraidLayersState() == null) {
+            if (((OwoScreenExtension) screeen).owo$getBraidLayersState() == null) {
                 setupLayers(screeen);
             }
 
@@ -162,11 +164,11 @@ public class BraidLayersBinding {
             });
 
             ScreenKeyboardEvents.allowKeyPress(screeen).register((screen, keyInput) -> {
-                return !tryHandleEvent(screen, new KeyPressEvent(keyInput.key(), keyInput.scancode(), keyInput.modifiers()));
+                return !tryHandleEvent(screen, new KeyPressEvent(keyInput.key(), keyInput.keycode(), keyInput.modifiers()));
             });
 
             ScreenKeyboardEvents.allowKeyRelease(screeen).register((screen, keyInput) -> {
-                return !tryHandleEvent(screen, new KeyReleaseEvent(keyInput.key(), keyInput.scancode(), keyInput.modifiers()));
+                return !tryHandleEvent(screen, new KeyReleaseEvent(keyInput.key(), keyInput.keycode(), keyInput.modifiers()));
             });
         });
     }

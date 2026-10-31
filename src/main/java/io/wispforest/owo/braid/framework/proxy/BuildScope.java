@@ -45,9 +45,9 @@ public class BuildScope {
 
         if (Owo.DEBUG && this.dirtyProxies.stream().anyMatch(BuildScope::isMissed)) {
             throw new IllegalStateException(
-                "missed the following dirty proxies: ["
-                    + this.dirtyProxies.stream().filter(BuildScope::isMissed).map(Objects::toString).collect(Collectors.joining(", "))
-                    + "]"
+                    "missed the following dirty proxies: ["
+                            + this.dirtyProxies.stream().filter(BuildScope::isMissed).map(Objects::toString).collect(Collectors.joining(", "))
+                            + "]"
             );
         }
 

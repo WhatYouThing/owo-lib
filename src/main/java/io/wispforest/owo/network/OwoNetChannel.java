@@ -137,18 +137,18 @@ public class OwoNetChannel {
         }
 
         Endec<MessagePayload> serverEndec = Endec.<Record, Integer>dispatched(
-            index -> this.endecsByIndex.get(index).endec,
-            msg -> this.endecsByClass.get(msg.getClass()).serverHandlerIndex,
-            Endec.VAR_INT
-        )
-            .xmap(x -> new MessagePayload(this.packetId, x), x -> x.message);
+                        index -> this.endecsByIndex.get(index).endec,
+                        msg -> this.endecsByClass.get(msg.getClass()).serverHandlerIndex,
+                        Endec.VAR_INT
+                )
+                .xmap(x -> new MessagePayload(this.packetId, x), x -> x.message);
 
         Endec<MessagePayload> clientEndec = Endec.<Record, Integer>dispatched(
-                index -> this.endecsByIndex.get(-index).endec,
-                msg -> this.endecsByClass.get(msg.getClass()).clientHandlerIndex,
-                Endec.VAR_INT
-            )
-            .xmap(x -> new MessagePayload(this.packetId, x), x -> x.message);
+                        index -> this.endecsByIndex.get(-index).endec,
+                        msg -> this.endecsByClass.get(msg.getClass()).clientHandlerIndex,
+                        Endec.VAR_INT
+                )
+                .xmap(x -> new MessagePayload(this.packetId, x), x -> x.message);
 
         PayloadTypeRegistry.serverboundPlay().register(this.packetId, CodecUtils.toPacketCodec(serverEndec));
         PayloadTypeRegistry.clientboundPlay().register(this.packetId, CodecUtils.toPacketCodec(clientEndec));
@@ -270,7 +270,7 @@ public class OwoNetChannel {
     //--
 
     @SuppressWarnings("unchecked")
-    private  <R extends Record> void registerClientbound(Class<R> messageClass, ChannelHandler<R, ClientAccess> handler, Supplier<StructEndec<R>> endec) {
+    private <R extends Record> void registerClientbound(Class<R> messageClass, ChannelHandler<R, ClientAccess> handler, Supplier<StructEndec<R>> endec) {
         int deferredIndex = deferredClientEndecs.removeInt(messageClass);
         if (deferredIndex != -1) {
             OwoFreezer.checkRegister("Network handlers");
@@ -385,7 +385,8 @@ public class OwoNetChannel {
      * to the given player only
      */
     public ServerHandle serverHandle(Player player) {
-        if (!(player instanceof ServerPlayer serverPlayer)) throw new NetworkException("'player' must be a 'ServerPlayerEntity'");
+        if (!(player instanceof ServerPlayer serverPlayer))
+            throw new NetworkException("'player' must be a 'ServerPlayerEntity'");
 
         var handle = getServerHandle();
         handle.targets = Collections.singleton(serverPlayer);
@@ -403,7 +404,8 @@ public class OwoNetChannel {
      * to all players tracking the given block entity
      */
     public ServerHandle serverHandle(BlockEntity entity) {
-        if (entity.getLevel().isClientSide()) throw new NetworkException("Server handle cannot be obtained on the client");
+        if (entity.getLevel().isClientSide())
+            throw new NetworkException("Server handle cannot be obtained on the client");
         return serverHandle(PlayerLookup.tracking(entity));
     }
 
@@ -590,7 +592,7 @@ public class OwoNetChannel {
             };
         }
 
-        public Class<R> getRecordClass(){
+        public Class<R> getRecordClass() {
             return this.recordClass;
         }
     }

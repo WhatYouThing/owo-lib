@@ -329,7 +329,7 @@ public interface UIComponent extends PositionedRectangle {
      *
      * @param click
      * @return {@code true} if this component handled the event and no more
-     *                     components should be notified
+     * components should be notified
      */
     boolean onMouseUp(MouseButtonEvent click);
 
@@ -371,7 +371,7 @@ public interface UIComponent extends PositionedRectangle {
      *
      * @param input
      * @return {@code true} if this component handled the key-press and no
-     *                     more components should be notified
+     * more components should be notified
      */
     boolean onKeyPress(KeyEvent input);
 
@@ -384,7 +384,7 @@ public interface UIComponent extends PositionedRectangle {
      *
      * @param input
      * @return {@code true} if this component handled the input and no
-     *                     * more components should be notified
+     * * more components should be notified
      */
     boolean onCharTyped(CharacterEvent input);
 
@@ -617,7 +617,7 @@ public interface UIComponent extends PositionedRectangle {
 
     /**
      * @return a textual representation of the component's details for use in debugging with the inspector HUD.
-     *          Default implementation contains positioning, size and margins.
+     * Default implementation contains positioning, size and margins.
      * @see OwoUIGraphics#drawInspector(ParentUIComponent, double, double, boolean)
      */
     default MutableComponent inspectorDescriptor() {

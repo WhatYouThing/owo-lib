@@ -23,18 +23,18 @@ public class BraidTooltipComponent implements ClientTooltipComponent {
     public BraidTooltipComponent(Widget widget) {
         var embedderInstance = new MutableObject<EmbedderRoot.Instance>();
         this.app = new AppState(
-            Owo.LOGGER,
-            AppState.formatName("BraidTooltipComponent", widget),
-            Minecraft.getInstance(),
-            new Surface.Default(),
-            new EventBinding.Headless(),
-            new Align(
-                Alignment.TOP_LEFT,
-                new EmbedderRoot(
-                    embedderInstance::setValue,
-                    widget
+                Owo.LOGGER,
+                AppState.formatName("BraidTooltipComponent", widget),
+                Minecraft.getInstance(),
+                new Surface.Default(),
+                new EventBinding.Headless(),
+                new Align(
+                        Alignment.TOP_LEFT,
+                        new EmbedderRoot(
+                                embedderInstance::setValue,
+                                widget
+                        )
                 )
-            )
         );
 
         this.app.processEvents(0);

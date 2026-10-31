@@ -1,6 +1,7 @@
 package io.wispforest.owo.braid.widgets.inspector;
 
 import com.google.common.collect.Streams;
+import com.mojang.blaze3d.platform.InputConstants;
 import io.wispforest.owo.braid.core.Insets;
 import io.wispforest.owo.braid.framework.BuildContext;
 import io.wispforest.owo.braid.framework.instance.HitTestState;
@@ -17,7 +18,6 @@ import io.wispforest.owo.braid.widgets.inspector.BraidInspector.PickEvent;
 import io.wispforest.owo.braid.widgets.stack.Stack;
 import io.wispforest.owo.braid.widgets.stack.StackBase;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -62,42 +62,43 @@ public class InstancePicker extends StatefulWidget {
             var children = new ArrayList<Widget>();
 
             children.add(new StackBase(
-                new Builder(childContext -> {
-                    this.childContext = childContext;
-                    return this.widget().child;
-                })
+                    new Builder(childContext -> {
+                        this.childContext = childContext;
+                        return this.widget().child;
+                    })
             ));
 
             if (this.picking) {
                 children.add(new MouseArea(
-                    widget -> widget
-                        .moveCallback((toX, toY) -> {
-                            var hitTest = new HitTestState();
-                            this.childContext.instance().hitTest(toX, toY, hitTest);
+                        widget -> widget
+                                .moveCallback((toX, toY) -> {
+                                    var hitTest = new HitTestState();
+                                    this.childContext.instance().hitTest(toX, toY, hitTest);
 
-                            if (this.pickedInstance != null) this.pickedInstance.debugHighlighted = false;
+                                    if (this.pickedInstance != null) this.pickedInstance.debugHighlighted = false;
 
-                            var pickHit = Streams.stream(hitTest.occludedTrace())
-                                .min(Comparator.comparingDouble(value -> value.instance().transform.width() * value.instance().transform.height()))
-                                .orElse(null);
+                                    var pickHit = Streams.stream(hitTest.occludedTrace())
+                                            .min(Comparator.comparingDouble(value -> value.instance().transform.width() * value.instance().transform.height()))
+                                            .orElse(null);
 
-                            this.pickedInstance = pickHit != null ? pickHit.instance() : null;
+                                    this.pickedInstance = pickHit != null ? pickHit.instance() : null;
 
-                            if (this.pickedInstance != null) this.pickedInstance.debugHighlighted = true;
-                        })
-                        .clickCallback((x, y, button, modifiers) -> {
-                            if (button <= 1) {
-                                if (this.pickedInstance != null) {
-                                    this.pickedInstance.debugHighlighted = false;
-                                    if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT) this.widget().pickCallback.onPick(this.pickedInstance);
-                                }
+                                    if (this.pickedInstance != null) this.pickedInstance.debugHighlighted = true;
+                                })
+                                .clickCallback((x, y, button, modifiers) -> {
+                                    if (button <= 1) {
+                                        if (this.pickedInstance != null) {
+                                            this.pickedInstance.debugHighlighted = false;
+                                            if (button == InputConstants.MOUSE_BUTTON_LEFT)
+                                                this.widget().pickCallback.onPick(this.pickedInstance);
+                                        }
 
-                                this.setState(() -> this.picking = false);
-                            }
+                                        this.setState(() -> this.picking = false);
+                                    }
 
-                            return true;
-                        }),
-                    new Padding(Insets.none())
+                                    return true;
+                                }),
+                        new Padding(Insets.none())
                 ));
             }
 

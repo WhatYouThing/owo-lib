@@ -17,12 +17,13 @@ import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Matrix4f;
 
 public record BlockElementRenderState(
-    BlockState state,
-    @Nullable BlockEntityRenderState entity,
-    ScreenRectangle bounds,
-    ScreenRectangle scissorArea
+        BlockState state,
+        @Nullable BlockEntityRenderState entity,
+        ScreenRectangle bounds,
+        ScreenRectangle scissorArea
 ) implements PictureInPictureRenderState {
 
     @Override
@@ -78,18 +79,18 @@ public record BlockElementRenderState(
             matrices.translate(0, -height / 2f, 100);
             matrices.scale(40 * width / 64f, -40 * height / 64f, -40);
 
-            matrices.mulPose(Axis.XP.rotationDegrees(30));
-            matrices.mulPose(Axis.YP.rotationDegrees(45 + 180));
+            matrices.mulPose(Axis.XP.rotationDegrees(30).get(new Matrix4f()));
+            matrices.mulPose(Axis.YP.rotationDegrees(45 + 180).get(new Matrix4f()));
 
             matrices.translate(-.5, -.5, -.5);
 
             if (state.state.getRenderShape() != RenderShape.INVISIBLE) {
                 var blockModelRenderState = new BlockModelRenderState();
                 Minecraft.getInstance().getModelManager().getBlockModelSet().get(state.state).update(
-                    blockModelRenderState,
-                    state.state,
-                    BlockDisplayContext.create(),
-                    67
+                        blockModelRenderState,
+                        state.state,
+                        BlockDisplayContext.create(),
+                        67
                 );
 
                 blockModelRenderState.submit(matrices, collector, LightCoordsUtil.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 0);

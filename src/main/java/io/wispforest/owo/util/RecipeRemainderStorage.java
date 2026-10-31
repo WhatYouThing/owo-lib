@@ -3,7 +3,6 @@ package io.wispforest.owo.util;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -13,7 +12,8 @@ import java.util.Map;
 @ApiStatus.Internal
 public final class RecipeRemainderStorage {
 
-    private RecipeRemainderStorage() {}
+    private RecipeRemainderStorage() {
+    }
 
     private static final Map<Identifier, Map<Item, ItemStackTemplate>> REMAINDERS = new HashMap<>();
 

@@ -1,7 +1,7 @@
 package io.wispforest.owo.ui.core;
 
 import com.google.common.base.Preconditions;
-import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import io.wispforest.owo.mixin.ui.access.GuiGraphicsExtractorAccessor;
 import io.wispforest.owo.ui.event.WindowResizeCallback;
 import io.wispforest.owo.ui.renderstate.CircleElementRenderState;
@@ -45,11 +45,11 @@ public class OwoUIGraphics extends GuiGraphicsExtractor {
 
     public static OwoUIGraphics of(GuiGraphicsExtractor graphics) {
         var owoContext = new OwoUIGraphics(
-            Minecraft.getInstance(),
-            graphics.guiRenderState,
-            ((GuiGraphicsExtractorAccessor) graphics).owo$getMouseY(),
-            ((GuiGraphicsExtractorAccessor) graphics).owo$getMouseX(),
-            ((GuiGraphicsExtractorAccessor) graphics)::owo$setDeferredTooltip
+                Minecraft.getInstance(),
+                graphics.guiRenderState,
+                ((GuiGraphicsExtractorAccessor) graphics).owo$getMouseY(),
+                ((GuiGraphicsExtractorAccessor) graphics).owo$getMouseX(),
+                ((GuiGraphicsExtractorAccessor) graphics)::owo$setDeferredTooltip
         );
 
         ((GuiGraphicsExtractorAccessor) owoContext).owo$setScissorStack(((GuiGraphicsExtractorAccessor) graphics).owo$getScissorStack());
@@ -72,9 +72,9 @@ public class OwoUIGraphics extends GuiGraphicsExtractor {
         var pos = rect.position();
 
         return other.x() < pos.x() + rect.width()
-            && other.x() + other.width() >= pos.x()
-            && other.y() < pos.y() + rect.height()
-            && other.y() + other.height() >= pos.y();
+                && other.x() + other.width() >= pos.x()
+                && other.y() < pos.y() + rect.height()
+                && other.y() + other.height() >= pos.y();
     }
 
     public void drawRectOutline(int x, int y, int width, int height, int color) {
@@ -116,14 +116,14 @@ public class OwoUIGraphics extends GuiGraphicsExtractor {
      */
     public void drawGradientRect(RenderPipeline pipeline, int x, int y, int width, int height, int topLeftColor, int topRightColor, int bottomRightColor, int bottomLeftColor) {
         this.guiRenderState.addGuiElement(new GradientQuadElementRenderState(
-            pipeline,
-            new Matrix3x2f(this.pose()),
-            new ScreenRectangle(new ScreenPosition(x, y), width, height),
-            this.scissorStack.peek(),
-            Color.ofArgb(topLeftColor),
-            Color.ofArgb(topRightColor),
-            Color.ofArgb(bottomLeftColor),
-            Color.ofArgb(bottomRightColor)
+                pipeline,
+                new Matrix3x2f(this.pose()),
+                new ScreenRectangle(new ScreenPosition(x, y), width, height),
+                this.scissorStack.peek(),
+                Color.ofArgb(topLeftColor),
+                Color.ofArgb(topRightColor),
+                Color.ofArgb(bottomLeftColor),
+                Color.ofArgb(bottomRightColor)
         ));
     }
 
@@ -143,14 +143,14 @@ public class OwoUIGraphics extends GuiGraphicsExtractor {
 
     public void drawSpectrum(int x, int y, int width, int height, boolean vertical) {
         this.guiRenderState.addGuiElement(new GradientQuadElementRenderState(
-            OwoUIPipelines.GUI_HSV,
-            new Matrix3x2f(this.pose()),
-            new ScreenRectangle(new ScreenPosition(x, y), width, height),
-            this.scissorStack.peek(),
-            Color.WHITE,
-            new Color(vertical ? 1f : 0f, 1f, 1f),
-            new Color(vertical ? 0f : 1f, 1f, 1f),
-            new Color(0f, 1f, 1f)
+                OwoUIPipelines.GUI_HSV,
+                new Matrix3x2f(this.pose()),
+                new ScreenRectangle(new ScreenPosition(x, y), width, height),
+                this.scissorStack.peek(),
+                Color.WHITE,
+                new Color(vertical ? 1f : 0f, 1f, 1f),
+                new Color(vertical ? 0f : 1f, 1f, 1f),
+                new Color(0f, 1f, 1f)
         ));
     }
 
@@ -188,12 +188,12 @@ public class OwoUIGraphics extends GuiGraphicsExtractor {
 
     public void drawLine(RenderPipeline pipeline, int x1, int y1, int x2, int y2, double thiccness, Color color) {
         this.guiRenderState.addGuiElement(new LineElementRenderState(
-            pipeline,
-            new Matrix3x2f(this.pose()),
-            this.scissorStack.peek(),
-            x1, y1, x2, y2,
-            thiccness,
-            color
+                pipeline,
+                new Matrix3x2f(this.pose()),
+                this.scissorStack.peek(),
+                x1, y1, x2, y2,
+                thiccness,
+                color
         ));
     }
 
@@ -213,10 +213,10 @@ public class OwoUIGraphics extends GuiGraphicsExtractor {
         Preconditions.checkArgument(angleFrom < angleTo, "angleFrom must be less than angleTo");
 
         this.guiRenderState.addGuiElement(new CircleElementRenderState(
-            pipeline,
-            new Matrix3x2f(this.pose()),
-            this.scissorStack.peek(),
-            centerX, centerY, angleFrom, angleTo, segments, radius, color
+                pipeline,
+                new Matrix3x2f(this.pose()),
+                this.scissorStack.peek(),
+                centerX, centerY, angleFrom, angleTo, segments, radius, color
         ));
     }
 
@@ -237,10 +237,10 @@ public class OwoUIGraphics extends GuiGraphicsExtractor {
         Preconditions.checkArgument(innerRadius < outerRadius, "innerRadius must be less than outerRadius");
 
         this.guiRenderState.addGuiElement(new RingElementRenderState(
-            pipeline,
-            new Matrix3x2f(this.pose()),
-            this.scissorStack.peek(),
-            centerX, centerY, angleFrom, angleTo, segments, innerRadius, outerRadius, innerColor, outerColor
+                pipeline,
+                new Matrix3x2f(this.pose()),
+                this.scissorStack.peek(),
+                centerX, centerY, angleFrom, angleTo, segments, innerRadius, outerRadius, innerColor, outerColor
         ));
     }
 
@@ -249,7 +249,7 @@ public class OwoUIGraphics extends GuiGraphicsExtractor {
     }
 
     public void drawTooltip(Font textRenderer, int x, int y, List<ClientTooltipComponent> components, @Nullable Identifier texture) {
-        ((GuiGraphicsExtractorAccessor) this).owo$tooltip(textRenderer, components, x, y, DefaultTooltipPositioner.INSTANCE, texture);
+        this.tooltip(textRenderer, components, x, y, DefaultTooltipPositioner.INSTANCE, texture, false);
     }
 
     @Override
@@ -308,7 +308,7 @@ public class OwoUIGraphics extends GuiGraphicsExtractor {
         for (var child : children) {
             if (child instanceof ParentUIComponent parentComponent) {
                 drawInsets(self, pipeline, parentComponent.x(), parentComponent.y(), parentComponent.width(),
-                    parentComponent.height(), parentComponent.padding().get().inverted(), 0xA70CECDD);
+                        parentComponent.height(), parentComponent.padding().get().inverted(), 0xA70CECDD);
             }
 
             final var margins = child.margins().get();
@@ -321,8 +321,8 @@ public class OwoUIGraphics extends GuiGraphicsExtractor {
                 int inspectorY = child.y() + child.height() + child.margins().get().bottom() + 1;
 
                 final var message = Component.literal(child.getClass().getSimpleName())
-                    .append(child.id() == null ? "\n" : " '" + child.id() + "'\n")
-                    .append(child.inspectorDescriptor());
+                        .append(child.id() == null ? "\n" : " '" + child.id() + "'\n")
+                        .append(child.inspectorDescriptor());
                 final var wrappedMessage = textRenderer.split(message, client.getWindow().getGuiScaledWidth() + 4);
                 int inspectorWidth = wrappedMessage.stream().mapToInt(textRenderer::width).max().orElse(30);
                 int inspectorHeight = textRenderer.lineHeight * wrappedMessage.size() + 4;
@@ -363,8 +363,8 @@ public class OwoUIGraphics extends GuiGraphicsExtractor {
 
                 final var client = Minecraft.getInstance();
                 INSTANCE.init(
-                    client.getWindow().getGuiScaledWidth(),
-                    client.getWindow().getGuiScaledHeight()
+                        client.getWindow().getGuiScaledWidth(),
+                        client.getWindow().getGuiScaledHeight()
                 );
             }
 

@@ -29,10 +29,10 @@ public class EntityWidget extends StatelessWidget {
     @Override
     public Widget build(BuildContext context) {
         return new EntityRenderStateWidget(
-            this.scale,
-            //TODO: can we get the client from the appstate?
-            () -> Minecraft.getInstance().getEntityRenderDispatcher().extractEntity(this.entity, 0),
-            this.setupCallback
+                this.scale,
+                //TODO: can we get the client from the appstate?
+                () -> Minecraft.getInstance().getEntityRenderDispatcher().extractEntity(this.entity, 0),
+                this.setupCallback
         );
     }
 }

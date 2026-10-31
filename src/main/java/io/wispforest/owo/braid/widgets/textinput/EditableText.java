@@ -35,8 +35,8 @@ public class EditableText extends StatefulWidget {
     protected boolean suggestionIsPlaceholder = false;
 
     public EditableText(
-        TextEditingController controller,
-        WidgetSetupCallback<EditableText> setupCallback
+            TextEditingController controller,
+            WidgetSetupCallback<EditableText> setupCallback
     ) {
         this.controller = controller;
         setupCallback.setup(this);
@@ -116,8 +116,8 @@ public class EditableText extends StatefulWidget {
 
     public EditableText singleLine() {
         return this
-            .softWrap(false)
-            .formatter(PatternFormatter.NO_NEWLINES);
+                .softWrap(false)
+                .formatter(PatternFormatter.NO_NEWLINES);
     }
 
     @Override
@@ -146,48 +146,48 @@ public class EditableText extends StatefulWidget {
             this.widget().controller.addListener(this.listener);
 
             this.actions.put(
-                InsertNewlineIntent.class,
-                Action.<InsertNewlineIntent>callback((actionCtx, intent) -> this.instance().insert("\n"))
+                    InsertNewlineIntent.class,
+                    Action.<InsertNewlineIntent>callback((actionCtx, intent) -> this.instance().insert("\n"))
             );
 
             this.actions.put(
-                InsertTabIntent.class,
-                Action.<InsertTabIntent>callback((actionCtx, intent) -> this.instance().insert("  "))
+                    InsertTabIntent.class,
+                    Action.<InsertTabIntent>callback((actionCtx, intent) -> this.instance().insert("  "))
             );
 
             this.actions.put(
-                DeleteTextIntent.class,
-                Action.<DeleteTextIntent>callback((actionCtx, intent) -> this.instance().deleteText(intent))
+                    DeleteTextIntent.class,
+                    Action.<DeleteTextIntent>callback((actionCtx, intent) -> this.instance().deleteText(intent))
             );
 
             this.actions.put(
-                DeleteLineIntent.class,
-                Action.<DeleteLineIntent>callback((actionCtx, intent) -> this.instance().deleteLine())
+                    DeleteLineIntent.class,
+                    Action.<DeleteLineIntent>callback((actionCtx, intent) -> this.instance().deleteLine())
             );
 
             this.actions.put(
-                MoveCursorIntent.class,
-                Action.<MoveCursorIntent>callback((actionCtx, intent) -> this.instance().moveCursor(intent))
+                    MoveCursorIntent.class,
+                    Action.<MoveCursorIntent>callback((actionCtx, intent) -> this.instance().moveCursor(intent))
             );
 
             this.actions.put(
-                TeleportCursorIntent.class,
-                Action.<TeleportCursorIntent>callback((actionCtx, intent) -> this.instance().teleportCursor(intent))
+                    TeleportCursorIntent.class,
+                    Action.<TeleportCursorIntent>callback((actionCtx, intent) -> this.instance().teleportCursor(intent))
             );
 
             this.actions.put(
-                SelectAllIntent.class,
-                Action.<SelectAllIntent>callback((actionCtx, intent) -> this.instance().selectAllText())
+                    SelectAllIntent.class,
+                    Action.<SelectAllIntent>callback((actionCtx, intent) -> this.instance().selectAllText())
             );
 
             this.actions.put(
-                CopyTextIntent.class,
-                Action.<CopyTextIntent>callback((actionCtx, intent) -> this.instance().copyToClipboard(intent))
+                    CopyTextIntent.class,
+                    Action.<CopyTextIntent>callback((actionCtx, intent) -> this.instance().copyToClipboard(intent))
             );
 
             this.actions.put(
-                PasteTextIntent.class,
-                Action.<PasteTextIntent>callback((actionCtx, intent) -> this.instance().pasteFromClipboard())
+                    PasteTextIntent.class,
+                    Action.<PasteTextIntent>callback((actionCtx, intent) -> this.instance().pasteFromClipboard())
             );
         }
 
@@ -211,13 +211,13 @@ public class EditableText extends StatefulWidget {
                 var lineHeight = inputInstance.host().client().font.lineHeight;
 
                 Scrollable.revealAabb(
-                    this.inputContext,
-                    new Aabb2d(
-                        cursorPos.x,
-                        cursorPos.y - lineHeight,
-                        2,
-                        lineHeight
-                    )
+                        this.inputContext,
+                        new Aabb2d(
+                                cursorPos.x,
+                                cursorPos.y - lineHeight,
+                                2,
+                                lineHeight
+                        )
                 );
             });
 
@@ -259,42 +259,42 @@ public class EditableText extends StatefulWidget {
         public Widget build(BuildContext context) {
             var widget = this.widget();
             return new Focusable(
-                focusable -> focusable
-                    .focusGainedCallback(() -> {
-                        this.focused = true;
-                        this.restartBlinking();
-                    })
-                    .focusLostCallback(() -> {
-                        this.focused = false;
-                        this.stopBlinking();
-                    })
-                    .charCallback((charCode, modifiers) -> this.instance().onChar(charCode))
-                    .skipTraversal(true),
-                new Actions(
-                    actions -> actions
-                        .autoFocus(widget.autoFocus)
-                        .actions(this.actions),
-                    new Scrollable(
-                        true, true,
-                        this.horizontalController,
-                        this.verticalController,
-                        ScrollAnimationSettings.NO_ANIMATION,
-                        new Builder(inputContext -> {
-                            this.inputContext = inputContext;
-                            return new TextInput(
-                                widget.controller,
-                                this.showCursor,
-                                widget.softWrap,
-                                widget.formatters,
-                                widget.baseStyle,
-                                widget.textShadow,
-                                !widget.suggestionIsPlaceholder || widget.controller.value().text().isEmpty()
-                                    ? widget.suggestion
-                                    : Component.empty()
-                            );
-                        })
+                    focusable -> focusable
+                            .focusGainedCallback(() -> {
+                                this.focused = true;
+                                this.restartBlinking();
+                            })
+                            .focusLostCallback(() -> {
+                                this.focused = false;
+                                this.stopBlinking();
+                            })
+                            .charCallback((charCode, modifiers) -> this.instance().onChar(charCode))
+                            .skipTraversal(true),
+                    new Actions(
+                            actions -> actions
+                                    .autoFocus(widget.autoFocus)
+                                    .actions(this.actions),
+                            new Scrollable(
+                                    true, true,
+                                    this.horizontalController,
+                                    this.verticalController,
+                                    ScrollAnimationSettings.NO_ANIMATION,
+                                    new Builder(inputContext -> {
+                                        this.inputContext = inputContext;
+                                        return new TextInput(
+                                                widget.controller,
+                                                this.showCursor,
+                                                widget.softWrap,
+                                                widget.formatters,
+                                                widget.baseStyle,
+                                                widget.textShadow,
+                                                !widget.suggestionIsPlaceholder || widget.controller.value().text().isEmpty()
+                                                        ? widget.suggestion
+                                                        : Component.empty()
+                                        );
+                                    })
+                            )
                     )
-                )
             );
         }
     }

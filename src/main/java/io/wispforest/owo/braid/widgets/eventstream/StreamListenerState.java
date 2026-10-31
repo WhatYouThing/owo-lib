@@ -14,7 +14,7 @@ public abstract class StreamListenerState<T extends StatefulWidget> extends Widg
 
     protected <S> void streamListen(Function<T, @Nullable BraidEventSource<S>> streamGetter, Consumer<S> onData) {
         this.streamSubscriptions.add(
-            new SubscriptionData<>(this.widget(), streamGetter, stream -> stream.subscribe(onData::accept))
+                new SubscriptionData<>(this.widget(), streamGetter, stream -> stream.subscribe(onData::accept))
         );
     }
 

@@ -18,11 +18,11 @@ public class MessageRangeSlider extends StatelessWidget {
     public final Component message;
 
     public MessageRangeSlider(
-        double minValue,
-        double maxValue,
-        Component message,
-        @Nullable WidgetSetupCallback<RangeSlider> setupCallback,
-        @Nullable RangeSliderCallback onChanged
+            double minValue,
+            double maxValue,
+            Component message,
+            @Nullable WidgetSetupCallback<RangeSlider> setupCallback,
+            @Nullable RangeSliderCallback onChanged
     ) {
         this.minValue = minValue;
         this.maxValue = maxValue;
@@ -32,12 +32,12 @@ public class MessageRangeSlider extends StatelessWidget {
     }
 
     public MessageRangeSlider(
-        double minValue,
-        double maxValue,
-        Component message,
-        @Nullable WidgetSetupCallback<RangeSlider> setupCallback,
-        boolean active,
-        RangeSliderCallback onChanged
+            double minValue,
+            double maxValue,
+            Component message,
+            @Nullable WidgetSetupCallback<RangeSlider> setupCallback,
+            boolean active,
+            RangeSliderCallback onChanged
     ) {
         this(minValue, maxValue, message, setupCallback, active ? onChanged : null);
     }
@@ -45,17 +45,17 @@ public class MessageRangeSlider extends StatelessWidget {
     @Override
     public Widget build(BuildContext context) {
         return new Stack(
-            new RangeSlider(
-                this.minValue,
-                this.maxValue,
-                this.setupCallback,
-                this.onChanged
-            ),
-            new Label(
-                LabelStyle.SHADOW,
-                false,
-                this.message
-            )
+                new RangeSlider(
+                        this.minValue,
+                        this.maxValue,
+                        this.setupCallback,
+                        this.onChanged
+                ),
+                new Label(
+                        LabelStyle.SHADOW,
+                        false,
+                        this.message
+                )
         );
     }
 }

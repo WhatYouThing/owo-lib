@@ -19,7 +19,7 @@ public class PatchedDataComponentMapMixin {
     @WrapOperation(method = "equals", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/component/DataComponentMap;equals(Ljava/lang/Object;)Z"))
     private boolean prioritiseDerivedMap(DataComponentMap instance, Object object, Operation<Boolean> original) {
         return (object instanceof DerivedComponentMap derivedComponentMap)
-            ? original.call(derivedComponentMap, instance)
-            : original.call(instance, object);
+                ? original.call(derivedComponentMap, instance)
+                : original.call(instance, object);
     }
 }

@@ -25,47 +25,47 @@ public class ConfigAP extends AbstractProcessor {
 
     private static final String WRAPPER_TEMPLATE = """
             package {package};
-
+            
             import blue.endless.jankson.Jankson;
             import io.wispforest.owo.config.ConfigWrapper;
             import io.wispforest.owo.config.ConfigWrapper.BuilderConsumer;
             import io.wispforest.owo.config.Option;
             import io.wispforest.owo.util.Observable;
-
+            
             import java.util.HashMap;
             import java.util.Map;
             import java.util.function.Consumer;
-
+            
             public class {wrapper_class_name} extends ConfigWrapper<{config_class_name}> {
-
+            
                 public final Keys keys = new Keys();
-
+            
             {option_instances}
-
+            
                 private {wrapper_class_name}() {
                     super({config_class_name}.class);
                 }
-
+            
                 private {wrapper_class_name}(BuilderConsumer consumer) {
                     super({config_class_name}.class, consumer);
                 }
-
+            
                 public static {wrapper_class_name} createAndLoad() {
                     var wrapper = new {wrapper_class_name}();
                     wrapper.load();
                     return wrapper;
                 }
-
+            
                 public static {wrapper_class_name} createAndLoad(BuilderConsumer consumer) {
                     var wrapper = new {wrapper_class_name}(consumer);
                     wrapper.load();
                     return wrapper;
                 }
-
+            
             {accessors}
-
+            
             {type_interfaces}
-
+            
                 public static class Keys {
             {key_constants}
                 }
@@ -258,7 +258,8 @@ public class ConfigAP extends AbstractProcessor {
 
             accessors.append(makeGetAccessor(this.name, this.key, this.type)).write("\n");
             accessors.append(makeSetAccessor(this.name, this.key, this.type)).write("\n");
-            if (this.makeSubscribe) accessors.append(makeSubscribe(capitalize(this.name), this.key, this.type)).write("\n");
+            if (this.makeSubscribe)
+                accessors.append(makeSubscribe(capitalize(this.name), this.key, this.type)).write("\n");
         }
     }
 

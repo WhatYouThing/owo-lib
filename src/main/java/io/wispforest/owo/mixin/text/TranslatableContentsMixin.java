@@ -28,7 +28,8 @@ import java.util.Optional;
 
 @Mixin(TranslatableContents.class)
 public class TranslatableContentsMixin {
-    @Shadow private List<FormattedText> decomposedParts;
+    @Shadow
+    private List<FormattedText> decomposedParts;
 
     @Shadow
     @Final
@@ -62,29 +63,29 @@ public class TranslatableContentsMixin {
     }
 
     @ModifyVariable(
-        method = "decomposeTemplate",
-        at = @At(
-            value = "STORE",
-            ordinal = 0
-        )
+            method = "decomposeTemplate",
+            at = @At(
+                    value = "STORE",
+                    ordinal = 0
+            )
     )
     private int restoreCorrectArgIndex(int value) {
-        return ((Object)this) instanceof CursedTranslatableContents ? CursedTranslatableContents.argIndex : value;
+        return ((Object) this) instanceof CursedTranslatableContents ? CursedTranslatableContents.argIndex : value;
     }
 
     @Inject(
-        method = "decomposeTemplate",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/network/chat/contents/TranslatableContents;getArgument(I)Lnet/minecraft/network/chat/FormattedText;"
-        )
+            method = "decomposeTemplate",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/network/chat/contents/TranslatableContents;getArgument(I)Lnet/minecraft/network/chat/FormattedText;"
+            )
     )
     private void keepCorrectArgIndex(CallbackInfo ci, @Local(ordinal = 0) int argIndex) {
-        if (((Object)this) instanceof CursedTranslatableContents) CursedTranslatableContents.argIndex = argIndex;
+        if (((Object) this) instanceof CursedTranslatableContents) CursedTranslatableContents.argIndex = argIndex;
     }
 
     @WrapMethod(method = "getArgument")
     private FormattedText unpackArgs(int index, Operation<FormattedText> original) {
-        return ((Object)this) instanceof CursedTranslatableContents ? MutableComponent.create(new InsertingTextContent(index)) : original.call(index);
+        return ((Object) this) instanceof CursedTranslatableContents ? MutableComponent.create(new InsertingTextContent(index)) : original.call(index);
     }
 }

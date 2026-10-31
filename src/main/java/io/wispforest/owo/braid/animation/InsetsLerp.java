@@ -12,10 +12,10 @@ public class InsetsLerp extends Lerp<Insets> {
     @Override
     protected Insets at(double t) {
         return Insets.of(
-            Mth.lerp(t, this.start.top(), this.end.top()),
-            Mth.lerp(t, this.start.bottom(), this.end.bottom()),
-            Mth.lerp(t, this.start.left(), this.end.left()),
-            Mth.lerp(t, this.start.right(), this.end.right())
+                Mth.lerp(t, this.start.top(), this.end.top()),
+                Mth.lerp(t, this.start.bottom(), this.end.bottom()),
+                Mth.lerp(t, this.start.left(), this.end.left()),
+                Mth.lerp(t, this.start.right(), this.end.right())
         );
     }
 }

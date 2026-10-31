@@ -41,7 +41,7 @@ public abstract class VisitorWidget extends Widget {
         @Override
         protected void doRebuild() {
             super.doRebuild();
-            this.child = this.refreshChild(this.child, ((VisitorWidget)this.widget()).child, this.slot());
+            this.child = this.refreshChild(this.child, ((VisitorWidget) this.widget()).child, this.slot());
 
             if (this.descendantInstance != null) {
                 this.visitor.visit((T) this.widget(), this.descendantInstance);

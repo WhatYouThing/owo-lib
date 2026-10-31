@@ -28,7 +28,7 @@ import io.wispforest.owo.braid.widgets.textinput.TextSelection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
+import org.lwjgl.sdl.SDLKeycode;
 
 import java.util.List;
 import java.util.Map;
@@ -72,8 +72,8 @@ public class ComboBox<T> extends StatefulWidget {
 
     public Component nameOption(@Nullable T option) {
         return option != null
-            ? this.optionToName.apply(option)
-            : Component.empty();
+                ? this.optionToName.apply(option)
+                : Component.empty();
     }
 
     public interface SelectCallback<T> {
@@ -129,18 +129,18 @@ public class ComboBox<T> extends StatefulWidget {
             }
 
             this.buttonsState.setValue(new ComboBoxButtonsState<>(
-                this.widget().options.stream()
-                    .filter(option -> this.widget().nameOption(option).getString().startsWith(this.controller.value().text()))
-                    .toList(),
-                OptionalInt.empty()
+                    this.widget().options.stream()
+                            .filter(option -> this.widget().nameOption(option).getString().startsWith(this.controller.value().text()))
+                            .toList(),
+                    OptionalInt.empty()
             ));
         }
 
         private void resetTextInput() {
             var text = this.widget().nameOption(this.widget().selectedOption).getString();
             this.controller.setValue(new TextEditingValue(
-                text,
-                TextSelection.collapsed(text.length())
+                    text,
+                    TextSelection.collapsed(text.length())
             ));
         }
 
@@ -162,9 +162,9 @@ public class ComboBox<T> extends StatefulWidget {
             }
 
             this.select(
-                state.highlightedOptionIdx().isPresent()
-                    ? state.options().get(state.highlightedOptionIdx().getAsInt())
-                    : state.options().getFirst()
+                    state.highlightedOptionIdx().isPresent()
+                            ? state.options().get(state.highlightedOptionIdx().getAsInt())
+                            : state.options().getFirst()
             );
         }
 
@@ -176,13 +176,13 @@ public class ComboBox<T> extends StatefulWidget {
                 var nextOptionIdx = Math.floorMod(currentOptionIdx + offset, state.options().size());
 
                 this.buttonsState.setValue(new ComboBoxButtonsState<>(
-                    state.options(),
-                    OptionalInt.of(nextOptionIdx)
+                        state.options(),
+                        OptionalInt.of(nextOptionIdx)
                 ));
             } else {
                 var currentOptionIdx = this.widget().selectedOption != null
-                    ? this.widget().options.indexOf(this.widget().selectedOption)
-                    : -Integer.signum(offset);
+                        ? this.widget().options.indexOf(this.widget().selectedOption)
+                        : -Integer.signum(offset);
                 var nextOptionIdx = Math.floorMod(currentOptionIdx + offset, this.widget().options.size());
 
                 this.select(this.widget().options.get(nextOptionIdx));
@@ -193,20 +193,20 @@ public class ComboBox<T> extends StatefulWidget {
             this.setState(() -> {
                 this.buttonsState = new ListenableValue<>(new ComboBoxButtonsState<>(this.widget().options, OptionalInt.empty()));
                 this.currentOverlay = Overlay.of(this.context()).add(
-                    new OverlayEntryBuilder(
-                        new ComboBoxButtons<>(
-                            this.buttonsState,
-                            this.context().instance().transform.width(),
-                            this.widget()::nameOption,
-                            this::select
-                        ),
-                        new RelativePosition(this.context(), 0, this.context().instance().transform.height() - 1)
-                    )
-                        .dismissOverlayOnClick()
-                        .onRemove(() -> this.setState(() -> {
-                            this.currentOverlay = null;
-                            this.buttonsState = null;
-                        }))
+                        new OverlayEntryBuilder(
+                                new ComboBoxButtons<>(
+                                        this.buttonsState,
+                                        this.context().instance().transform.width(),
+                                        this.widget()::nameOption,
+                                        this::select
+                                ),
+                                new RelativePosition(this.context(), 0, this.context().instance().transform.height() - 1)
+                        )
+                                .dismissOverlayOnClick()
+                                .onRemove(() -> this.setState(() -> {
+                                    this.currentOverlay = null;
+                                    this.buttonsState = null;
+                                }))
                 );
             });
         }
@@ -222,50 +222,50 @@ public class ComboBox<T> extends StatefulWidget {
             var expanded = this.isOpen();
 
             return new Interactable(
-                SHORTCUTS,
-                widget -> widget
-                    .focusLostCallback(this::resetTextInput)
-                    .cursorStyle(CursorStyle.HAND)
-                    .addCallbackAction(CycleIntent.class, (actionCtx, intent) -> this.cycle(intent.previous() ? -1 : 1))
-                    .addCallbackAction(SelectIntent.class, (actionCtx, intent) -> {
-                        if (expanded) {
-                            this.trySelectHighlightedValue();
-                        } else {
-                            this.open();
-                        }
-                    })
-                    .addCallbackAction(PrimaryActionIntent.class, (actionCtx, intent) -> {
-                        if (expanded) {
-                            this.close();
-                        } else {
-                            this.open();
-                        }
-                    }),
-                new HoverableBuilder(
-                    (hoverableContext, hovered, child) -> new Panel(
-                        (expanded || hovered) ? HOVERED_TEXTURE : ACTIVE_TEXTURE,
-                        child
-                    ),
-                    new Padding(
-                        Insets.of(4, 4, 6, 0),
-                        new Row(
-                            MainAxisAlignment.START,
-                            CrossAxisAlignment.CENTER,
-                            new Flexible(
-                                new EditableText(
-                                    this.controller,
-                                    widget -> widget
-                                        .textShadow(true)
-                                        .singleLine()
-                                )
+                    SHORTCUTS,
+                    widget -> widget
+                            .focusLostCallback(this::resetTextInput)
+                            .cursorStyle(CursorStyle.HAND)
+                            .addCallbackAction(CycleIntent.class, (actionCtx, intent) -> this.cycle(intent.previous() ? -1 : 1))
+                            .addCallbackAction(SelectIntent.class, (actionCtx, intent) -> {
+                                if (expanded) {
+                                    this.trySelectHighlightedValue();
+                                } else {
+                                    this.open();
+                                }
+                            })
+                            .addCallbackAction(PrimaryActionIntent.class, (actionCtx, intent) -> {
+                                if (expanded) {
+                                    this.close();
+                                } else {
+                                    this.open();
+                                }
+                            }),
+                    new HoverableBuilder(
+                            (hoverableContext, hovered, child) -> new Panel(
+                                    (expanded || hovered) ? HOVERED_TEXTURE : ACTIVE_TEXTURE,
+                                    child
                             ),
                             new Padding(
-                                Insets.horizontal(3),
-                                new SpriteWidget(Owo.id("braid_combo_box_arrow"))
+                                    Insets.of(4, 4, 6, 0),
+                                    new Row(
+                                            MainAxisAlignment.START,
+                                            CrossAxisAlignment.CENTER,
+                                            new Flexible(
+                                                    new EditableText(
+                                                            this.controller,
+                                                            widget -> widget
+                                                                    .textShadow(true)
+                                                                    .singleLine()
+                                                    )
+                                            ),
+                                            new Padding(
+                                                    Insets.horizontal(3),
+                                                    new SpriteWidget(Owo.id("braid_combo_box_arrow"))
+                                            )
+                                    )
                             )
-                        )
                     )
-                )
             );
         }
     }
@@ -273,12 +273,15 @@ public class ComboBox<T> extends StatefulWidget {
     // ---
 
     private static final Map<List<ShortcutTrigger>, Intent> SHORTCUTS = Map.of(
-        List.of(ShortcutTrigger.UP), new CycleIntent(true),
-        List.of(ShortcutTrigger.DOWN), new CycleIntent(false),
-        List.of(new ShortcutTrigger(Trigger.ofKey(GLFW.GLFW_KEY_ENTER), Trigger.ofKey(GLFW.GLFW_KEY_KP_ENTER))), new SelectIntent(),
-        List.of(ShortcutTrigger.LEFT_CLICK), PrimaryActionIntent.INSTANCE
+            List.of(ShortcutTrigger.UP), new CycleIntent(true),
+            List.of(ShortcutTrigger.DOWN), new CycleIntent(false),
+            List.of(new ShortcutTrigger(Trigger.ofKey(SDLKeycode.SDLK_RETURN), Trigger.ofKey(SDLKeycode.SDLK_KP_ENTER))), new SelectIntent(),
+            List.of(ShortcutTrigger.LEFT_CLICK), PrimaryActionIntent.INSTANCE
     );
 }
 
-record CycleIntent(boolean previous) implements Intent {}
-record SelectIntent() implements Intent {}
+record CycleIntent(boolean previous) implements Intent {
+}
+
+record SelectIntent() implements Intent {
+}

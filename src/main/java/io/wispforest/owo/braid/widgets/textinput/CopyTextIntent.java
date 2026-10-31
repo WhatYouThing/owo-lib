@@ -2,4 +2,5 @@ package io.wispforest.owo.braid.widgets.textinput;
 
 import io.wispforest.owo.braid.widgets.intents.Intent;
 
-public record CopyTextIntent(boolean delete) implements Intent {}
+public record CopyTextIntent(boolean delete) implements Intent {
+}

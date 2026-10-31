@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 public class EffectsInInventoryMixin {
 
     @ModifyVariable(method = "extractEffects",
-        at = @At("HEAD"),
-        ordinal = 0, argsOnly = true)
+            at = @At("HEAD"),
+            ordinal = 0, argsOnly = true)
     private int shiftStatusEffects(int x) {
         if (!((Object) this instanceof CreativeModeInventoryScreen)) return x;
         if (!(CreativeModeInventoryScreenAccessor.owo$getSelectedTab() instanceof OwoItemGroup group)) return x;

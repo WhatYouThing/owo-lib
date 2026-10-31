@@ -88,19 +88,19 @@ public class RawBlockWidget extends LeafInstanceWidget {
                 if (renderer != null) {
                     entity = renderer.createRenderState();
                     renderer.extractRenderState(
-                        this.widget.blockEntity, entity, 0, Vec3.ZERO, null
+                            this.widget.blockEntity, entity, 0, Vec3.ZERO, null
                     );
                 }
             }
 
             graphics.guiRenderState.addPicturesInPictureState(new BraidBlockElement(
-                this.widget.blockState,
-                entity,
-                drawTransform,
-                new Matrix3x2f(graphics.pose()),
-                this.transform.width(),
-                this.transform.height(),
-                graphics.scissorStack.peek()
+                    this.widget.blockState,
+                    entity,
+                    drawTransform,
+                    new Matrix3x2f(graphics.pose()),
+                    this.transform.width(),
+                    this.transform.height(),
+                    graphics.scissorStack.peek()
             ));
         }
     }

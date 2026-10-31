@@ -38,8 +38,8 @@ public class AnimatedPadding extends AutomaticallyAnimatedWidget {
         @Override
         public Widget build(BuildContext context) {
             return new Padding(
-                this.insets.compute(this.animationValue()),
-                this.widget().child
+                    this.insets.compute(this.animationValue()),
+                    this.widget().child
             );
         }
     }

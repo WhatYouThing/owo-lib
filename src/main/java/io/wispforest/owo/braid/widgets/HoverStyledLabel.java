@@ -31,10 +31,10 @@ public class HoverStyledLabel extends StatefulWidget {
         @Override
         public Widget build(BuildContext context) {
             return new MouseArea(
-                widget -> widget
-                    .enterCallback(() -> setState(() -> this.hovered = true))
-                    .exitCallback(() -> setState(() -> this.hovered = false)),
-                new Label(this.hovered ? this.widget().defaultText.copy().withStyle(this.widget().hoverStyle) : this.widget().defaultText)
+                    widget -> widget
+                            .enterCallback(() -> setState(() -> this.hovered = true))
+                            .exitCallback(() -> setState(() -> this.hovered = false)),
+                    new Label(this.hovered ? this.widget().defaultText.copy().withStyle(this.widget().hoverStyle) : this.widget().defaultText)
             );
         }
     }

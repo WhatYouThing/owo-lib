@@ -23,6 +23,7 @@ import java.util.regex.Pattern;
 
 public class InstanceTitle extends StatefulWidget {
     public final WidgetInstance<?> instance;
+
     public InstanceTitle(WidgetInstance<?> instance) {
         this.instance = instance;
     }
@@ -50,67 +51,67 @@ public class InstanceTitle extends StatefulWidget {
             var className = this.widget().instance.widget().getClass().getSimpleName();
 
             var instanceText = instanceName.endsWith(className)
-                ? Component.literal(instanceName)
-                : Component.literal(className).append(Component.literal(" " + instanceName).withStyle(ChatFormatting.GRAY));
+                    ? Component.literal(instanceName)
+                    : Component.literal(className).append(Component.literal(" " + instanceName).withStyle(ChatFormatting.GRAY));
 
             var title = new Panel(
-                selected ? Owo.id("braid_inspector_selected") : null,
-                new Padding(
-                    Insets.all(2),
-                    new Row(
-                        MainAxisAlignment.START,
-                        CrossAxisAlignment.CENTER,
-                        new Label(instanceText.withStyle(style -> style.withBold(this.hovered))),
-                        new Visibility(
-                            this.widget().instance.isRelayoutBoundary() && this.widget().instance.debugParentHasDependency(),
-                            new Padding(
-                                Insets.left(2),
-                                new Tooltip(
-                                    Component.literal("Relayout Boundary\n").append(Component.literal("with parent dependency").withStyle(ChatFormatting.GRAY)),
-                                    new SpriteWidget(Owo.id("braid_inspector_relayout_boundary_with_dependency"))
-                                )
+                    selected ? Owo.id("braid_inspector_selected") : null,
+                    new Padding(
+                            Insets.all(2),
+                            new Row(
+                                    MainAxisAlignment.START,
+                                    CrossAxisAlignment.CENTER,
+                                    new Label(instanceText.withStyle(style -> style.withBold(this.hovered))),
+                                    new Visibility(
+                                            this.widget().instance.isRelayoutBoundary() && this.widget().instance.debugParentHasDependency(),
+                                            new Padding(
+                                                    Insets.left(2),
+                                                    new Tooltip(
+                                                            Component.literal("Relayout Boundary\n").append(Component.literal("with parent dependency").withStyle(ChatFormatting.GRAY)),
+                                                            new SpriteWidget(Owo.id("braid_inspector_relayout_boundary_with_dependency"))
+                                                    )
+                                            )
+                                    ),
+                                    new Visibility(
+                                            this.widget().instance.isRelayoutBoundary() && !this.widget().instance.debugParentHasDependency(),
+                                            new Padding(
+                                                    Insets.left(2),
+                                                    new Tooltip(
+                                                            Component.literal("Relayout Boundary"),
+                                                            new SpriteWidget(Owo.id("braid_inspector_relayout_boundary"))
+                                                    )
+                                            )
+                                    ),
+                                    new Visibility(
+                                            (this.widget().instance.flags & WidgetInstance.FLAG_HIT_TEST_BOUNDARY) != 0,
+                                            new Padding(
+                                                    Insets.left(2),
+                                                    new Tooltip(
+                                                            Component.literal("Hit Test Boundary"),
+                                                            new SpriteWidget(Owo.id("braid_inspector_hit_test_boundary"))
+                                                    )
+                                            )
+                                    )
                             )
-                        ),
-                        new Visibility(
-                            this.widget().instance.isRelayoutBoundary() && !this.widget().instance.debugParentHasDependency(),
-                            new Padding(
-                                Insets.left(2),
-                                new Tooltip(
-                                    Component.literal("Relayout Boundary"),
-                                    new SpriteWidget(Owo.id("braid_inspector_relayout_boundary"))
-                                )
-                            )
-                        ),
-                        new Visibility(
-                            (this.widget().instance.flags & WidgetInstance.FLAG_HIT_TEST_BOUNDARY) != 0,
-                            new Padding(
-                                Insets.left(2),
-                                new Tooltip(
-                                    Component.literal("Hit Test Boundary"),
-                                    new SpriteWidget(Owo.id("braid_inspector_hit_test_boundary"))
-                                )
-                            )
-                        )
                     )
-                )
             );
 
             return new Focusable(
-                widget -> widget
-                    .focusGainedCallback(() -> SharedState.set(context, InspectorState.class, state -> state.selectedElement = this.widget().instance)),
-                new MouseArea(
                     widget -> widget
-                        .enterCallback(() -> this.setState(() -> {
-                            this.widget().instance.debugHighlighted = true;
-                            this.hovered = true;
-                        }))
-                        .exitCallback(() -> this.setState(() -> {
-                            this.widget().instance.debugHighlighted = false;
-                            this.hovered = false;
-                        }))
-                        .cursorStyle(CursorStyle.CROSSHAIR),
-                    title
-                )
+                            .focusGainedCallback(() -> SharedState.set(context, InspectorState.class, state -> state.selectedElement = this.widget().instance)),
+                    new MouseArea(
+                            widget -> widget
+                                    .enterCallback(() -> this.setState(() -> {
+                                        this.widget().instance.debugHighlighted = true;
+                                        this.hovered = true;
+                                    }))
+                                    .exitCallback(() -> this.setState(() -> {
+                                        this.widget().instance.debugHighlighted = false;
+                                        this.hovered = false;
+                                    }))
+                                    .cursorStyle(CursorStyle.CROSSHAIR),
+                            title
+                    )
             );
         }
 

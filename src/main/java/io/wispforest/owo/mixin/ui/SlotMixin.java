@@ -1,9 +1,7 @@
 package io.wispforest.owo.mixin.ui;
 
-import io.wispforest.owo.ui.core.PositionedRectangle;
 import io.wispforest.owo.util.pond.OwoSlotExtension;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.inventory.Slot;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;

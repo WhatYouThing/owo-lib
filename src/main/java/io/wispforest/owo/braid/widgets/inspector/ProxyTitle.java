@@ -35,7 +35,8 @@ public class ProxyTitle extends StatefulWidget {
             var proxy = this.widget().proxy;
             var widgetName = proxy.widget().getClass().getSimpleName();
 
-            record ProxyTag(String shortForm, String fullName, ChatFormatting color) {}
+            record ProxyTag(String shortForm, String fullName, ChatFormatting color) {
+            }
             var tag = switch (proxy) {
                 case VisitorWidget.Proxy<?> ignored -> new ProxyTag("V", "Visitor", ChatFormatting.DARK_AQUA);
                 case StatefulProxy ignored -> new ProxyTag("SF", "Stateful", ChatFormatting.AQUA);
@@ -46,18 +47,18 @@ public class ProxyTitle extends StatefulWidget {
             };
 
             var text = Component.literal(widgetName)
-                .withStyle(style -> style.withBold(this.hovered))
-                .append(Component.literal(" " + tag.shortForm()).withStyle(style -> style
-                    .withColor(tag.color())
-                    .withHoverEvent(new HoverEvent.ShowText(
-                        Component.literal(tag.fullName()).withStyle(tag.color())
-                    ))
-                ));
+                    .withStyle(style -> style.withBold(this.hovered))
+                    .append(Component.literal(" " + tag.shortForm()).withStyle(style -> style
+                            .withColor(tag.color())
+                            .withHoverEvent(new HoverEvent.ShowText(
+                                    Component.literal(tag.fullName()).withStyle(tag.color())
+                            ))
+                    ));
 
             return new MouseArea(
-                w -> w.enterCallback(() -> this.setState(() -> this.hovered = true))
-                    .exitCallback(() -> this.setState(() -> this.hovered = false)),
-                new Padding(Insets.vertical(1), new Label(text))
+                    w -> w.enterCallback(() -> this.setState(() -> this.hovered = true))
+                            .exitCallback(() -> this.setState(() -> this.hovered = false)),
+                    new Padding(Insets.vertical(1), new Label(text))
             );
         }
     }

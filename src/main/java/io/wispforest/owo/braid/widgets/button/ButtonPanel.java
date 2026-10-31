@@ -20,17 +20,17 @@ public class ButtonPanel extends StatelessWidget {
     @Override
     public Widget build(BuildContext context) {
         return new HoverableBuilder(
-            (innerContext, hovered, child) -> {
-                return new Panel(
-                    this.active
-                        ? (hovered || Focusable.shouldShowHighlight(context))
-                        ? ButtonComponent.HOVERED_TEXTURE
-                        : ButtonComponent.ACTIVE_TEXTURE
-                        : ButtonComponent.DISABLED_TEXTURE,
-                    child
-                );
-            },
-            this.child
+                (innerContext, hovered, child) -> {
+                    return new Panel(
+                            this.active
+                                    ? (hovered || Focusable.shouldShowHighlight(context))
+                                    ? ButtonComponent.HOVERED_TEXTURE
+                                    : ButtonComponent.ACTIVE_TEXTURE
+                                    : ButtonComponent.DISABLED_TEXTURE,
+                            child
+                    );
+                },
+                this.child
         );
     }
 }

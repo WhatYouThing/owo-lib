@@ -80,9 +80,9 @@ public class TextInput extends LeafInstanceWidget {
         @Override
         public void setWidget(TextInput widget) {
             if (!(this.lastValue.equals(widget.controller.value())
-                && this.widget.softWrap == widget.softWrap
-                && this.widget.baseStyle.equals(widget.baseStyle)
-                && this.widget.suggestion.equals(widget.suggestion))) {
+                    && this.widget.softWrap == widget.softWrap
+                    && this.widget.baseStyle.equals(widget.baseStyle)
+                    && this.widget.suggestion.equals(widget.suggestion))) {
 
                 this.lastValue = this.value = widget.controller.value();
 
@@ -98,20 +98,20 @@ public class TextInput extends LeafInstanceWidget {
             var wrapWidth = this.widget.softWrap ? maxWidth - 2 : Integer.MAX_VALUE;
 
             this.metrics = TextLayout.measure(
-                this.host().client().font,
-                this.value.text() + this.widget.suggestion.getString(),
-                this.widget.baseStyle,
-                wrapWidth
+                    this.host().client().font,
+                    this.value.text() + this.widget.suggestion.getString(),
+                    this.widget.baseStyle,
+                    wrapWidth
             );
 
             this.renderLines = new ArrayList<>(this.host().client().font.split(
-                this.widget.controller.createTextForRendering(this.widget.baseStyle).copy().append(this.widget.suggestion),
-                wrapWidth
+                    this.widget.controller.createTextForRendering(this.widget.baseStyle).copy().append(this.widget.suggestion),
+                    wrapWidth
             ));
 
             var size = Size.of(
-                this.metrics.width() + 1,
-                this.metrics.height()
+                    this.metrics.width() + 1,
+                    this.metrics.height()
             ).constrained(constraints);
 
             this.transform.setSize(size);
@@ -123,20 +123,20 @@ public class TextInput extends LeafInstanceWidget {
         @Override
         protected double measureIntrinsicWidth(double height) {
             return TextLayout.measure(
-                this.host().client().font,
-                this.value.text(),
-                this.widget.baseStyle,
-                Integer.MAX_VALUE
+                    this.host().client().font,
+                    this.value.text(),
+                    this.widget.baseStyle,
+                    Integer.MAX_VALUE
             ).width();
         }
 
         @Override
         protected double measureIntrinsicHeight(double width) {
             return TextLayout.measure(
-                this.host().client().font,
-                this.value.text(),
-                this.widget.baseStyle,
-                this.widget.softWrap ? (int) width : Integer.MAX_VALUE
+                    this.host().client().font,
+                    this.value.text(),
+                    this.widget.baseStyle,
+                    this.widget.softWrap ? (int) width : Integer.MAX_VALUE
             ).height();
         }
 
@@ -163,12 +163,12 @@ public class TextInput extends LeafInstanceWidget {
 
             for (int lineIdx = 0; lineIdx < this.renderLines.size(); lineIdx++) {
                 graphics.text(
-                    font,
-                    this.renderLines.get(lineIdx),
-                    0,
-                    lineIdx * font.lineHeight,
-                    Color.WHITE.argb(),
-                    this.widget.textShadow
+                        font,
+                        this.renderLines.get(lineIdx),
+                        0,
+                        lineIdx * font.lineHeight,
+                        Color.WHITE.argb(),
+                        this.widget.textShadow
                 );
             }
 
@@ -206,10 +206,10 @@ public class TextInput extends LeafInstanceWidget {
                 var cursorPos = this.coordinatesAtCharIdx(this.value.selection().end());
 
                 graphics.verticalLine(
-                    (int) cursorPos.x,
-                    (int) (cursorPos.y - font.lineHeight - 2),
-                    (int) (cursorPos.y),
-                    0xaad0d0d0
+                        (int) cursorPos.x,
+                        (int) (cursorPos.y - font.lineHeight - 2),
+                        (int) (cursorPos.y),
+                        0xaad0d0d0
                 );
             }
         }
@@ -252,8 +252,8 @@ public class TextInput extends LeafInstanceWidget {
 
             var newText = chars.toString();
             this.formatAndSetValue(new TextEditingValue(
-                newText,
-                TextSelection.collapsed(selection.lower() + insertion.length())
+                    newText,
+                    TextSelection.collapsed(selection.lower() + insertion.length())
             ));
         }
 
@@ -313,9 +313,9 @@ public class TextInput extends LeafInstanceWidget {
 
         private void setCursorPosition(int toRune, boolean selecting) {
             this.formatAndSetValue(this.value.withSelection(
-                selecting
-                    ? new TextSelection(this.value.selection().start(), toRune)
-                    : TextSelection.collapsed(toRune)
+                    selecting
+                            ? new TextSelection(this.value.selection().start(), toRune)
+                            : TextSelection.collapsed(toRune)
             ));
         }
 
@@ -345,9 +345,9 @@ public class TextInput extends LeafInstanceWidget {
             var actual = newValue;
             if (!Objects.equals(this.value.text(), newValue.text())) {
                 actual = BraidUtils.fold(
-                    this.widget.formatters,
-                    newValue,
-                    (value, formatter) -> formatter.format(this.value, value)
+                        this.widget.formatters,
+                        newValue,
+                        (value, formatter) -> formatter.format(this.value, value)
                 );
             }
 
@@ -374,31 +374,31 @@ public class TextInput extends LeafInstanceWidget {
             if (intent.forwards()) {
                 var chars = new StringBuilder(text);
                 var end = Math.min(
-                    text.length(),
-                    intent.entireWord()
-                        ? this.nextWordBoundary(true, OptionalInt.empty())
-                        : cursorPosition + 1
+                        text.length(),
+                        intent.entireWord()
+                                ? this.nextWordBoundary(true, OptionalInt.empty())
+                                : cursorPosition + 1
                 );
 
                 chars.delete(cursorPosition, end);
 
                 this.formatAndSetValue(new TextEditingValue(
-                    chars.toString(),
-                    TextSelection.collapsed(cursorPosition)
+                        chars.toString(),
+                        TextSelection.collapsed(cursorPosition)
                 ));
             } else {
                 var chars = new StringBuilder(text);
                 var start = Math.max(
-                    0,
-                    intent.entireWord()
-                        ? this.nextWordBoundary(false, OptionalInt.empty())
-                        : cursorPosition - 1
+                        0,
+                        intent.entireWord()
+                                ? this.nextWordBoundary(false, OptionalInt.empty())
+                                : cursorPosition - 1
                 );
                 chars.delete(start, cursorPosition);
 
                 this.formatAndSetValue(new TextEditingValue(
-                    chars.toString(),
-                    TextSelection.collapsed(start)
+                        chars.toString(),
+                        TextSelection.collapsed(start)
                 ));
             }
         }
@@ -414,26 +414,26 @@ public class TextInput extends LeafInstanceWidget {
                 case UP -> this.moveCursorVertically(-1, intent.selecting());
                 case DOWN -> this.moveCursorVertically(1, intent.selecting());
                 case RIGHT -> this.setCursorPosition(
-                    Math.min(
-                        text.length(),
-                        endingSelection
-                            ? selection.upper()
-                            : intent.skipWord()
-                                ? this.nextWordBoundary(true, OptionalInt.empty())
-                                : cursorPosition + 1
-                    ),
-                    intent.selecting()
+                        Math.min(
+                                text.length(),
+                                endingSelection
+                                        ? selection.upper()
+                                        : intent.skipWord()
+                                        ? this.nextWordBoundary(true, OptionalInt.empty())
+                                        : cursorPosition + 1
+                        ),
+                        intent.selecting()
                 );
                 case LEFT -> this.setCursorPosition(
-                    Math.max(
-                        0,
-                        endingSelection
-                            ? selection.lower()
-                            : intent.skipWord()
-                                ? this.nextWordBoundary(false, OptionalInt.empty())
-                                : cursorPosition - 1
-                    ),
-                    intent.selecting()
+                        Math.max(
+                                0,
+                                endingSelection
+                                        ? selection.lower()
+                                        : intent.skipWord()
+                                        ? this.nextWordBoundary(false, OptionalInt.empty())
+                                        : cursorPosition - 1
+                        ),
+                        intent.selecting()
                 );
             }
         }
@@ -444,8 +444,8 @@ public class TextInput extends LeafInstanceWidget {
 
         public void copyToClipboard(CopyTextIntent intent) {
             Minecraft.getInstance().keyboardHandler.setClipboard(this.value.text().substring(
-                this.value.selection().lower(),
-                this.value.selection().upper()
+                    this.value.selection().lower(),
+                    this.value.selection().upper()
             ));
 
             if (intent.delete()) {
@@ -471,8 +471,8 @@ public class TextInput extends LeafInstanceWidget {
 
             chars.delete(line.beginIdx(), line.endIdx());
             this.formatAndSetValue(new TextEditingValue(
-                chars.toString(),
-                TextSelection.collapsed(line.beginIdx())
+                    chars.toString(),
+                    TextSelection.collapsed(line.beginIdx())
             ));
         }
 
@@ -493,7 +493,7 @@ public class TextInput extends LeafInstanceWidget {
                 var end = this.nextWordBoundary(true, OptionalInt.of(clickedIdx));
 
                 this.formatAndSetValue(this.value.withSelection(
-                    new TextSelection(Math.max(0, start), end)
+                        new TextSelection(Math.max(0, start), end)
                 ));
             } else {
                 this.lastClickTime = Instant.now();
@@ -554,6 +554,7 @@ public class TextInput extends LeafInstanceWidget {
             }
         }
 
-        protected record CursorLocation(int line, int charIdx) {}
+        protected record CursorLocation(int line, int charIdx) {
+        }
     }
 }

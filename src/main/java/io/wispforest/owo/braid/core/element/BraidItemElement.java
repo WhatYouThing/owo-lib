@@ -15,12 +15,12 @@ import org.joml.Matrix3x2f;
 import org.joml.Matrix4fc;
 
 public record BraidItemElement(
-    ItemStackRenderState item,
-    double width,
-    double height,
-    ScreenRectangle scissorArea,
-    Matrix4fc transform,
-    Matrix3x2f pose
+        ItemStackRenderState item,
+        double width,
+        double height,
+        ScreenRectangle scissorArea,
+        Matrix4fc transform,
+        Matrix3x2f pose
 ) implements PictureInPictureRenderState {
 
     @Override
@@ -63,8 +63,8 @@ public record BraidItemElement(
         var bounds = new ScreenRectangle(0, 0, (int) this.width, (int) this.height).transformMaxBounds(this.pose);
 
         return this.scissorArea != null
-            ? this.scissorArea.intersection(bounds)
-            : bounds;
+                ? this.scissorArea.intersection(bounds)
+                : bounds;
     }
 
     public static class Renderer extends PictureInPictureRenderer<BraidItemElement> {

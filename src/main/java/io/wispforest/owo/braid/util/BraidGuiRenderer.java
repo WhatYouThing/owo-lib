@@ -19,9 +19,9 @@ public class BraidGuiRenderer extends GuiRenderer {
 
     public BraidGuiRenderer(Minecraft client) {
         super(
-            new GuiRenderState(),
-            client.gameRenderer.featureRenderDispatcher(),
-            new ArrayList<>(((GuiRendererAccessor) ((GameRendererAccessor) client.gameRenderer).owo$getGuiRenderer()).owo$getPictureInPictureRenderers().values())
+                new GuiRenderState(),
+                client.gameRenderer.featureRenderDispatcher(),
+                new ArrayList<>(((GuiRendererAccessor) ((GameRendererAccessor) client.gameRenderer).owo$getGuiRenderer()).owo$getPictureInPictureRenderers().values())
         );
         this.client = client;
     }
@@ -29,13 +29,14 @@ public class BraidGuiRenderer extends GuiRenderer {
     public GuiGraphicsExtractor newGraphics(double mouseX, double mouseY) {
         this.trySetFabricState();
         return new GuiGraphicsExtractor(
-            this.client,
-            ((GuiRendererAccessor) this).owo$getRenderState(),
-            (int) mouseX, (int) mouseY
+                this.client,
+                ((GuiRendererAccessor) this).owo$getRenderState(),
+                (int) mouseX, (int) mouseY
         );
     }
 
     private boolean fabricStateSet = false;
+
     private void trySetFabricState() {
         if (this.fabricStateSet) {
             return;
@@ -63,5 +64,6 @@ public class BraidGuiRenderer extends GuiRenderer {
         super.render();
     }
 
-    public record Target(RenderTarget renderTarget, Surface surface) {}
+    public record Target(RenderTarget renderTarget, Surface surface) {
+    }
 }

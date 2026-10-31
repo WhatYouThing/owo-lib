@@ -2,8 +2,8 @@ package io.wispforest.owo.ui.component;
 
 import io.wispforest.owo.Owo;
 import io.wispforest.owo.ui.base.BaseUIComponent;
-import io.wispforest.owo.ui.container.UIContainers;
 import io.wispforest.owo.ui.container.FlowLayout;
+import io.wispforest.owo.ui.container.UIContainers;
 import io.wispforest.owo.ui.core.*;
 import io.wispforest.owo.ui.parsing.UIModel;
 import io.wispforest.owo.ui.parsing.UIParsing;

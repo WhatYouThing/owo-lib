@@ -78,6 +78,7 @@ public abstract class WidgetInstance<T extends InstanceWidget> implements Compar
     protected abstract void doLayout(Constraints constraints);
 
     protected abstract double measureIntrinsicWidth(double height);
+
     protected abstract double measureIntrinsicHeight(double width);
 
     private final Object2DoubleMap<IntrinsicCacheKey> intrinsicSizeCache = new Object2DoubleOpenHashMap<>();
@@ -93,6 +94,7 @@ public abstract class WidgetInstance<T extends InstanceWidget> implements Compar
     protected abstract OptionalDouble measureBaselineOffset();
 
     private @Nullable OptionalDouble baselineOffsetCache;
+
     public OptionalDouble getBaselineOffset() {
         //noinspection OptionalAssignedToNull
         if (this.baselineOffsetCache != null) return this.baselineOffsetCache;
@@ -138,7 +140,8 @@ public abstract class WidgetInstance<T extends InstanceWidget> implements Compar
         return false;
     }
 
-    protected void debugDrawVisualizers(BraidGraphics graphics) {}
+    protected void debugDrawVisualizers(BraidGraphics graphics) {
+    }
 
     // ---
 
@@ -153,10 +156,10 @@ public abstract class WidgetInstance<T extends InstanceWidget> implements Compar
 
         if (child.debugHighlighted) {
             NinePatchTexture.draw(
-                Owo.id("braid_debug_highlighted"),
-                ctx,
-                0, 0, (int) child.transform.width(), (int) child.transform.height(),
-                Color.ofRgb(0x00FFD1)
+                    Owo.id("braid_debug_highlighted"),
+                    ctx,
+                    0, 0, (int) child.transform.width(), (int) child.transform.height(),
+                    Color.ofRgb(0x00FFD1)
             );
         }
 
@@ -322,6 +325,7 @@ public abstract class WidgetInstance<T extends InstanceWidget> implements Compar
     // ---
 
     private static final WeakHashMap<WidgetInstance<?>, Runnable> POST_ATTACH_CALLBACKS = new WeakHashMap<>();
+
     public static void addPostAttachCallback(WidgetInstance<?> instance, Runnable callback) {
         POST_ATTACH_CALLBACKS.put(instance, callback);
     }
@@ -341,7 +345,8 @@ public abstract class WidgetInstance<T extends InstanceWidget> implements Compar
     }
 }
 
-record IntrinsicCacheKey(LayoutAxis axis, double crossExtent) {}
+record IntrinsicCacheKey(LayoutAxis axis, double crossExtent) {
+}
 
 //enum Visitors implements WidgetInstance.Visitor {
 //    MARK_NEEDS_LAYOUT(WidgetInstance::markNeedsLayout);

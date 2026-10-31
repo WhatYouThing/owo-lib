@@ -18,6 +18,7 @@ public class EdmOps implements DynamicOps<EdmElement<?>>, ContextHolder {
     private static final EdmOps NO_CONTEXT = new EdmOps(SerializationContext.empty());
 
     private final SerializationContext capturedContext;
+
     private EdmOps(SerializationContext capturedContext) {
         this.capturedContext = capturedContext;
     }
@@ -145,7 +146,7 @@ public class EdmOps implements DynamicOps<EdmElement<?>>, ContextHolder {
     public DataResult<Boolean> getBooleanValue(EdmElement<?> input) {
         if (input.value() instanceof Boolean bl) {
             return DataResult.success(bl);
-        } else if(input.value() instanceof Byte b) {
+        } else if (input.value() instanceof Byte b) {
             return DataResult.success(b == 1);
         } else {
             return DataResult.error(() -> "Not a boolean: " + input);
@@ -210,8 +211,10 @@ public class EdmOps implements DynamicOps<EdmElement<?>>, ContextHolder {
             case BOOLEAN -> outOps.createBoolean(input.cast());
             case STRING -> outOps.createString(input.cast());
             case BYTES -> outOps.createByteList(ByteBuffer.wrap(input.cast()));
-            case OPTIONAL -> input.<Optional<EdmElement<?>>>cast().map(element -> this.convertTo(outOps, element)).orElse(outOps.empty());
-            case SEQUENCE -> outOps.createList(input.<List<EdmElement<?>>>cast().stream().map(element -> this.convertTo(outOps, element)));
+            case OPTIONAL ->
+                    input.<Optional<EdmElement<?>>>cast().map(element -> this.convertTo(outOps, element)).orElse(outOps.empty());
+            case SEQUENCE ->
+                    outOps.createList(input.<List<EdmElement<?>>>cast().stream().map(element -> this.convertTo(outOps, element)));
             case MAP ->
                     outOps.createMap(input.<Map<String, EdmElement<?>>>cast().entrySet().stream().map(entry -> new Pair<>(outOps.createString(entry.getKey()), this.convertTo(outOps, entry.getValue()))));
         };

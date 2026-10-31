@@ -9,7 +9,8 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 // TODO: GET ENDEC TRACE WHEN USING LATEST ENDEC OR SOMETHING?
-public record KeyedEndecDecodeError(KeyedEndec<?> key, Tag element, Exception exception, boolean sendEntireException) implements ProblemReporter.Problem {
+public record KeyedEndecDecodeError(KeyedEndec<?> key, Tag element, Exception exception,
+                                    boolean sendEntireException) implements ProblemReporter.Problem {
 
     public KeyedEndecDecodeError(KeyedEndec<?> key, Tag element, Exception exception) {
         this(key, element, exception, Owo.DEBUG);

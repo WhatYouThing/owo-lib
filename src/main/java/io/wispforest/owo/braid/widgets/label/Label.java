@@ -49,10 +49,10 @@ public class Label extends StatelessWidget {
         }
 
         Widget result = new RawLabel(
-            effectiveStyle.fillDefaults(),
-            this.softWrap,
-            this.overflow == Overflow.ELLIPSIS,
-            this.text
+                effectiveStyle.fillDefaults(),
+                this.softWrap,
+                this.overflow == Overflow.ELLIPSIS,
+                this.text
         );
 
         if (this.overflow == Overflow.CLIP) {

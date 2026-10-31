@@ -1,7 +1,7 @@
 package io.wispforest.owo.braid.core;
 
 import com.google.common.collect.Iterables;
-import com.mojang.blaze3d.opengl.GlStateManager;
+import com.mojang.blaze3d.platform.InputConstants;
 import io.wispforest.owo.braid.core.cursor.CursorStyle;
 import io.wispforest.owo.braid.core.events.*;
 import io.wispforest.owo.braid.framework.BuildContext;
@@ -29,7 +29,6 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector2d;
 import org.joml.Vector2dc;
 import org.joml.Vector2f;
-import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 
 import java.time.Duration;
@@ -83,12 +82,12 @@ public class AppState implements InstanceHost, ProxyHost {
     private final BraidInspector inspector = new BraidInspector(this);
 
     public AppState(
-        @Nullable Logger logger,
-        @Nullable String name,
-        Minecraft client,
-        Surface surface,
-        EventBinding eventBinding,
-        Widget root
+            @Nullable Logger logger,
+            @Nullable String name,
+            Minecraft client,
+            Surface surface,
+            EventBinding eventBinding,
+            Widget root
     ) {
         this.logger = logger;
         this.client = client;
@@ -98,24 +97,24 @@ public class AppState implements InstanceHost, ProxyHost {
 
         this.name = name != null ? name : root.getClass().getName();
         this.root = new RootWidget(
-            new AppWidget(
-                this,
-                new InstancePicker(
-                    this.inspector.onPick(),
-                    this.inspector::revealInstance,
-                    new RootFocusScope(
-                        this.keyDownStream.source(),
-                        this.keyUpStream.source(),
-                        this.charStream.source(),
-                        new UserRoot(
-                            widgetProxy -> inspector.rootProxy = widgetProxy,
-                            widgetInstance -> inspector.rootInstance = widgetInstance,
-                            root
+                new AppWidget(
+                        this,
+                        new InstancePicker(
+                                this.inspector.onPick(),
+                                this.inspector::revealInstance,
+                                new RootFocusScope(
+                                        this.keyDownStream.source(),
+                                        this.keyUpStream.source(),
+                                        this.charStream.source(),
+                                        new UserRoot(
+                                                widgetProxy -> inspector.rootProxy = widgetProxy,
+                                                widgetInstance -> inspector.rootInstance = widgetInstance,
+                                                root
+                                        )
+                                )
                         )
-                    )
-                )
-            ),
-            this.rootBuildScope
+                ),
+                this.rootBuildScope
         ).proxy();
         this.root.bootstrap(this, this);
         this.scheduleLayout(this.rootInstance());
@@ -221,15 +220,15 @@ public class AppState implements InstanceHost, ProxyHost {
             activeStyle = this.draggingCursorStyle;
         } else {
             var cursorStyleSource = state.firstWhere(
-                (hit) ->
-                    hit.instance() instanceof MouseListener &&
-                        ((MouseListener) hit.instance()).cursorStyleAt(hit.x(), hit.y()) != null
+                    (hit) ->
+                            hit.instance() instanceof MouseListener &&
+                                    ((MouseListener) hit.instance()).cursorStyleAt(hit.x(), hit.y()) != null
             );
 
             if (cursorStyleSource != null) {
                 activeStyle = ((MouseListener) cursorStyleSource.instance()).cursorStyleAt(
-                    cursorStyleSource.x(),
-                    cursorStyleSource.y()
+                        cursorStyleSource.x(),
+                        cursorStyleSource.y()
                 );
             }
         }
@@ -292,7 +291,7 @@ public class AppState implements InstanceHost, ProxyHost {
                     });
 
                     var clicked = state.firstWhere(
-                        (hit) -> hit.instance() instanceof MouseListener && ((MouseListener) hit.instance()).onMouseDown(hit.x(), hit.y(), button, modifiers)
+                            (hit) -> hit.instance() instanceof MouseListener && ((MouseListener) hit.instance()).onMouseDown(hit.x(), hit.y(), button, modifiers)
                     );
 
                     if (clicked != null) {
@@ -301,8 +300,8 @@ public class AppState implements InstanceHost, ProxyHost {
                         if (this.dragging == null) {
                             this.dragging = (MouseListener) clicked.instance();
                             this.draggingCursorStyle = ((MouseListener) clicked.instance()).cursorStyleAt(
-                                clicked.x(),
-                                clicked.y()
+                                    clicked.x(),
+                                    clicked.y()
                             );
                             this.dragStarted = false;
                             this.draggingButton = button;
@@ -343,7 +342,7 @@ public class AppState implements InstanceHost, ProxyHost {
                     this.scrollHit = null;
                     var state = this.hitTest();
                     var unClicked = state.firstWhere(
-                        (hit) -> hit.instance() instanceof MouseListener && ((MouseListener) hit.instance()).onMouseUp(hit.x(), hit.y(), button, modifiers)
+                            (hit) -> hit.instance() instanceof MouseListener && ((MouseListener) hit.instance()).onMouseUp(hit.x(), hit.y(), button, modifiers)
                     );
 
                     if (unClicked != null) {
@@ -361,17 +360,18 @@ public class AppState implements InstanceHost, ProxyHost {
                 case MouseScrollEvent(double xOffset, double yOffset) -> {
                     var now = Instant.now();
                     var grace = this.cursorPosition.distance(this.scrollPos) > SCROLL_MOVEMENT_THRESHOLD ? MIN_GRACE_PERIOD : MAX_GRACE_PERIOD;
-                    if (this.scrollHit == null || now.minus(grace).isAfter(this.lastScrollTime)) this.scrollHit = this.hitTest();
+                    if (this.scrollHit == null || now.minus(grace).isAfter(this.lastScrollTime))
+                        this.scrollHit = this.hitTest();
                     this.lastScrollTime = now;
                     this.scrollPos = new Vector2d(this.cursorPosition);
                     var scrolled = this.scrollHit.firstWhere(
-                        (hit) -> hit.instance() instanceof MouseListener &&
-                            ((MouseListener) hit.instance()).onMouseScroll(
-                                hit.x(),
-                                hit.y(),
-                                xOffset,
-                                yOffset
-                            )
+                            (hit) -> hit.instance() instanceof MouseListener &&
+                                    ((MouseListener) hit.instance()).onMouseScroll(
+                                            hit.x(),
+                                            hit.y(),
+                                            xOffset,
+                                            yOffset
+                                    )
                     );
 
                     if (scrolled != null) {
@@ -379,14 +379,14 @@ public class AppState implements InstanceHost, ProxyHost {
                     }
                 }
                 case KeyPressEvent(int keyCode, int scancode, KeyModifiers modifiers) -> {
-                    if (keyCode == GLFW.GLFW_KEY_R && modifiers.shift() && modifiers.alt()) {
+                    if (keyCode == InputConstants.KEY_R && modifiers.shift() && modifiers.alt()) {
                         this.rebuildRoot();
                         slot.markHandled();
 
                         break;
                     }
 
-                    if (keyCode == GLFW.GLFW_KEY_I && modifiers.ctrl() && modifiers.shift()) {
+                    if (keyCode == InputConstants.KEY_I && modifiers.ctrl() && modifiers.shift()) {
                         this.inspector.activate();
                         slot.markHandled();
 
@@ -416,7 +416,8 @@ public class AppState implements InstanceHost, ProxyHost {
                         slot.markHandled();
                     }
                 }
-                case FilesDroppedEvent filesDroppedEvent -> {}
+                case FileDroppedEvent fileDroppedEvent -> {
+                }
                 case CloseEvent ignored -> {
                     slot.markHandled();
                     this.scheduleShutdown();
@@ -493,9 +494,9 @@ public class AppState implements InstanceHost, ProxyHost {
 
                 if (instance.needsLayout()) {
                     instance.layout(
-                        instance.hasParent()
-                            ? instance.constraints()
-                            : Constraints.tight(Size.of(this.surface.width(), this.surface.height()))
+                            instance.hasParent()
+                                    ? instance.constraints()
+                                    : Constraints.tight(Size.of(this.surface.width(), this.surface.height()))
                     );
                 }
             }
@@ -525,8 +526,8 @@ public class AppState implements InstanceHost, ProxyHost {
     public long scheduleDelayedCallback(Duration delay, Runnable callback) {
         var id = ScheduledCallback.nextId++;
         this.callbacks.add(new ScheduledCallback(
-            Instant.now().plus(delay),
-            callback, id
+                Instant.now().plus(delay),
+                callback, id
         ));
         return id;
     }
@@ -680,7 +681,8 @@ class AppWidget extends InheritedWidget {
     }
 }
 
-record TooltipState(@Nullable List<ClientTooltipComponent> components, @Nullable Style style, int x, int y) {}
+record TooltipState(@Nullable List<ClientTooltipComponent> components, @Nullable Style style, int x, int y) {
+}
 
 record MousePosition(double x, double y) {
     public static final MousePosition ORIGIN = new MousePosition(0, 0);

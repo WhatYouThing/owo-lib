@@ -10,7 +10,6 @@ import io.wispforest.owo.braid.framework.proxy.WidgetState;
 import io.wispforest.owo.braid.framework.widget.StatefulWidget;
 import io.wispforest.owo.braid.framework.widget.Widget;
 import io.wispforest.owo.braid.widgets.object.entity.EntityDisplayMode;
-import io.wispforest.owo.braid.widgets.object.entity.EntityRenderStateWidget;
 import io.wispforest.owo.braid.widgets.object.entity.EntityWidget;
 import net.minecraft.IdentifierException;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -80,36 +79,38 @@ public class KdlEntityWidget extends StatefulWidget {
         @Override
         public Widget build(BuildContext context) {
             return new EntityWidget(
-                this.widget().scale,
-                this.entity,
-                widget -> widget
-                    .displayMode(this.widget().mode)
-                    .scaleToFit(this.widget().scaleToFit)
-                    .showNametag(this.widget().showNametag)
+                    this.widget().scale,
+                    this.entity,
+                    widget -> widget
+                            .displayMode(this.widget().mode)
+                            .scaleToFit(this.widget().scaleToFit)
+                            .showNametag(this.widget().showNametag)
             );
         }
     }
 
     public record EntitySpec(EntityType<?> type, @Nullable CompoundTag nbt) {
         public static final Endec<EntitySpec> STRING_ENDEC = Endec.STRING.xmap(
-            s -> {
-                try {
-                    CompoundTag nbt = null;
+                s -> {
+                    try {
+                        CompoundTag nbt = null;
 
-                    int nbtIndex = s.indexOf('{');
-                    if (nbtIndex != -1) {
+                        int nbtIndex = s.indexOf('{');
+                        if (nbtIndex != -1) {
 
-                        nbt = TagParser.parseCompoundAsArgument(new StringReader(s.substring(nbtIndex)));
-                        s = s.substring(0, nbtIndex);
+                            nbt = TagParser.parseCompoundAsArgument(new StringReader(s.substring(nbtIndex)));
+                            s = s.substring(0, nbtIndex);
+                        }
+
+                        var entityType = BuiltInRegistries.ENTITY_TYPE.getOptional(Identifier.parse(s)).orElseThrow();
+                        return new EntitySpec(entityType, nbt);
+                    } catch (CommandSyntaxException | NoSuchElementException | IdentifierException e) {
+                        throw new IllegalStateException("invalid entity: " + s, e);
                     }
-
-                    var entityType = BuiltInRegistries.ENTITY_TYPE.getOptional(Identifier.parse(s)).orElseThrow();
-                    return new EntitySpec(entityType, nbt);
-                } catch (CommandSyntaxException | NoSuchElementException | IdentifierException e) {
-                    throw new IllegalStateException("invalid entity: " + s, e);
+                },
+                spec -> {
+                    throw new UnsupportedOperationException("cannot serialize an entity spec to a string");
                 }
-            },
-            spec -> { throw new UnsupportedOperationException("cannot serialize an entity spec to a string"); }
         );
     }
 }

@@ -44,12 +44,12 @@ public class Clickable extends StatelessWidget {
 
         var effectiveSound = this.clickSound != null ? this.clickSound : SoundEvents.UI_BUTTON_CLICK.value();
         return Interactable.primary(
-            () -> {
-                if (this.onClick.getAsBoolean()) {
-                    UISounds.play(effectiveSound);
-                }
-            },
-            this.child
+                () -> {
+                    if (this.onClick.getAsBoolean()) {
+                        UISounds.play(effectiveSound);
+                    }
+                },
+                this.child
         );
     }
 

@@ -26,7 +26,8 @@ public abstract class EulaMixin {
     @Final
     private Path file;
 
-    @Shadow public abstract boolean hasAgreedToEULA();
+    @Shadow
+    public abstract boolean hasAgreedToEULA();
 
     @Inject(method = "readFile", at = @At(value = "TAIL"), cancellable = true)
     private void overrideEulaAgreement(CallbackInfoReturnable<Boolean> cir) {

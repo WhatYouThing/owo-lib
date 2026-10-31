@@ -11,7 +11,8 @@ public class LeafInstanceWidgetProxy extends InstanceWidgetProxy {
     }
 
     @Override
-    public void visitChildren(Visitor visitor) {}
+    public void visitChildren(Visitor visitor) {
+    }
 
     @Override
     public void notifyDescendantInstance(@Nullable WidgetInstance<?> instance, @Nullable Object slot) {

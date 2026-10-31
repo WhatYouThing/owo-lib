@@ -49,12 +49,12 @@ public class BraidHudElement implements HudElement {
 
     protected void setupAppState() {
         this.app = new AppState(
-            null,
-            AppState.formatName("BraidHudElement", widget),
-            Minecraft.getInstance(),
-            new Surface.Default(),
-            new EventBinding.Headless(),
-            widget
+                null,
+                AppState.formatName("BraidHudElement", widget),
+                Minecraft.getInstance(),
+                new Surface.Default(),
+                new EventBinding.Headless(),
+                widget
         );
     }
 

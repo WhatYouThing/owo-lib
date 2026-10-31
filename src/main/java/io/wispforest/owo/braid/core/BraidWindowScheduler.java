@@ -25,7 +25,7 @@ public class BraidWindowScheduler {
             }
 
             app.state().processEvents(
-                Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaTicks()
+                    Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaTicks()
             );
 
             app.state().draw(app.surface().guiRenderer.newGraphics(app.state().cursorPosition().x(), app.state().cursorPosition().y()));
@@ -41,4 +41,5 @@ public class BraidWindowScheduler {
     }
 }
 
-record App(BraidWindow surface, AppState state) {}
+record App(BraidWindow surface, AppState state) {
+}

@@ -1,6 +1,5 @@
 package io.wispforest.owo.braid.widgets.owoui;
 
-import com.mojang.blaze3d.opengl.GlStateManager;
 import io.wispforest.owo.braid.core.BraidGraphics;
 import io.wispforest.owo.braid.core.Constraints;
 import io.wispforest.owo.braid.core.KeyModifiers;
@@ -16,8 +15,9 @@ import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.input.MouseButtonInfo;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
+import org.lwjgl.sdl.SDLKeyboard;
 
+import java.nio.ShortBuffer;
 import java.util.OptionalDouble;
 
 public class OwoUIWidgetWrapper extends LeafInstanceWidget {
@@ -50,7 +50,7 @@ public class OwoUIWidgetWrapper extends LeafInstanceWidget {
             widget.rootComponent.mount(null, 0, 0);
 
             this.transform.setSize(Size.of(widget.rootComponent.width(), widget.rootComponent.height())
-                .constrained(constraints));
+                    .constrained(constraints));
         }
 
         @Override
@@ -150,7 +150,7 @@ public class OwoUIWidgetWrapper extends LeafInstanceWidget {
         }
 
         public boolean onKeyDown(int keyCode, KeyModifiers modifiers) {
-            return this.widget.rootComponent.onKeyPress(new KeyEvent(keyCode, GLFW.glfwGetKeyScancode(keyCode), modifiers.bitMask()));
+            return this.widget.rootComponent.onKeyPress(new KeyEvent(keyCode, SDLKeyboard.SDL_GetScancodeFromKey(keyCode, ShortBuffer.allocate(0)), modifiers.bitMask()));
         }
 
         public boolean onChar(int charCode, KeyModifiers modifiers) {
@@ -162,17 +162,17 @@ public class OwoUIWidgetWrapper extends LeafInstanceWidget {
             var client = host().client();
 
             this.widget.rootComponent.update(
-                client.getDeltaTracker().getGameTimeDeltaTicks(),
-                mouseX,
-                mouseY
+                    client.getDeltaTracker().getGameTimeDeltaTicks(),
+                    mouseX,
+                    mouseY
             );
 
             this.widget.rootComponent.draw(
-                graphics,
-                mouseX,
-                mouseY,
-                client.getDeltaTracker().getGameTimeDeltaPartialTick(false),
-                client.getDeltaTracker().getGameTimeDeltaTicks()
+                    graphics,
+                    mouseX,
+                    mouseY,
+                    client.getDeltaTracker().getGameTimeDeltaPartialTick(false),
+                    client.getDeltaTracker().getGameTimeDeltaTicks()
             );
 
             // TODO: tooltips.

@@ -11,8 +11,8 @@ public class EmiStackUtil {
 //        } else if (stack.getKey() instanceof Fluid fluid) {
 //            return new ViewerStack.OfFluid(FluidVariant.of(fluid, stack.getComponentChanges()), stack.getAmount());
 //        } else {
-            // TODO: custom EMI stack.
-            return ViewerStack.OfItem.EMPTY;
+        // TODO: custom EMI stack.
+        return ViewerStack.OfItem.EMPTY;
 //        }
     }
 
@@ -22,7 +22,7 @@ public class EmiStackUtil {
 //        } else if (stack instanceof ViewerStack.OfFluid ofFluid) {
 //            return FabricEmiStack.of(ofFluid.fluid(), ofFluid.count());
 //        } else {
-            throw new IllegalStateException("Invalid ViewerStack");
+        throw new IllegalStateException("Invalid ViewerStack");
 //        }
     }
 }

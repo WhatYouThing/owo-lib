@@ -32,21 +32,21 @@ public class BraidToast implements Toast {
         this.timeout = timeout;
         this.token = token != null ? token : new Object();
         this.app = new AppState(
-            Owo.LOGGER,
-            AppState.formatName("BraidToast", widget),
-            Minecraft.getInstance(),
-            new Surface.Default(),
-            new EventBinding.Headless(),
-            new Align(
-                Alignment.TOP_LEFT,
-                new EmbedderRoot(
-                    instance -> this.rootInstance = instance,
-                    new BraidToastProvider(
-                        this,
-                        widget
-                    )
+                Owo.LOGGER,
+                AppState.formatName("BraidToast", widget),
+                Minecraft.getInstance(),
+                new Surface.Default(),
+                new EventBinding.Headless(),
+                new Align(
+                        Alignment.TOP_LEFT,
+                        new EmbedderRoot(
+                                instance -> this.rootInstance = instance,
+                                new BraidToastProvider(
+                                        this,
+                                        widget
+                                )
+                        )
                 )
-            )
         );
 
         this.app.processEvents(0);
@@ -104,7 +104,7 @@ public class BraidToast implements Toast {
 
         var tickCounter = Minecraft.getInstance().getDeltaTracker();
         this.app.processEvents(
-            tickCounter.getGameTimeDeltaTicks()
+                tickCounter.getGameTimeDeltaTicks()
         );
     }
 

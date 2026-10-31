@@ -1,6 +1,7 @@
 package io.wispforest.owo.config;
 
 import com.google.common.collect.HashMultimap;
+import com.mojang.datafixers.util.Pair;
 import io.wispforest.endec.Endec;
 import io.wispforest.endec.impl.StructEndecBuilder;
 import io.wispforest.owo.Owo;
@@ -26,7 +27,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
-import com.mojang.datafixers.util.Pair;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;

@@ -14,7 +14,8 @@ import xyz.nucleoid.server.translations.impl.language.SystemDelegatedLanguage;
 @Mixin(SystemDelegatedLanguage.class)
 public abstract class SystemDelegatedLanguageFixin implements TextLanguage {
     @Final
-    @Shadow private Language vanilla;
+    @Shadow
+    private Language vanilla;
 
     @Shadow
     protected abstract ServerLanguage getSystemLanguage();

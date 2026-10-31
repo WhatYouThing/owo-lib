@@ -11,15 +11,19 @@ import net.minecraft.client.Minecraft;
 public interface Surface {
 
     int width();
+
     int height();
+
     double scaleFactor();
 
     EventSource<ResizeCallback> onResize();
 
     CursorStyle currentCursorStyle();
+
     void setCursorStyle(CursorStyle style);
 
     void beginRendering();
+
     void endRendering();
 
     void dispose();
@@ -75,10 +79,12 @@ public interface Surface {
         }
 
         @Override
-        public void beginRendering() {}
+        public void beginRendering() {
+        }
 
         @Override
-        public void endRendering() {}
+        public void endRendering() {
+        }
 
         @Override
         public void dispose() {

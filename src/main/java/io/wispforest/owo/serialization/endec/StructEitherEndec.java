@@ -38,14 +38,16 @@ public final class StructEitherEndec<L, R> implements StructEndec<Either<L, R>> 
             Either<L, R> leftResult = null;
             try {
                 leftResult = Either.left(deserializer.tryRead(deserializer1 -> this.leftEndec.decodeStruct(ctx, deserializer1, struct)));
-            } catch (Exception ignore) {}
+            } catch (Exception ignore) {
+            }
 
             if (!this.exclusive && leftResult != null) return leftResult;
 
             Either<L, R> rightResult = null;
             try {
                 rightResult = Either.right(deserializer.tryRead(deserializer1 -> this.rightEndec.decodeStruct(ctx, deserializer1, struct)));
-            } catch (Exception ignore) {}
+            } catch (Exception ignore) {
+            }
 
             if (this.exclusive && leftResult != null && rightResult != null) {
                 throw new IllegalStateException("Both alternatives read successfully, can not pick the correct one; first: " + leftResult + " second: " + rightResult);

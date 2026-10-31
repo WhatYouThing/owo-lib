@@ -204,7 +204,8 @@ public abstract class BaseOwoContainerScreen<R extends ParentUIComponent, S exte
     }
 
     @Override
-    public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {}
+    public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+    }
 
     @Override
     public void extractRenderState(GuiGraphicsExtractor vanillaContext, int mouseX, int mouseY, float a) {
@@ -218,12 +219,12 @@ public abstract class BaseOwoContainerScreen<R extends ParentUIComponent, S exte
                     if (!slot.isActive()) continue;
 
                     context.drawText(Component.literal("H:" + i),
-                        this.leftPos + slot.x + 15, this.topPos + slot.y + 9, .5f, 0x0096FF,
-                        OwoUIGraphics.TextAnchor.BOTTOM_RIGHT
+                            this.leftPos + slot.x + 15, this.topPos + slot.y + 9, .5f, 0x0096FF,
+                            OwoUIGraphics.TextAnchor.BOTTOM_RIGHT
                     );
                     context.drawText(Component.literal("I:" + slot.getContainerSlot()),
-                        this.leftPos + slot.x + 15, this.topPos + slot.y + 15, .5f, 0x5800FF,
-                        OwoUIGraphics.TextAnchor.BOTTOM_RIGHT
+                            this.leftPos + slot.x + 15, this.topPos + slot.y + 15, .5f, 0x5800FF,
+                            OwoUIGraphics.TextAnchor.BOTTOM_RIGHT
                     );
                 }
             }
@@ -237,8 +238,8 @@ public abstract class BaseOwoContainerScreen<R extends ParentUIComponent, S exte
     @Override
     public boolean keyPressed(KeyEvent input) {
         if (!input.hasControlDown()
-            && this.uiAdapter.rootComponent.focusHandler().focused() instanceof GreedyInputUIComponent inputComponent
-            && inputComponent.onKeyPress(input)) {
+                && this.uiAdapter.rootComponent.focusHandler().focused() instanceof GreedyInputUIComponent inputComponent
+                && inputComponent.onKeyPress(input)) {
             return true;
         }
 

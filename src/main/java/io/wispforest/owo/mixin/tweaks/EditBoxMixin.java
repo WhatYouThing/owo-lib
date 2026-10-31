@@ -31,7 +31,8 @@ public abstract class EditBoxMixin extends AbstractWidget {
         for (int i = 0; i < wordsToSkip; i++) {
             if (forward) {
                 cursorPosition++;
-                while (cursorPosition < this.value.length() && owo$isWordChar(this.value.charAt(cursorPosition))) cursorPosition++;
+                while (cursorPosition < this.value.length() && owo$isWordChar(this.value.charAt(cursorPosition)))
+                    cursorPosition++;
             } else if (cursorPosition > 0) {
                 cursorPosition--;
                 while (cursorPosition > 0 && owo$isWordChar(this.value.charAt(cursorPosition - 1))) cursorPosition--;

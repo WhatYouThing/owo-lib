@@ -52,10 +52,10 @@ public class Padding extends OptionalChildInstanceWidget {
         protected void doLayout(Constraints constraints) {
             var insets = this.widget.insets;
             var childConstraints = Constraints.of(
-                Math.max(0, constraints.minWidth() - insets.horizontal()),
-                Math.max(0, constraints.minHeight() - insets.vertical()),
-                Math.max(0, constraints.maxWidth() - insets.horizontal()),
-                Math.max(0, constraints.maxHeight() - insets.vertical())
+                    Math.max(0, constraints.minWidth() - insets.horizontal()),
+                    Math.max(0, constraints.minHeight() - insets.vertical()),
+                    Math.max(0, constraints.maxWidth() - insets.horizontal()),
+                    Math.max(0, constraints.maxHeight() - insets.vertical())
             );
 
             var size = (this.child != null ? this.child.layout(childConstraints) : Size.zero()).withInsets(insets).constrained(constraints);

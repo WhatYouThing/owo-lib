@@ -24,7 +24,7 @@ public class MountingHelper {
 
         children.forEach(child -> {
             if (!child.verticalSizing().get().isExpand() && !child.horizontalSizing().get().isExpand()) {
-                if(child.positioning().get().type == Positioning.Type.LAYOUT) {
+                if (child.positioning().get().type == Positioning.Type.LAYOUT) {
                     nonExpandChildren.add(child);
                 }
 
@@ -75,7 +75,9 @@ public class MountingHelper {
 
     public void mountLate() {
         for (var child : this.lateChildren) {
-            this.sink.accept(child, component -> {throw new IllegalStateException("A layout-positioned child was mounted late");});
+            this.sink.accept(child, component -> {
+                throw new IllegalStateException("A layout-positioned child was mounted late");
+            });
         }
         this.lateChildren.clear();
     }

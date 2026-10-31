@@ -1,11 +1,11 @@
 package io.wispforest.owo.ops;
 
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.util.FormattedCharSequence;
 
@@ -15,7 +15,8 @@ import net.minecraft.util.FormattedCharSequence;
  */
 public final class TextOps {
 
-    private TextOps() {}
+    private TextOps() {
+    }
 
     /**
      * Appends the {@code text} onto the {@code prefix} without
@@ -65,7 +66,8 @@ public final class TextOps {
      */
     public static MutableComponent withFormatting(String text, ChatFormatting... formatting) {
         var textPieces = text.split("§");
-        if (formatting.length != textPieces.length) return withColor("unmatched format specifiers - this is a bug", 0xff007f);
+        if (formatting.length != textPieces.length)
+            return withColor("unmatched format specifiers - this is a bug", 0xff007f);
 
         var textBase = Component.literal(textPieces[0]).withStyle(formatting[0]);
 
@@ -89,7 +91,8 @@ public final class TextOps {
      */
     public static MutableComponent withColor(String text, int... colors) {
         var textPieces = text.split("§");
-        if (colors.length != textPieces.length) return withColor("unmatched color specifiers - this is a bug", 0xff007f);
+        if (colors.length != textPieces.length)
+            return withColor("unmatched color specifiers - this is a bug", 0xff007f);
 
         var textBase = withColor(textPieces[0], colors[0]);
 

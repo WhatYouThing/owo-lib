@@ -37,7 +37,7 @@ public final class RegistriesAttribute implements SerializationAttribute.Instanc
     public static RegistriesAttribute fromCachedInfoGetter(RegistryOps.HolderLookupAdapter cachedGetter) {
         RegistryAccess registryAccess = null;
 
-        if(((CachedRegistryInfoGetterAccessor) (Object) cachedGetter).owo$getRegistriesLookup() instanceof RegistryAccess drm) {
+        if (((CachedRegistryInfoGetterAccessor) (Object) cachedGetter).owo$getRegistriesLookup() instanceof RegistryAccess drm) {
             registryAccess = drm;
         }
 

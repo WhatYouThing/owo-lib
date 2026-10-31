@@ -144,16 +144,16 @@ public class Shortcuts extends StatefulWidget {
         @Override
         public Widget build(BuildContext context) {
             return new ShortcutDecoder(
-                widget -> widget
-                    .shortcuts(this.listeners)
-                    .enterCallback(this.widget().enterCallback)
-                    .exitCallback(this.widget().exitCallback)
-                    .cursorStyleSupplier(this.widget().cursorStyleSupplier)
-                    .focusGainedCallback(this.widget().focusGainedCallback)
-                    .focusLostCallback(this.widget().focusLostCallback)
-                    .skipTraversal(this.widget().skipTraversal)
-                    .autoFocus(this.widget().autoFocus),
-                this.widget().child
+                    widget -> widget
+                            .shortcuts(this.listeners)
+                            .enterCallback(this.widget().enterCallback)
+                            .exitCallback(this.widget().exitCallback)
+                            .cursorStyleSupplier(this.widget().cursorStyleSupplier)
+                            .focusGainedCallback(this.widget().focusGainedCallback)
+                            .focusLostCallback(this.widget().focusLostCallback)
+                            .skipTraversal(this.widget().skipTraversal)
+                            .autoFocus(this.widget().autoFocus),
+                    this.widget().child
             );
         }
     }

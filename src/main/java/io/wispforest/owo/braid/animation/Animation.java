@@ -74,9 +74,9 @@ public class Animation {
         if (this.target == null) return;
 
         this.progress = Mth.clamp(
-            this.progress + this.target.direction * delta.toNanos() / (double) this.duration.toNanos(),
-            0,
-            1
+                this.progress + this.target.direction * delta.toNanos() / (double) this.duration.toNanos(),
+                0,
+                1
         );
 
         this.listener.onUpdate(this.easing.apply((float) this.progress));

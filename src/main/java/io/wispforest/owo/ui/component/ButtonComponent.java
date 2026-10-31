@@ -105,8 +105,8 @@ public class ButtonComponent extends Button {
     public interface Renderer {
         Renderer VANILLA = (matrices, button, delta) -> {
             var texture = button.active
-                ? button.isHovered ? HOVERED_TEXTURE : ACTIVE_TEXTURE
-                : DISABLED_TEXTURE;
+                    ? button.isHovered ? HOVERED_TEXTURE : ACTIVE_TEXTURE
+                    : DISABLED_TEXTURE;
             NinePatchTexture.draw(texture, matrices, button.getX(), button.getY(), button.width, button.height);
         };
 
@@ -141,7 +141,9 @@ public class ButtonComponent extends Button {
 
         static Renderer parse(Element element) {
             var children = UIParsing.<Element>allChildrenOfType(element, Node.ELEMENT_NODE);
-            if (children.size() > 1) {throw new UIModelParsingException("'renderer' declaration may only contain a single child");}
+            if (children.size() > 1) {
+                throw new UIModelParsingException("'renderer' declaration may only contain a single child");
+            }
 
             var rendererElement = children.get(0);
             return switch (rendererElement.getNodeName()) {
@@ -149,22 +151,23 @@ public class ButtonComponent extends Button {
                 case "flat" -> {
                     UIParsing.expectAttributes(rendererElement, "color", "hovered-color", "disabled-color");
                     yield flat(
-                        Color.parseAndPack(rendererElement.getAttributeNode("color")),
-                        Color.parseAndPack(rendererElement.getAttributeNode("hovered-color")),
-                        Color.parseAndPack(rendererElement.getAttributeNode("disabled-color"))
+                            Color.parseAndPack(rendererElement.getAttributeNode("color")),
+                            Color.parseAndPack(rendererElement.getAttributeNode("hovered-color")),
+                            Color.parseAndPack(rendererElement.getAttributeNode("disabled-color"))
                     );
                 }
                 case "texture" -> {
                     UIParsing.expectAttributes(rendererElement, "texture", "u", "v", "texture-width", "texture-height");
                     yield texture(
-                        UIParsing.parseIdentifier(rendererElement.getAttributeNode("texture")),
-                        UIParsing.parseUnsignedInt(rendererElement.getAttributeNode("u")),
-                        UIParsing.parseUnsignedInt(rendererElement.getAttributeNode("v")),
-                        UIParsing.parseUnsignedInt(rendererElement.getAttributeNode("texture-width")),
-                        UIParsing.parseUnsignedInt(rendererElement.getAttributeNode("texture-height"))
+                            UIParsing.parseIdentifier(rendererElement.getAttributeNode("texture")),
+                            UIParsing.parseUnsignedInt(rendererElement.getAttributeNode("u")),
+                            UIParsing.parseUnsignedInt(rendererElement.getAttributeNode("v")),
+                            UIParsing.parseUnsignedInt(rendererElement.getAttributeNode("texture-width")),
+                            UIParsing.parseUnsignedInt(rendererElement.getAttributeNode("texture-height"))
                     );
                 }
-                default -> throw new UIModelParsingException("Unknown button renderer '" + rendererElement.getNodeName() + "'");
+                default ->
+                        throw new UIModelParsingException("Unknown button renderer '" + rendererElement.getNodeName() + "'");
             };
         }
     }

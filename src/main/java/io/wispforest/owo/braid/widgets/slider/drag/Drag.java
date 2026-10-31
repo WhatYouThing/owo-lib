@@ -10,24 +10,24 @@ import org.jetbrains.annotations.Nullable;
 public class Drag extends RawDrag {
 
     public Drag(
-        double value,
-        @Nullable WidgetSetupCallback<Drag> setupCallback,
-        @Nullable SliderCallback onChanged
+            double value,
+            @Nullable WidgetSetupCallback<Drag> setupCallback,
+            @Nullable SliderCallback onChanged
     ) {
         super(
-            value,
-            null,
-            onChanged,
-            new Panel(ButtonComponent.DISABLED_TEXTURE)
+                value,
+                null,
+                onChanged,
+                new Panel(ButtonComponent.DISABLED_TEXTURE)
         );
         if (setupCallback != null) setupCallback.setup(this);
     }
 
     public Drag(
-        double value,
-        @Nullable WidgetSetupCallback<Drag> setupCallback,
-        SliderCallback onChanged,
-        boolean active
+            double value,
+            @Nullable WidgetSetupCallback<Drag> setupCallback,
+            SliderCallback onChanged,
+            boolean active
     ) {
         this(value, setupCallback, active ? onChanged : null);
     }

@@ -41,11 +41,11 @@ public class LazyCollapsible extends StatefulWidget {
             }
 
             return new Collapsible(
-                widget.showVerticalRule,
-                widget.collapsed,
-                widget.onToggled,
-                widget.title,
-                this.expandedOnce ? widget.content : new Padding(Insets.none())
+                    widget.showVerticalRule,
+                    widget.collapsed,
+                    widget.onToggled,
+                    widget.title,
+                    this.expandedOnce ? widget.content : new Padding(Insets.none())
             );
         }
     }

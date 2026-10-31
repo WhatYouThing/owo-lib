@@ -137,7 +137,8 @@ public class UIModelLoader implements ResourceManagerReloadListener, Identifiabl
                     if (!(value instanceof JsonPrimitive primitive)) return;
                     HOT_RELOAD_LOCATIONS.put(Identifier.parse(key), Path.of(primitive.asString()));
                 });
-            } catch (IOException | SyntaxError ignored) {}
+            } catch (IOException | SyntaxError ignored) {
+            }
         }
     }
 }

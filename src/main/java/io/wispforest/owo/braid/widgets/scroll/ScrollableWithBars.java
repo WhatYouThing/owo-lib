@@ -67,64 +67,64 @@ public class ScrollableWithBars extends StatefulWidget {
         @Override
         public Widget build(BuildContext context) {
             return new ListenableBuilder(
-                this.horizontalController,
-                horizontalContext -> {
-                    var showHorizontalScrollbar = this.horizontalController.maxOffset() > 0;
+                    this.horizontalController,
+                    horizontalContext -> {
+                        var showHorizontalScrollbar = this.horizontalController.maxOffset() > 0;
 
-                    return new ListenableBuilder(
-                        this.verticalController,
-                        verticalContext -> {
-                            var showVerticalScrollbar = this.verticalController.maxOffset() > 0;
+                        return new ListenableBuilder(
+                                this.verticalController,
+                                verticalContext -> {
+                                    var showVerticalScrollbar = this.verticalController.maxOffset() > 0;
 
-                            var widgets = new ArrayList<Widget>();
-                            widgets.add(new StackBase(
-                                new Padding(
-                                    Insets.of(
-                                        0,
-                                        showHorizontalScrollbar ? this.widget().scrollbarSize : 0,
-                                        0,
-                                        showVerticalScrollbar ? this.widget().scrollbarSize : 0
-                                    ),
-                                    new Scrollable(
-                                        true,
-                                        true,
-                                        this.horizontalController,
-                                        this.verticalController,
-                                        this.widget().animationSettings,
-                                        this.widget().child
-                                    )
-                                )
-                            ));
+                                    var widgets = new ArrayList<Widget>();
+                                    widgets.add(new StackBase(
+                                            new Padding(
+                                                    Insets.of(
+                                                            0,
+                                                            showHorizontalScrollbar ? this.widget().scrollbarSize : 0,
+                                                            0,
+                                                            showVerticalScrollbar ? this.widget().scrollbarSize : 0
+                                                    ),
+                                                    new Scrollable(
+                                                            true,
+                                                            true,
+                                                            this.horizontalController,
+                                                            this.verticalController,
+                                                            this.widget().animationSettings,
+                                                            this.widget().child
+                                                    )
+                                            )
+                                    ));
 
-                            if (showVerticalScrollbar) {
-                                widgets.add(new Align(
-                                    Alignment.RIGHT,
-                                    new Padding(
-                                        showHorizontalScrollbar ? Insets.bottom(this.widget().scrollbarSize) : Insets.none(),
-                                        new Sized(
-                                            this.widget().scrollbarSize,
-                                            null,
-                                            this.widget().scrollbarFactory.apply(LayoutAxis.VERTICAL, this.verticalController)
-                                        )
-                                    )
-                                ));
-                            }
+                                    if (showVerticalScrollbar) {
+                                        widgets.add(new Align(
+                                                Alignment.RIGHT,
+                                                new Padding(
+                                                        showHorizontalScrollbar ? Insets.bottom(this.widget().scrollbarSize) : Insets.none(),
+                                                        new Sized(
+                                                                this.widget().scrollbarSize,
+                                                                null,
+                                                                this.widget().scrollbarFactory.apply(LayoutAxis.VERTICAL, this.verticalController)
+                                                        )
+                                                )
+                                        ));
+                                    }
 
-                            if (showHorizontalScrollbar) {
-                                widgets.add(new Align(
-                                    Alignment.BOTTOM,
-                                    new Sized(
-                                        null,
-                                        this.widget().scrollbarSize,
-                                        this.widget().scrollbarFactory.apply(LayoutAxis.HORIZONTAL, this.horizontalController)
-                                    )
-                                ));
-                            }
+                                    if (showHorizontalScrollbar) {
+                                        widgets.add(new Align(
+                                                Alignment.BOTTOM,
+                                                new Sized(
+                                                        null,
+                                                        this.widget().scrollbarSize,
+                                                        this.widget().scrollbarFactory.apply(LayoutAxis.HORIZONTAL, this.horizontalController)
+                                                )
+                                        ));
+                                    }
 
-                            return new Stack(widgets);
-                        }
-                    );
-                }
+                                    return new Stack(widgets);
+                                }
+                        );
+                    }
             );
         }
     }

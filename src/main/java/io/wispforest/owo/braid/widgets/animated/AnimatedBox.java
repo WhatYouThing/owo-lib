@@ -49,9 +49,9 @@ public class AnimatedBox extends AutomaticallyAnimatedWidget {
         @Override
         public Widget build(BuildContext context) {
             return new Box(
-                this.color.compute(this.animationValue()),
-                this.widget().outline,
-                this.widget().child
+                    this.color.compute(this.animationValue()),
+                    this.widget().outline,
+                    this.widget().child
             );
         }
     }

@@ -7,7 +7,6 @@ import io.wispforest.owo.braid.framework.instance.InspectorProperty;
 import io.wispforest.owo.braid.framework.instance.SingleChildWidgetInstance;
 import io.wispforest.owo.braid.framework.widget.SingleChildInstanceWidget;
 import io.wispforest.owo.braid.framework.widget.Widget;
-import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -46,8 +45,8 @@ public class Align extends SingleChildInstanceWidget {
         @Override
         public void setWidget(Align widget) {
             if (Objects.equals(this.widget.widthFactor, widget.widthFactor)
-                && Objects.equals(this.widget.heightFactor, widget.heightFactor)
-                && Objects.equals(this.widget.alignment, widget.alignment)) {
+                    && Objects.equals(this.widget.heightFactor, widget.heightFactor)
+                    && Objects.equals(this.widget.alignment, widget.alignment)) {
                 return;
             }
 
@@ -63,10 +62,10 @@ public class Align extends SingleChildInstanceWidget {
 
             var childSize = this.child.layout(constraints.asLoose());
             var selfSize = Size.of(
-                widthFactor.isPresent() || !constraints.hasBoundedWidth() ? childSize.width() * widthFactor.orElse(1) : constraints.maxWidth(),
-                heightFactor.isPresent() || !constraints.hasBoundedHeight()
-                    ? childSize.height() * heightFactor.orElse(1)
-                    : constraints.maxHeight()
+                    widthFactor.isPresent() || !constraints.hasBoundedWidth() ? childSize.width() * widthFactor.orElse(1) : constraints.maxWidth(),
+                    heightFactor.isPresent() || !constraints.hasBoundedHeight()
+                            ? childSize.height() * heightFactor.orElse(1)
+                            : constraints.maxHeight()
             ).constrained(constraints);
 
             var childX = alignment.alignHorizontal(selfSize.width(), childSize.width());

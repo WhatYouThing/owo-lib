@@ -15,8 +15,8 @@ public class EndecRecipeSerializer {
 
     public static <T extends Recipe<?>> RecipeSerializer<T> create(StructEndec<T> endec, Endec<T> networkEndec) {
         return new RecipeSerializer<>(
-            CodecUtils.toMapCodec(endec, SerializationContext.attributes(SerializationAttributes.HUMAN_READABLE)),
-            CodecUtils.toPacketCodec(networkEndec)
+                CodecUtils.toMapCodec(endec, SerializationContext.attributes(SerializationAttributes.HUMAN_READABLE)),
+                CodecUtils.toPacketCodec(networkEndec)
         );
     }
 }

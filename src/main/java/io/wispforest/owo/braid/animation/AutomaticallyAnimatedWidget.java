@@ -31,17 +31,18 @@ public abstract class AutomaticallyAnimatedWidget extends StatefulWidget {
         private LerpVisitor activeVisitor;
 
         private void callback(double progress) {
-            this.setState(() -> {});
+            this.setState(() -> {
+            });
         }
 
         @Override
         public void init() {
             this.animation = new Animation(
-                this.widget().easing,
-                this.widget().duration,
-                this::scheduleAnimationCallback,
-                this::callback,
-                Animation.Target.END
+                    this.widget().easing,
+                    this.widget().duration,
+                    this::scheduleAnimationCallback,
+                    this::callback,
+                    Animation.Target.END
             );
 
             this.visitLerps((previous, targetValue, factory) -> {

@@ -16,11 +16,11 @@ import java.util.List;
 public abstract class MultiPackResourceManagerMixin {
 
     @Inject(
-        method = "<init>",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/server/packs/resources/MultiPackResourceManager;getPackFilterSection(Lnet/minecraft/server/packs/PackResources;)Lnet/minecraft/server/packs/resources/ResourceFilterSection;"
-        )
+            method = "<init>",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/server/packs/resources/MultiPackResourceManager;getPackFilterSection(Lnet/minecraft/server/packs/PackResources;)Lnet/minecraft/server/packs/resources/ResourceFilterSection;"
+            )
     )
     private static void json5$optInPacks(PackType type, List<PackResources> packs, CallbackInfo ci) {
         for (var pack : packs) {

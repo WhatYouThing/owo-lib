@@ -37,10 +37,10 @@ public class HoverableBuilder extends StatefulWidget {
         @Override
         public Widget build(BuildContext context) {
             return new MouseArea(
-                widget -> widget
-                    .enterCallback(() -> this.setState(() -> this.hovered = true))
-                    .exitCallback(() -> this.setState(() -> this.hovered = false)),
-                this.widget().builder.build(context, this.hovered, this.widget().child)
+                    widget -> widget
+                            .enterCallback(() -> this.setState(() -> this.hovered = true))
+                            .exitCallback(() -> this.setState(() -> this.hovered = false)),
+                    this.widget().builder.build(context, this.hovered, this.widget().child)
             );
         }
     }

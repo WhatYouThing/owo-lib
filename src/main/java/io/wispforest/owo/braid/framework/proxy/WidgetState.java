@@ -24,11 +24,17 @@ public abstract class WidgetState<T extends StatefulWidget> {
         return this.owner;
     }
 
-    public void init() {}
-    public void dispose() {}
+    public void init() {
+    }
 
-    public void didUpdateWidget(T oldWidget) {}
-    public void notifyDependenciesChanged() {}
+    public void dispose() {
+    }
+
+    public void didUpdateWidget(T oldWidget) {
+    }
+
+    public void notifyDependenciesChanged() {
+    }
 
     public final void setState(Runnable fn) {
         Preconditions.checkState(this.owner != null, "setState invoked on WidgetState before it was mounted");

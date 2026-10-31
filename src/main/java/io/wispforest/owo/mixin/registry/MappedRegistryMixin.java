@@ -23,14 +23,28 @@ import java.util.Objects;
 @Mixin(MappedRegistry.class)
 public abstract class MappedRegistryMixin<T> implements WritableRegistry<T>, OwoSimpleRegistryExtensions<T> {
 
-    @Shadow private Map<T, Holder.Reference<T>> unregisteredIntrusiveHolders;
-    @Shadow @Final private Map<ResourceKey<T>, Holder.Reference<T>> byKey;
-    @Shadow @Final private Map<Identifier, Holder.Reference<T>> byLocation;
-    @Shadow @Final private Map<T, Holder.Reference<T>> byValue;
-    @Shadow @Final private ObjectList<Holder.Reference<T>> byId;
-    @Shadow @Final private Reference2IntMap<T> toId;
-    @Shadow @Final private Map<ResourceKey<T>, RegistrationInfo> registrationInfos;
-    @Shadow private Lifecycle registryLifecycle;
+    @Shadow
+    private Map<T, Holder.Reference<T>> unregisteredIntrusiveHolders;
+    @Shadow
+    @Final
+    private Map<ResourceKey<T>, Holder.Reference<T>> byKey;
+    @Shadow
+    @Final
+    private Map<Identifier, Holder.Reference<T>> byLocation;
+    @Shadow
+    @Final
+    private Map<T, Holder.Reference<T>> byValue;
+    @Shadow
+    @Final
+    private ObjectList<Holder.Reference<T>> byId;
+    @Shadow
+    @Final
+    private Reference2IntMap<T> toId;
+    @Shadow
+    @Final
+    private Map<ResourceKey<T>, RegistrationInfo> registrationInfos;
+    @Shadow
+    private Lifecycle registryLifecycle;
 
     //--
 
@@ -57,7 +71,7 @@ public abstract class MappedRegistryMixin<T> implements WritableRegistry<T>, Owo
             ((ReferenceAccessor<T>) reference).owo$setRegistryKey(arg);
         } else {
             reference = this.byKey.computeIfAbsent(arg, k -> Holder.Reference.createStandAlone(this, k));
-            ((ReferenceAccessor<T>) reference).owo$setValue((T)object);
+            ((ReferenceAccessor<T>) reference).owo$setValue((T) object);
         }
 
         this.byKey.put(arg, reference);
@@ -69,7 +83,7 @@ public abstract class MappedRegistryMixin<T> implements WritableRegistry<T>, Owo
         this.registryLifecycle = this.registryLifecycle.add(arg2.lifecycle());
 
         // TODO: SHOULD WE BE REFIREING THE EVENT?
-        RegistryEntryAddedCallback.event(this).invoker().onEntryAdded(id, arg.identifier(), (T)object);
+        RegistryEntryAddedCallback.event(this).invoker().onEntryAdded(id, arg.identifier(), (T) object);
 
         return reference;
     }

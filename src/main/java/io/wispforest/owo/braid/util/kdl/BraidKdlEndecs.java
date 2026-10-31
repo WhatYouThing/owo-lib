@@ -25,40 +25,41 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public final class BraidKdlEndecs {
-    private BraidKdlEndecs() {}
+    private BraidKdlEndecs() {
+    }
 
     public static final SerializationAttribute.WithValue<Map<String, Consumer<@Nullable Object>>> HANDLERS = SerializationAttribute.withValue("braid_handlers");
 
     public static final Endec<Alignment> ALIGNMENT = Endec.STRING.xmap(
-        s -> switch (s) {
-            case "top_left" -> Alignment.TOP_LEFT;
-            case "top" -> Alignment.TOP;
-            case "top_right" -> Alignment.TOP_RIGHT;
-            case "left" -> Alignment.LEFT;
-            case "center" -> Alignment.CENTER;
-            case "right" -> Alignment.RIGHT;
-            case "bottom_left" -> Alignment.BOTTOM_LEFT;
-            case "bottom" -> Alignment.BOTTOM;
-            case "bottom_right" -> Alignment.BOTTOM_RIGHT;
-            default -> throw new IllegalStateException("invalid alignment type: " + s);
-        },
-        alignment -> {
-            throw new UnsupportedOperationException("cannot serialize arbitrary alignment into a string");
-        }
+            s -> switch (s) {
+                case "top_left" -> Alignment.TOP_LEFT;
+                case "top" -> Alignment.TOP;
+                case "top_right" -> Alignment.TOP_RIGHT;
+                case "left" -> Alignment.LEFT;
+                case "center" -> Alignment.CENTER;
+                case "right" -> Alignment.RIGHT;
+                case "bottom_left" -> Alignment.BOTTOM_LEFT;
+                case "bottom" -> Alignment.BOTTOM;
+                case "bottom_right" -> Alignment.BOTTOM_RIGHT;
+                default -> throw new IllegalStateException("invalid alignment type: " + s);
+            },
+            alignment -> {
+                throw new UnsupportedOperationException("cannot serialize arbitrary alignment into a string");
+            }
     );
 
     public static final Endec<Color> COLOR = Endec.INT.xmap(Color::new, Color::argb);
 
     public static final Endec<LayoutAxis> LAYOUT_AXIS = Endec.STRING.xmap(
-        s -> switch (s) {
-            case "column" -> LayoutAxis.VERTICAL;
-            case "row" -> LayoutAxis.HORIZONTAL;
-            default -> throw new IllegalStateException("invalid layout axis: " + s);
-        },
-        layoutAxis -> switch (layoutAxis) {
-            case VERTICAL -> "column";
-            case HORIZONTAL -> "row";
-        }
+            s -> switch (s) {
+                case "column" -> LayoutAxis.VERTICAL;
+                case "row" -> LayoutAxis.HORIZONTAL;
+                default -> throw new IllegalStateException("invalid layout axis: " + s);
+            },
+            layoutAxis -> switch (layoutAxis) {
+                case VERTICAL -> "column";
+                case HORIZONTAL -> "row";
+            }
     );
     public static final Endec<CrossAxisAlignment> CROSS_AXIS_ALIGNMENT = Endec.forEnum(CrossAxisAlignment.class, false);
     public static final Endec<MainAxisAlignment> MAIN_AXIS_ALIGNMENT = Endec.forEnum(MainAxisAlignment.class, false);
@@ -68,87 +69,93 @@ public final class BraidKdlEndecs {
             throw new IllegalStateException("Vector2f array must have two elements");
         }
     }).xmap(
-        components -> new Vector2f(components.get(0), components.get(1)),
-        vector -> List.of(vector.x, vector.y)
+            components -> new Vector2f(components.get(0), components.get(1)),
+            vector -> List.of(vector.x, vector.y)
     );
 
     private sealed interface TransformStep {
         record Translate(Vector2f translation) implements TransformStep {
             public static final StructEndec<Translate> ENDEC = StructEndecBuilder.of(
-                VECTOR2F.fieldOf("@arguments", Translate::translation),
-                Translate::new
+                    VECTOR2F.fieldOf("@arguments", Translate::translation),
+                    Translate::new
             );
         }
 
         record Scale(Vector2f scaling) implements TransformStep {
             public static final StructEndec<Scale> ENDEC = StructEndecBuilder.of(
-                VECTOR2F.fieldOf("@arguments", Scale::scaling),
-                Scale::new
+                    VECTOR2F.fieldOf("@arguments", Scale::scaling),
+                    Scale::new
             );
         }
 
         record Rotate(float angle) implements TransformStep {
             public static final StructEndec<Rotate> ENDEC = StructEndecBuilder.of(
-                Endec.FLOAT.fieldOf("@argument", Rotate::angle),
-                Rotate::new
+                    Endec.FLOAT.fieldOf("@argument", Rotate::angle),
+                    Rotate::new
             );
         }
 
         StructEndec<TransformStep> ENDEC = Endec.dispatchedStruct(
-            variant -> switch (variant) {
-                case "translate" -> Translate.ENDEC;
-                case "scale" -> Scale.ENDEC;
-                case "rotate" -> Rotate.ENDEC;
-                default -> throw new IllegalStateException("invalid transform step: " + variant);
-            },
-            step -> switch (step) {
-                case Translate ignored -> "translate";
-                case Scale ignored -> "scale";
-                case Rotate ignored -> "rotate";
-            },
-            Endec.STRING,
-            "@name"
+                variant -> switch (variant) {
+                    case "translate" -> Translate.ENDEC;
+                    case "scale" -> Scale.ENDEC;
+                    case "rotate" -> Rotate.ENDEC;
+                    default -> throw new IllegalStateException("invalid transform step: " + variant);
+                },
+                step -> switch (step) {
+                    case Translate ignored -> "translate";
+                    case Scale ignored -> "scale";
+                    case Rotate ignored -> "rotate";
+                },
+                Endec.STRING,
+                "@name"
         );
     }
 
     public static final StructEndec<Matrix3x2f> TRANSFORM_MATRIX_2D = StructEndecBuilder.of(
-        TransformStep.ENDEC.listOf().fieldOf("@children", s -> {throw new UnsupportedOperationException("cannot serialize a matrix into transform steps");}),
-        transformSteps -> {
-            var result = new Matrix3x2f();
-            for (var step : transformSteps) {
-                switch (step) {
-                    case TransformStep.Translate(var translation) -> result.translate(translation);
-                    case TransformStep.Scale(var scaling) -> result.scale(scaling);
-                    case TransformStep.Rotate(var angle) -> result.rotate((float) Math.toRadians(angle));
+            TransformStep.ENDEC.listOf().fieldOf("@children", s -> {
+                throw new UnsupportedOperationException("cannot serialize a matrix into transform steps");
+            }),
+            transformSteps -> {
+                var result = new Matrix3x2f();
+                for (var step : transformSteps) {
+                    switch (step) {
+                        case TransformStep.Translate(var translation) -> result.translate(translation);
+                        case TransformStep.Scale(var scaling) -> result.scale(scaling);
+                        case TransformStep.Rotate(var angle) -> result.rotate((float) Math.toRadians(angle));
+                    }
                 }
+                return result;
             }
-            return result;
-        }
     );
 
     public static final Endec<ItemStack> ITEM_STACK_STRING = Endec.STRING.xmap(
-        s -> {
-            try {
-                var result = new ItemParser(Minecraft.getInstance().level.registryAccess()).parse(new StringReader(s));
-                var stack = result.item().value().getDefaultInstance();
-                stack.applyComponents(result.components());
+            s -> {
+                try {
+                    var result = new ItemParser(Minecraft.getInstance().level.registryAccess()).parse(new StringReader(s));
+                    var stack = result.item().value().getDefaultInstance();
+                    stack.applyComponents(result.components());
 
-                return stack;
-            } catch (CommandSyntaxException e) {
-                throw new IllegalStateException("invalid item stack: " + s, e);
+                    return stack;
+                } catch (CommandSyntaxException e) {
+                    throw new IllegalStateException("invalid item stack: " + s, e);
+                }
+            },
+            stack -> {
+                throw new UnsupportedOperationException("cannot serialize an item stack to a string");
             }
-        },
-        stack -> { throw new UnsupportedOperationException("cannot serialize an item stack to a string"); }
     );
 
     public static final Endec<BlockStateParser.BlockResult> BLOCK_STRING = Endec.STRING.xmap(
-        s -> {
-            try {
-                return BlockStateParser.parseForBlock(BuiltInRegistries.BLOCK, s, true);
-            } catch (CommandSyntaxException e) {
-                throw new IllegalStateException("invalid block state: " + s, e);
+            s -> {
+                try {
+                    return BlockStateParser.parseForBlock(BuiltInRegistries.BLOCK, s, true);
+                } catch (CommandSyntaxException e) {
+                    throw new IllegalStateException("invalid block state: " + s, e);
+                }
+            },
+            blockState -> {
+                throw new UnsupportedOperationException("cannot serialize a block state to a string");
             }
-        },
-        blockState -> { throw new UnsupportedOperationException("cannot serialize a block state to a string"); }
     );
 }

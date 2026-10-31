@@ -10,7 +10,8 @@ public record Constraints(double minWidth, double minHeight, double maxWidth, do
 
     @ApiStatus.Internal
     @Deprecated(forRemoval = true)
-    public Constraints {}
+    public Constraints {
+    }
 
     public static Constraints unconstrained() {
         return UNCONSTRAINED;
@@ -38,10 +39,10 @@ public record Constraints(double minWidth, double minHeight, double maxWidth, do
 
     public static Constraints only(@Nullable Double minWidth, @Nullable Double minHeight, @Nullable Double maxWidth, @Nullable Double maxHeight) {
         return new Constraints(
-            minWidth != null ? minWidth : 0,
-            minHeight != null ? minHeight : 0,
-            maxWidth != null ? maxWidth : Double.POSITIVE_INFINITY,
-            maxHeight != null ? maxHeight : Double.POSITIVE_INFINITY
+                minWidth != null ? minWidth : 0,
+                minHeight != null ? minHeight : 0,
+                maxWidth != null ? maxWidth : Double.POSITIVE_INFINITY,
+                maxHeight != null ? maxHeight : Double.POSITIVE_INFINITY
         );
     }
 
@@ -114,17 +115,17 @@ public record Constraints(double minWidth, double minHeight, double maxWidth, do
 
     public Constraints respecting(Constraints other) {
         if (this.minWidth >= other.minWidth && this.minWidth <= other.maxWidth
-            && this.maxWidth >= other.minWidth && this.maxWidth <= other.maxWidth
-            && this.minHeight >= other.minHeight && this.minHeight <= other.maxHeight
-            && this.maxHeight >= other.minHeight && this.maxHeight <= other.maxHeight) {
+                && this.maxWidth >= other.minWidth && this.maxWidth <= other.maxWidth
+                && this.minHeight >= other.minHeight && this.minHeight <= other.maxHeight
+                && this.maxHeight >= other.minHeight && this.maxHeight <= other.maxHeight) {
             return this;
         }
 
         return new Constraints(
-            Mth.clamp(this.minWidth, other.minWidth, other.maxWidth),
-            Mth.clamp(this.minHeight, other.minHeight, other.maxHeight),
-            Mth.clamp(this.maxWidth, other.minWidth, other.maxWidth),
-            Mth.clamp(this.maxHeight, other.minHeight, other.maxHeight)
+                Mth.clamp(this.minWidth, other.minWidth, other.maxWidth),
+                Mth.clamp(this.minHeight, other.minHeight, other.maxHeight),
+                Mth.clamp(this.maxWidth, other.minWidth, other.maxWidth),
+                Mth.clamp(this.maxHeight, other.minHeight, other.maxHeight)
         );
     }
 
@@ -170,8 +171,8 @@ public record Constraints(double minWidth, double minHeight, double maxWidth, do
 
     public Size maxFiniteOrMinSize() {
         return Size.of(
-            this.maxFiniteOrMinWidth(),
-            this.maxFiniteOrMinHeight()
+                this.maxFiniteOrMinWidth(),
+                this.maxFiniteOrMinHeight()
         );
     }
 }

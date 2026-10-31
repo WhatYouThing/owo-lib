@@ -17,7 +17,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(EditBox.class)
 public abstract class EditBoxMixin extends AbstractWidget implements GreedyInputUIComponent {
 
-    @Shadow private String value;
+    @Shadow
+    private String value;
+
     public EditBoxMixin(int x, int y, int width, int height, Component message) {
         super(x, y, width, height, message);
     }

@@ -13,7 +13,8 @@ public record Insets(int top, int bottom, int left, int right) implements Animat
 
     @ApiStatus.Internal
     @Deprecated(forRemoval = true)
-    public Insets {}
+    public Insets {
+    }
 
     public Insets inverted() {
         return new Insets(-this.top, -this.bottom, -this.left, -this.right);

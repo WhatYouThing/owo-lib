@@ -10,12 +10,9 @@ import io.wispforest.owo.ui.util.UISounds;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.Util;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
 import java.nio.file.Path;
-import java.util.concurrent.CompletableFuture;
 
 public class ConfigureHotReloadScreen extends BaseUIModelScreen<FlowLayout> implements CommandOpenedScreen {
 
@@ -41,12 +38,15 @@ public class ConfigureHotReloadScreen extends BaseUIModelScreen<FlowLayout> impl
         this.updateFileNameLabel();
 
         rootComponent.childById(ButtonComponent.class, "choose-button").onPress(button -> {
+            // TODO: TinyFileDialogs was removed, needs replacement
+            /*
             CompletableFuture.runAsync(() -> {
                 var newPath = TinyFileDialogs.tinyfd_openFileDialog("Choose UI Model source", null, null, null, false);
                 if (newPath != null) this.reloadLocation = Path.of(newPath);
             }, Util.backgroundExecutor()).whenComplete((unused, throwable) -> {
                 this.updateFileNameLabel();
             });
+             */
         });
 
         rootComponent.childById(ButtonComponent.class, "save-button").onPress(button -> {

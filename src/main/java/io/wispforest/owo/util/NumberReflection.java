@@ -10,7 +10,8 @@ import org.jetbrains.annotations.ApiStatus;
 @ApiStatus.Experimental
 public final class NumberReflection {
 
-    private NumberReflection() {}
+    private NumberReflection() {
+    }
 
     /**
      * Determines whether the given class represents a number type
@@ -81,7 +82,8 @@ public final class NumberReflection {
      */
     @SuppressWarnings("unchecked")
     public static <T extends Number> T maxValue(Class<T> numberType) {
-        if (!isNumberType(numberType)) throw new IllegalArgumentException("Cannot get maximum value of non-number class");
+        if (!isNumberType(numberType))
+            throw new IllegalArgumentException("Cannot get maximum value of non-number class");
 
         if (numberType == Float.class || numberType == float.class) {
             return (T) (Float) Float.MAX_VALUE;
@@ -110,7 +112,8 @@ public final class NumberReflection {
      */
     @SuppressWarnings("unchecked")
     public static <T extends Number> T minValue(Class<T> numberType) {
-        if (!isNumberType(numberType)) throw new IllegalArgumentException("Cannot get minimum value of non-number class");
+        if (!isNumberType(numberType))
+            throw new IllegalArgumentException("Cannot get minimum value of non-number class");
 
         if (numberType == Float.class || numberType == float.class) {
             return (T) (Float) (-Float.MAX_VALUE);

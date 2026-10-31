@@ -1,7 +1,7 @@
 package io.wispforest.owo.braid.core;
 
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.util.Mth;
 
 public class Color {
@@ -30,10 +30,10 @@ public class Color {
 
     public Color(int argb) {
         this(
-            ((argb >> 16) & 0xFF) / 255.0,
-            ((argb >> 8) & 0xFF) / 255.0,
-            (argb & 0xFF) / 255.0,
-            (argb >>> 24) / 255.0
+                ((argb >> 16) & 0xFF) / 255.0,
+                ((argb >> 8) & 0xFF) / 255.0,
+                (argb & 0xFF) / 255.0,
+                (argb >>> 24) / 255.0
         );
     }
 
@@ -47,9 +47,9 @@ public class Color {
 
     public static Color rgb(int rgb) {
         return values(
-            ((rgb >> 16) & 0xFF) / 255.0,
-            ((rgb >> 8) & 0xFF) / 255.0,
-            (rgb & 0xFF) / 255.0
+                ((rgb >> 16) & 0xFF) / 255.0,
+                ((rgb >> 8) & 0xFF) / 255.0,
+                (rgb & 0xFF) / 255.0
         );
     }
 
@@ -69,10 +69,10 @@ public class Color {
 
     public static Color mix(double t, Color a, Color b) {
         return Color.values(
-            Mth.lerp(t, a.r, b.r),
-            Mth.lerp(t, a.g, b.g),
-            Mth.lerp(t, a.b, b.b),
-            Mth.lerp(t, a.a, b.a)
+                Mth.lerp(t, a.r, b.r),
+                Mth.lerp(t, a.g, b.g),
+                Mth.lerp(t, a.b, b.b),
+                Mth.lerp(t, a.a, b.a)
         );
     }
 
@@ -84,14 +84,14 @@ public class Color {
 
     public io.wispforest.owo.ui.core.Color toOwoUi() {
         return new io.wispforest.owo.ui.core.Color(
-            (float) this.r, (float) this.g, (float) this.b, (float) this.a
+                (float) this.r, (float) this.g, (float) this.b, (float) this.a
         );
     }
 
     public String toHexString(boolean includeAlpha) {
         return includeAlpha
-            ? String.format("#%08X", this.argb())
-            : String.format("#%06X", this.rgb());
+                ? String.format("#%08X", this.argb())
+                : String.format("#%06X", this.rgb());
     }
 
     //
@@ -116,15 +116,15 @@ public class Color {
 
     public int rgb() {
         return (int) (this.r * 255) << 16
-            | (int) (this.g * 255) << 8
-            | (int) (this.b * 255);
+                | (int) (this.g * 255) << 8
+                | (int) (this.b * 255);
     }
 
     public int argb() {
         return (int) (this.a * 255) << 24
-            | (int) (this.r * 255) << 16
-            | (int) (this.g * 255) << 8
-            | (int) (this.b * 255);
+                | (int) (this.r * 255) << 16
+                | (int) (this.g * 255) << 8
+                | (int) (this.b * 255);
     }
 
     public float[] hsv() {
@@ -137,9 +137,9 @@ public class Color {
 
         var other = (Color) o;
         return this.r == other.r
-            && this.g == other.g
-            && this.b == other.b
-            && this.a == other.a;
+                && this.g == other.g
+                && this.b == other.b
+                && this.a == other.a;
     }
 
     @Override

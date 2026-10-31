@@ -56,7 +56,8 @@ public class LinearProcessExecutor<T> {
         int tableIndex = processTick - 1;
 
         if (this.eventTable.containsKey(tableIndex)) this.eventTable.get(tableIndex).accept(this, this.target);
-        if (this.processStepTable.containsKey(tableIndex)) this.activeSteps.add(this.processStepTable.get(tableIndex).createInfo(tableIndex));
+        if (this.processStepTable.containsKey(tableIndex))
+            this.activeSteps.add(this.processStepTable.get(tableIndex).createInfo(tableIndex));
 
         this.activeSteps.removeIf(stepInfo -> !stepInfo.tick(this));
 
@@ -110,7 +111,8 @@ public class LinearProcessExecutor<T> {
         this.processTick = 0;
         this.activeSteps.clear();
 
-        if (this.eventTable.containsKey(CANCEL_EVENT_INDEX)) this.eventTable.get(CANCEL_EVENT_INDEX).accept(this, this.target);
+        if (this.eventTable.containsKey(CANCEL_EVENT_INDEX))
+            this.eventTable.get(CANCEL_EVENT_INDEX).accept(this, this.target);
 
         return true;
     }
@@ -119,7 +121,8 @@ public class LinearProcessExecutor<T> {
         if (!this.running()) return false;
         if (this.processTick < processLength) return false;
 
-        if (this.eventTable.containsKey(FINISH_EVENT_INDEX)) this.eventTable.get(FINISH_EVENT_INDEX).accept(this, this.target);
+        if (this.eventTable.containsKey(FINISH_EVENT_INDEX))
+            this.eventTable.get(FINISH_EVENT_INDEX).accept(this, this.target);
 
         this.processTick = 0;
         this.activeSteps.clear();

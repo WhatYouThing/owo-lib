@@ -65,10 +65,10 @@ public class SharedStateStorage {
 
     public static Path configPath(Identifier id) {
         return FabricLoader.getInstance().getConfigDir()
-            .resolve("braid")
-            .resolve("shared_state")
-            .resolve(id.getNamespace())
-            .resolve(id.getPath() + ".json5");
+                .resolve("braid")
+                .resolve("shared_state")
+                .resolve(id.getNamespace())
+                .resolve(id.getPath() + ".json5");
     }
 
     private static class Entry<T extends ShareableState> {

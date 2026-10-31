@@ -36,18 +36,18 @@ public record PatternFormatter(Pattern pattern, String replacement, boolean allo
         this.replaceRegion(lastRegionEnd, newState.text().length(), this.allow, newState.text(), state);
 
         return new TextEditingValue(
-            state.builder.toString(),
-            new TextSelection(
-                state.selectionStart,
-                state.selectionEnd
-            )
+                state.builder.toString(),
+                new TextSelection(
+                        state.selectionStart,
+                        state.selectionEnd
+                )
         );
     }
 
     private void replaceRegion(int start, int end, boolean regionIsDenied, String input, FormatState state) {
         var replacement = regionIsDenied
-            ? (start != end ? this.replacement : "")
-            : input.substring(start, end);
+                ? (start != end ? this.replacement : "")
+                : input.substring(start, end);
 
         state.builder.append(replacement);
 

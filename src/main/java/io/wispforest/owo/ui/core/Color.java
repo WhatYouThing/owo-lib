@@ -1,10 +1,10 @@
 package io.wispforest.owo.ui.core;
 
-import net.minecraft.network.chat.TextColor;
 import com.google.common.collect.ImmutableMap;
 import io.wispforest.endec.Endec;
 import io.wispforest.owo.ui.parsing.UIModelParsingException;
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.DyeColor;
 import org.jetbrains.annotations.NotNull;
@@ -76,6 +76,7 @@ public record Color(float red, float green, float blue, float alpha) implements 
 
     /**
      * Generates a random color
+     *
      * @apiNote Don't tell glisco about this
      * @author chyzman
      */

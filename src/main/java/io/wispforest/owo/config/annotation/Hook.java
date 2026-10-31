@@ -8,4 +8,5 @@ import java.lang.annotation.Target;
  * registering subscribers should be generated
  */
 @Target(ElementType.FIELD)
-public @interface Hook {}
+public @interface Hook {
+}

@@ -12,28 +12,28 @@ import java.util.List;
 /// See the [Flex] documentation for details
 public class Column extends Flex {
     public Column(
-        MainAxisAlignment mainAxisAlignment,
-        CrossAxisAlignment crossAxisAlignment,
-        @Nullable Widget separator,
-        List<? extends Widget> children
+            MainAxisAlignment mainAxisAlignment,
+            CrossAxisAlignment crossAxisAlignment,
+            @Nullable Widget separator,
+            List<? extends Widget> children
     ) {
         super(LayoutAxis.VERTICAL, mainAxisAlignment, crossAxisAlignment, separator, children);
     }
 
     /// Create a column without a separator
     public Column(
-        MainAxisAlignment mainAxisAlignment,
-        CrossAxisAlignment crossAxisAlignment,
-        List<? extends Widget> children
+            MainAxisAlignment mainAxisAlignment,
+            CrossAxisAlignment crossAxisAlignment,
+            List<? extends Widget> children
     ) {
         this(mainAxisAlignment, crossAxisAlignment, null, children);
     }
 
     /// Create a column without a separator
     public Column(
-        MainAxisAlignment mainAxisAlignment,
-        CrossAxisAlignment crossAxisAlignment,
-        Widget... children
+            MainAxisAlignment mainAxisAlignment,
+            CrossAxisAlignment crossAxisAlignment,
+            Widget... children
     ) {
         this(mainAxisAlignment, crossAxisAlignment, null, Arrays.asList(children));
     }
@@ -41,8 +41,8 @@ public class Column extends Flex {
     /// Create a column with default (start) alignment
     /// on both axes
     public Column(
-        @Nullable Widget separator,
-        List<? extends Widget> children
+            @Nullable Widget separator,
+            List<? extends Widget> children
     ) {
         this(MainAxisAlignment.START, CrossAxisAlignment.START, separator, children);
     }
@@ -50,7 +50,7 @@ public class Column extends Flex {
     /// Create a column with default (start) alignment
     /// on both axes and no separator
     public Column(
-        List<? extends Widget> children
+            List<? extends Widget> children
     ) {
         this(MainAxisAlignment.START, CrossAxisAlignment.START, null, children);
     }
@@ -58,7 +58,7 @@ public class Column extends Flex {
     /// Create a column with default (start) alignment
     /// on both axes and no separator
     public Column(
-        Widget... children
+            Widget... children
     ) {
         this(Arrays.asList(children));
     }

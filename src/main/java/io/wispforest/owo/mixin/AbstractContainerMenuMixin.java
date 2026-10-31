@@ -3,8 +3,8 @@ package io.wispforest.owo.mixin;
 import io.wispforest.endec.Endec;
 import io.wispforest.endec.SerializationContext;
 import io.wispforest.endec.impl.ReflectiveEndecBuilder;
-import io.wispforest.owo.client.screens.OwoAbstractContainerMenu;
 import io.wispforest.owo.client.screens.MenuNetworkingInternals;
+import io.wispforest.owo.client.screens.OwoAbstractContainerMenu;
 import io.wispforest.owo.client.screens.ScreenhandlerMessageData;
 import io.wispforest.owo.client.screens.SyncedProperty;
 import io.wispforest.owo.network.NetworkException;
@@ -38,15 +38,21 @@ import java.util.function.Consumer;
 @Mixin(AbstractContainerMenu.class)
 public abstract class AbstractContainerMenuMixin implements OwoAbstractContainerMenu, OwoAbstractContainerMenuExtension {
 
-    @Shadow private boolean suppressRemoteUpdates;
+    @Shadow
+    private boolean suppressRemoteUpdates;
 
-    @Unique private final List<SyncedProperty<?>> properties = new ArrayList<>();
+    @Unique
+    private final List<SyncedProperty<?>> properties = new ArrayList<>();
 
-    @Unique private final Map<Class<?>, ScreenhandlerMessageData<?>> messages = new LinkedHashMap<>();
-    @Unique private final List<ScreenhandlerMessageData<?>> clientBoundMessages = new ArrayList<>();
-    @Unique private final List<ScreenhandlerMessageData<?>> serverBoundMessages = new ArrayList<>();
+    @Unique
+    private final Map<Class<?>, ScreenhandlerMessageData<?>> messages = new LinkedHashMap<>();
+    @Unique
+    private final List<ScreenhandlerMessageData<?>> clientBoundMessages = new ArrayList<>();
+    @Unique
+    private final List<ScreenhandlerMessageData<?>> serverBoundMessages = new ArrayList<>();
 
-    @Unique private Player player = null;
+    @Unique
+    private Player player = null;
 
     @Unique
     private ReflectiveEndecBuilder builder;
@@ -146,7 +152,7 @@ public abstract class AbstractContainerMenuMixin implements OwoAbstractContainer
 
     @Override
     public <T> SyncedProperty<T> createProperty(Class<T> clazz, Endec<T> endec, T initial) {
-        var prop = new SyncedProperty<>(this.properties.size(), endec, initial, (AbstractContainerMenu)(Object) this);
+        var prop = new SyncedProperty<>(this.properties.size(), endec, initial, (AbstractContainerMenu) (Object) this);
         this.properties.add(prop);
         return prop;
     }

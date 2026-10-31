@@ -29,7 +29,8 @@ import java.util.function.Function;
 
 public final class MinecraftEndecs {
 
-    private MinecraftEndecs() {}
+    private MinecraftEndecs() {
+    }
 
     // --- MC Types ---
 

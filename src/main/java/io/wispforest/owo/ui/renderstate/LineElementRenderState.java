@@ -1,7 +1,7 @@
 package io.wispforest.owo.ui.renderstate;
 
-import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import io.wispforest.owo.ui.core.Color;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.TextureSetup;
@@ -10,15 +10,15 @@ import org.joml.Matrix3x2f;
 import org.joml.Vector2d;
 
 public record LineElementRenderState(
-    RenderPipeline pipeline,
-    Matrix3x2f pose,
-    ScreenRectangle scissorArea,
-    int x0,
-    int y0,
-    int x1,
-    int y1,
-    double thiccness,
-    Color color
+        RenderPipeline pipeline,
+        Matrix3x2f pose,
+        ScreenRectangle scissorArea,
+        int x0,
+        int y0,
+        int x1,
+        int y1,
+        double thiccness,
+        Color color
 ) implements GuiElementRenderState {
     @Override
     public void buildVertices(VertexConsumer vertices) {

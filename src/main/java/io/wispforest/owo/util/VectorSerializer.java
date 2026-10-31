@@ -15,7 +15,8 @@ import org.joml.Vector3f;
  */
 public final class VectorSerializer {
 
-    private VectorSerializer() {}
+    private VectorSerializer() {
+    }
 
     /**
      * Stores the given vector  as an array at the

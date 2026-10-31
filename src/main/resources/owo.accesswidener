@@ -26,3 +26,4 @@ accessible class net/minecraft/core/component/DataComponentMap$Builder$SimpleMap
 
 accessible class net/minecraft/server/packs/resources/FallbackResourceManager$PackEntry
 accessible field net/minecraft/server/packs/resources/FallbackResourceManager$PackEntry resources Lnet/minecraft/server/packs/PackResources;
+accessible class net/minecraft/server/packs/resources/FallbackResourceManager$EntryStack

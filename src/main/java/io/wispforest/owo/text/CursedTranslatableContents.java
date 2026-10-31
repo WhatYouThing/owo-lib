@@ -30,11 +30,11 @@ public class CursedTranslatableContents extends TranslatableContents {
         ComponentContents newContent = PlainTextContents.EMPTY;
         if (text.getContents() instanceof PlainTextContents.LiteralContents(String string)) {
             ((TranslatableContentsAccessor) INSTANCE).owo$decomposeTemplate(
-                string,
-                part -> {
-                    if (part instanceof Component textPart) unpacked.add(textPart);
-                    else unpacked.add(Component.literal(part.getString()));
-                }
+                    string,
+                    part -> {
+                        if (part instanceof Component textPart) unpacked.add(textPart);
+                        else unpacked.add(Component.literal(part.getString()));
+                    }
             );
         } else {
             if (text.getSiblings().isEmpty()) return text;

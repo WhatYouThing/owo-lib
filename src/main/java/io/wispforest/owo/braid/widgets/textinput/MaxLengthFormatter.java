@@ -11,10 +11,10 @@ public record MaxLengthFormatter(int maxChars) implements TextInput.Formatter {
         }
 
         return new TextEditingValue(
-            newState.text().substring(0, this.maxChars),
-            newState.selection().upper() > this.maxChars
-                ? TextSelection.collapsed(this.maxChars)
-                : newState.selection()
+                newState.text().substring(0, this.maxChars),
+                newState.selection().upper() > this.maxChars
+                        ? TextSelection.collapsed(this.maxChars)
+                        : newState.selection()
         );
     }
 }

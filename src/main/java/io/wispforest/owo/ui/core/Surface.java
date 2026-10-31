@@ -20,7 +20,8 @@ import org.w3c.dom.Node;
 
 public interface Surface {
 
-    Surface BLANK = (context, component) -> {};
+    Surface BLANK = (context, component) -> {
+    };
 
     Surface PANEL = (context, component) -> {
         context.drawPanel(component.x(), component.y(), component.width(), component.height(), false);
@@ -36,8 +37,8 @@ public interface Surface {
 
     Surface VANILLA_TRANSLUCENT = (context, component) -> {
         context.drawGradientRect(
-            component.x(), component.y(), component.width(), component.height(),
-            0xC0101010, 0xC0101010, 0xD0101010, 0xD0101010
+                component.x(), component.y(), component.width(), component.height(),
+                0xC0101010, 0xC0101010, 0xD0101010, 0xD0101010
         );
     };
 
@@ -52,10 +53,10 @@ public interface Surface {
     static Surface blur(float quality, float size) {
         return (context, component) -> {
             context.guiRenderState.addGuiElement(new BlurQuadElementRenderState(
-                new Matrix3x2f(context.pose()),
-                new ScreenRectangle(component.x(), component.y(), component.width(), component.height()),
-                context.scissorStack.peek(),
-                16, quality, size
+                    new Matrix3x2f(context.pose()),
+                    new ScreenRectangle(component.x(), component.y(), component.width(), component.height()),
+                    context.scissorStack.peek(),
+                    16, quality, size
             ));
         };
     }
@@ -72,9 +73,9 @@ public interface Surface {
         return (context, component) -> {
             if (!alwaysVisible && Minecraft.getInstance().level != null) return;
             context.guiRenderState.addPicturesInPictureState(new CubeMapElementRenderState(
-                renderer, true,
-                new ScreenRectangle(component.x(), component.y(), component.width(), component.height()),
-                context.scissorStack.peek()
+                    renderer, true,
+                    new ScreenRectangle(component.x(), component.y(), component.width(), component.height()),
+                    context.scissorStack.peek()
             ));
         };
     }
@@ -96,12 +97,12 @@ public interface Surface {
     static Surface panelWithInset(int insetWidth) {
         return Surface.PANEL.and((context, component) -> {
             NinePatchTexture.draw(
-                OwoUIGraphics.PANEL_INSET_NINE_PATCH_TEXTURE,
-                context,
-                component.x() + insetWidth,
-                component.y() + insetWidth,
-                component.width() - insetWidth * 2,
-                component.height() - insetWidth * 2
+                    OwoUIGraphics.PANEL_INSET_NINE_PATCH_TEXTURE,
+                    context,
+                    component.x() + insetWidth,
+                    component.y() + insetWidth,
+                    component.width() - insetWidth * 2,
+                    component.height() - insetWidth * 2
             );
         });
     }
@@ -122,21 +123,21 @@ public interface Surface {
         for (var child : children) {
             surface = switch (child.getNodeName()) {
                 case "panel" -> surface.and(child.getAttribute("dark").equalsIgnoreCase("true")
-                    ? DARK_PANEL
-                    : PANEL);
+                        ? DARK_PANEL
+                        : PANEL);
                 case "tiled" -> {
                     UIParsing.expectAttributes(child, "texture-width", "texture-height");
                     yield surface.and(tiled(
-                        UIParsing.parseIdentifier(child),
-                        UIParsing.parseUnsignedInt(child.getAttributeNode("texture-width")),
-                        UIParsing.parseUnsignedInt(child.getAttributeNode("texture-height")))
+                            UIParsing.parseIdentifier(child),
+                            UIParsing.parseUnsignedInt(child.getAttributeNode("texture-width")),
+                            UIParsing.parseUnsignedInt(child.getAttributeNode("texture-height")))
                     );
                 }
                 case "blur" -> {
                     UIParsing.expectAttributes(child, "size", "quality");
                     yield surface.and(blur(
-                        UIParsing.parseFloat(child.getAttributeNode("quality")),
-                        UIParsing.parseFloat(child.getAttributeNode("size"))
+                            UIParsing.parseFloat(child.getAttributeNode("quality")),
+                            UIParsing.parseFloat(child.getAttributeNode("size"))
                     ));
                 }
                 case "panel-with-inset" -> surface.and(panelWithInset(UIParsing.parseUnsignedInt(child)));

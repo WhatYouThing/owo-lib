@@ -23,7 +23,7 @@ public final class StackTraceSupplier implements Supplier<String> {
 
     public static StackTraceSupplier of(String message) {
         var error = new IllegalStateException(message)
-            .initCause(null);
+                .initCause(null);
 
         return new StackTraceSupplier(error, null);
     }

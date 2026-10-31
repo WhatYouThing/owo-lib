@@ -17,10 +17,10 @@ public class RootFocusScope extends StatefulWidget {
     public final Widget child;
 
     public RootFocusScope(
-        BraidEventSource<KeyDownEvent> onKeyDown,
-        BraidEventSource<KeyUpEvent> onKeyUp,
-        BraidEventSource<CharEvent> onChar,
-        Widget child
+            BraidEventSource<KeyDownEvent> onKeyDown,
+            BraidEventSource<KeyUpEvent> onKeyUp,
+            BraidEventSource<CharEvent> onChar,
+            Widget child
     ) {
         this.onKeyDown = onKeyDown;
         this.onKeyUp = onKeyUp;
@@ -47,19 +47,19 @@ public class RootFocusScope extends StatefulWidget {
         @Override
         public Widget build(BuildContext context) {
             return new FocusPolicy(
-                true,
-                new FocusScope(
-                    Widget.noSetup(),
-                    new Builder(scopeContext -> {
-                        if (this.scope == null) {
-                            this.scope = FocusScope.State.maybeOf(scopeContext);
-                            //noinspection DataFlowIssue
-                            this.scope.onFocusChange(FocusLevel.BASE);
-                        }
+                    true,
+                    new FocusScope(
+                            Widget.noSetup(),
+                            new Builder(scopeContext -> {
+                                if (this.scope == null) {
+                                    this.scope = FocusScope.State.maybeOf(scopeContext);
+                                    //noinspection DataFlowIssue
+                                    this.scope.onFocusChange(FocusLevel.BASE);
+                                }
 
-                        return this.widget().child;
-                    })
-                )
+                                return this.widget().child;
+                            })
+                    )
             );
         }
     }

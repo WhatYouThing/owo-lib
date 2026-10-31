@@ -20,10 +20,10 @@ public class MessageDrag extends StatelessWidget {
     public final Component message;
 
     public MessageDrag(
-        double value,
-        @Nullable WidgetSetupCallback<Drag> setupCallback,
-        @Nullable SliderCallback onChanged,
-        Component message
+            double value,
+            @Nullable WidgetSetupCallback<Drag> setupCallback,
+            @Nullable SliderCallback onChanged,
+            Component message
     ) {
         this.value = value;
         this.setupCallback = setupCallback;
@@ -32,11 +32,11 @@ public class MessageDrag extends StatelessWidget {
     }
 
     public MessageDrag(
-        double value,
-        @Nullable WidgetSetupCallback<Drag> setupCallback,
-        boolean active,
-        SliderCallback onChanged,
-        Component message
+            double value,
+            @Nullable WidgetSetupCallback<Drag> setupCallback,
+            boolean active,
+            SliderCallback onChanged,
+            Component message
     ) {
         this(value, setupCallback, active ? onChanged : null, message);
     }
@@ -44,16 +44,16 @@ public class MessageDrag extends StatelessWidget {
     @Override
     public Widget build(BuildContext context) {
         return new Stack(
-            new Drag(
-                this.value,
-                this.setupCallback,
-                this.onChanged
-            ),
-            new Label(
-                LabelStyle.SHADOW,
-                false,
-                this.message
-            )
+                new Drag(
+                        this.value,
+                        this.setupCallback,
+                        this.onChanged
+                ),
+                new Label(
+                        LabelStyle.SHADOW,
+                        false,
+                        this.message
+                )
         );
     }
 }

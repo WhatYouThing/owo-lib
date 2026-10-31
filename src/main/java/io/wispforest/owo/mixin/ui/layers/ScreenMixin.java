@@ -14,8 +14,10 @@ import java.util.*;
 @Mixin(value = Screen.class, priority = 1100)
 public abstract class ScreenMixin extends AbstractContainerEventHandler implements OwoScreenExtension {
 
-    @Shadow public int width;
-    @Shadow public int height;
+    @Shadow
+    public int width;
+    @Shadow
+    public int height;
 
     private final List<Layer<?, ?>.Instance> owo$instances = new ArrayList<>();
     private final List<Layer<?, ?>.Instance> owo$instancesView = Collections.unmodifiableList(this.owo$instances);

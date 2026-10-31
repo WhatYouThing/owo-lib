@@ -21,11 +21,11 @@ public class ScrollController extends Listenable {
     public ScrollController(Animation.Scheduler callbackScheduler) {
         this.lerp = new DoubleLerp(0.0, 0.0);
         this.animation = new Animation(
-            Easing.LINEAR,
-            Duration.ofNanos(1),
-            callbackScheduler,
-            progress -> this.setOffset(this.lerp.compute(progress)),
-            Animation.Target.END
+                Easing.LINEAR,
+                Duration.ofNanos(1),
+                callbackScheduler,
+                progress -> this.setOffset(this.lerp.compute(progress)),
+                Animation.Target.END
         );
     }
 
@@ -86,6 +86,7 @@ public class ScrollController extends Listenable {
     }
 
     boolean maxOffsetNotificationScheduled = false;
+
     void sendMaxOffsetNotification() {
         this.notifyListeners();
         this.maxOffsetNotificationScheduled = false;

@@ -8,10 +8,10 @@ public class ButtonScrollbar extends Scrollbar {
 
     public ButtonScrollbar(LayoutAxis axis, ScrollController controller) {
         super(
-            axis,
-            controller,
-            new Panel(ButtonComponent.DISABLED_TEXTURE),
-            new Panel(ButtonComponent.ACTIVE_TEXTURE)
+                axis,
+                controller,
+                new Panel(ButtonComponent.DISABLED_TEXTURE),
+                new Panel(ButtonComponent.ACTIVE_TEXTURE)
         );
     }
 

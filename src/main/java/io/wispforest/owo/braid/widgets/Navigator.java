@@ -23,11 +23,11 @@ public class Navigator extends StatelessWidget {
     @Override
     public Widget build(BuildContext context) {
         return new SharedState<>(
-            () -> new NavigationState(this.initialRoute),
-            new Builder(innerContext -> {
-                var state = SharedState.get(innerContext, NavigationState.class);
-                return new Stack(state.displayedRoutes());
-            })
+                () -> new NavigationState(this.initialRoute),
+                new Builder(innerContext -> {
+                    var state = SharedState.get(innerContext, NavigationState.class);
+                    return new Stack(state.displayedRoutes());
+                })
         );
     }
 
@@ -46,7 +46,8 @@ public class Navigator extends StatelessWidget {
     }
 }
 
-record Route(Widget widget, boolean overlay) {}
+record Route(Widget widget, boolean overlay) {
+}
 
 class NavigationState extends ShareableState {
     private final List<Route> routes;

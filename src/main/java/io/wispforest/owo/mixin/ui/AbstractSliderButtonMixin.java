@@ -23,7 +23,8 @@ public abstract class AbstractSliderButtonMixin extends AbstractWidget {
     @Shadow
     protected abstract void setValue(double value);
 
-    @Shadow protected double value;
+    @Shadow
+    protected double value;
 
     public AbstractSliderButtonMixin(int x, int y, int width, int height, Component message) {
         super(x, y, width, height, message);

@@ -6,7 +6,8 @@ package io.wispforest.owo.ui.util;
  */
 public final class Delta {
 
-    private Delta() {}
+    private Delta() {
+    }
 
     /**
      * Compute an additive interpolator for smoothly approaching the

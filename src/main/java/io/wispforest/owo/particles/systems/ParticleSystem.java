@@ -53,7 +53,8 @@ public class ParticleSystem<T> {
      * @throws NetworkException if this particle system already has a handler
      */
     public void setHandler(ParticleSystemExecutor<T> handler) {
-        if (OwoFreezer.isFrozen()) throw new ServicesFrozenException("Particle systems can only be changed during mod init");
+        if (OwoFreezer.isFrozen())
+            throw new ServicesFrozenException("Particle systems can only be changed during mod init");
         if (this.handler != null) throw new NetworkException("Particle system already has a handler");
 
         this.handler = handler;
@@ -72,7 +73,8 @@ public class ParticleSystem<T> {
      * @param data  The context to execute with
      */
     public void spawn(Level level, Vec3 pos, @Nullable T data) {
-        if (data == null && !permitsContextlessExecution) throw new IllegalStateException("This particle system does not permit 'null' data");
+        if (data == null && !permitsContextlessExecution)
+            throw new IllegalStateException("This particle system does not permit 'null' data");
 
         if (level.isClientSide()) {
             handler.executeParticleSystem(level, pos, data);

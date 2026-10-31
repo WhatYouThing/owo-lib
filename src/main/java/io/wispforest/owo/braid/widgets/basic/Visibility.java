@@ -39,7 +39,7 @@ public class Visibility extends SingleChildInstanceWidget {
         @Override
         public void setWidget(Visibility widget) {
             if (this.widget.visible == widget.visible
-                && this.widget.reportSize == widget.reportSize) {
+                    && this.widget.reportSize == widget.reportSize) {
                 return;
             }
 

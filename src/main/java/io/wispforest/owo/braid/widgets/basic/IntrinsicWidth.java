@@ -29,10 +29,10 @@ public class IntrinsicWidth extends SingleChildInstanceWidget {
             var childSize = this.child.getIntrinsicWidth(constraints.maxHeight());
 
             var childConstraints = Constraints.of(
-                childSize,
-                constraints.minHeight(),
-                childSize,
-                constraints.maxHeight()
+                    childSize,
+                    constraints.minHeight(),
+                    childSize,
+                    constraints.maxHeight()
             ).respecting(constraints);
 
             this.transform.setSize(this.child.layout(childConstraints));

@@ -42,9 +42,9 @@ public class Xlyder extends StatefulWidget {
     public final @Nullable XlyderCallback onChanged;
 
     public Xlyder(
-        Vector2dc value,
-        @Nullable WidgetSetupCallback<Xlyder> setupCallback,
-        @Nullable XlyderCallback onChanged
+            Vector2dc value,
+            @Nullable WidgetSetupCallback<Xlyder> setupCallback,
+            @Nullable XlyderCallback onChanged
     ) {
         this.value = value;
         this.onChanged = onChanged;
@@ -52,27 +52,27 @@ public class Xlyder extends StatefulWidget {
     }
 
     public Xlyder(
-        Vector2dc value,
-        @Nullable WidgetSetupCallback<Xlyder> setupCallback,
-        boolean active,
-        XlyderCallback onChanged
+            Vector2dc value,
+            @Nullable WidgetSetupCallback<Xlyder> setupCallback,
+            boolean active,
+            XlyderCallback onChanged
     ) {
         this(value, setupCallback, active ? onChanged : null);
     }
 
     public Xlyder(
-        double x, double y,
-        @Nullable WidgetSetupCallback<Xlyder> setupCallback,
-        @Nullable XlyderCallback onChanged
+            double x, double y,
+            @Nullable WidgetSetupCallback<Xlyder> setupCallback,
+            @Nullable XlyderCallback onChanged
     ) {
         this(new Vector2d(x, y), setupCallback, onChanged);
     }
 
     public Xlyder(
-        double x, double y,
-        @Nullable WidgetSetupCallback<Xlyder> setupCallback,
-        boolean active,
-        XlyderCallback onChanged
+            double x, double y,
+            @Nullable WidgetSetupCallback<Xlyder> setupCallback,
+            boolean active,
+            XlyderCallback onChanged
     ) {
         this(new Vector2d(x, y), setupCallback, active ? onChanged : null);
     }
@@ -348,8 +348,8 @@ public class Xlyder extends StatefulWidget {
             var trueMinY = Math.min(widget.min.y, widget.max.y);
             var trueMaxY = Math.max(widget.min.y, widget.max.y);
             this.incrementStep = new Vector2d(
-                widget.xIncrementStep != null ? widget.xSliderFunction.normalize(widget.xIncrementStep, trueMinX, trueMaxX) : widget.xStep != null ? widget.xSliderFunction.normalize(widget.xStep, trueMinX, trueMaxX) : 0.01,
-                widget.yIncrementStep != null ? widget.ySliderFunction.normalize(widget.yIncrementStep, trueMinY, trueMaxY) : widget.yStep != null ? widget.ySliderFunction.normalize(widget.yStep, trueMinY, trueMaxY) : 0.01
+                    widget.xIncrementStep != null ? widget.xSliderFunction.normalize(widget.xIncrementStep, trueMinX, trueMaxX) : widget.xStep != null ? widget.xSliderFunction.normalize(widget.xStep, trueMinX, trueMaxX) : 0.01,
+                    widget.yIncrementStep != null ? widget.ySliderFunction.normalize(widget.yIncrementStep, trueMinY, trueMaxY) : widget.yStep != null ? widget.ySliderFunction.normalize(widget.yStep, trueMinY, trueMaxY) : 0.01
             );
         }
 
@@ -370,50 +370,51 @@ public class Xlyder extends StatefulWidget {
             var confirmSound = effectiveStyle.confirmSound() != null ? effectiveStyle.confirmSound().orElse(null) : SoundEvents.UI_BUTTON_CLICK.value();
 
             this.normalizedValue = new Vector2d(
-                widget.xSliderFunction.normalize(widget.value.x(), widget.min.x, widget.max.x),
-                widget.ySliderFunction.normalize(widget.value.y(), widget.min.y, widget.max.y)
+                    widget.xSliderFunction.normalize(widget.value.x(), widget.min.x, widget.max.x),
+                    widget.ySliderFunction.normalize(widget.value.y(), widget.min.y, widget.max.y)
             );
             return new LayoutBuilder((innerContext, constraints) -> {
                 var content = new Stack(
-                    Alignment.TOP_LEFT,
-                    new Sized(constraints.maxWidth(), constraints.maxHeight(), track),
-                    new Padding(
-                        Insets.left(Math.floor((constraints.maxWidth() - this.handleSize.width()) * this.normalizedValue.x()))
-                            .withTop(Math.floor((constraints.maxHeight() - this.handleSize.height()) * (1 - this.normalizedValue.y()))),
-                        new Sized(this.handleSize, handle)
-                    )
+                        Alignment.TOP_LEFT,
+                        new Sized(constraints.maxWidth(), constraints.maxHeight(), track),
+                        new Padding(
+                                Insets.left(Math.floor((constraints.maxWidth() - this.handleSize.width()) * this.normalizedValue.x()))
+                                        .withTop(Math.floor((constraints.maxHeight() - this.handleSize.height()) * (1 - this.normalizedValue.y()))),
+                                new Sized(this.handleSize, handle)
+                        )
                 );
                 return new Center(
-                    widget.onChanged == null || ControlsOverride.controlsDisabled(context)
-                        ? content
-                        : new Incrementor(
-                            xIncrement -> this.applyValue(Mth.clamp(this.normalizedValue.x() + this.incrementStep.x() * xIncrement, 0, 1), null),
-                            yIncrement -> this.applyValue(null, Mth.clamp(this.normalizedValue.y() + this.incrementStep.y() * yIncrement, 0, 1)),
-                            new MouseArea(
-                                mouseArea -> mouseArea
-                                    //TODO: decide what to do with buttons here
-                                    .clickCallback((x, y, button, modifiers) -> {
-                                        if (button != 0) return false;
+                        widget.onChanged == null || ControlsOverride.controlsDisabled(context)
+                                ? content
+                                : new Incrementor(
+                                xIncrement -> this.applyValue(Mth.clamp(this.normalizedValue.x() + this.incrementStep.x() * xIncrement, 0, 1), null),
+                                yIncrement -> this.applyValue(null, Mth.clamp(this.normalizedValue.y() + this.incrementStep.y() * yIncrement, 0, 1)),
+                                new MouseArea(
+                                        mouseArea -> mouseArea
+                                                //TODO: decide what to do with buttons here
+                                                .clickCallback((x, y, button, modifiers) -> {
+                                                    if (button != 0) return false;
 
-                                        y = constraints.maxHeight() - y;
-                                        Vector2dc initialDragValue = new Vector2d(this.normalizedValue);
-                                        if (!this.isInHandle(constraints, x, y)) initialDragValue = this.setAbsolute(constraints, x, y);
+                                                    y = constraints.maxHeight() - y;
+                                                    Vector2dc initialDragValue = new Vector2d(this.normalizedValue);
+                                                    if (!this.isInHandle(constraints, x, y))
+                                                        initialDragValue = this.setAbsolute(constraints, x, y);
 
-                                        this.dragValue.set(initialDragValue);
-                                        this.dragging = true;
-                                        return true;
-                                    })
-                                    .dragCallback((x, y, dx, dy) -> this.move(constraints, dx, -dy))
-                                    .dragEndCallback(() -> {
-                                        this.dragging = false;
-                                        if (confirmSound != null) {
-                                            UISounds.play(confirmSound);
-                                        }
-                                    })
-                                    //TODO: invert the y passed here cuz it cringe atm
-                                    .cursorStyleSupplier((x, y) -> (!this.isInHandle(constraints, x, constraints.maxHeight() - y) && !this.dragging) ? CursorStyle.HAND : CursorStyle.MOVE),
-                                content
-                            )
+                                                    this.dragValue.set(initialDragValue);
+                                                    this.dragging = true;
+                                                    return true;
+                                                })
+                                                .dragCallback((x, y, dx, dy) -> this.move(constraints, dx, -dy))
+                                                .dragEndCallback(() -> {
+                                                    this.dragging = false;
+                                                    if (confirmSound != null) {
+                                                        UISounds.play(confirmSound);
+                                                    }
+                                                })
+                                                //TODO: invert the y passed here cuz it cringe atm
+                                                .cursorStyleSupplier((x, y) -> (!this.isInHandle(constraints, x, constraints.maxHeight() - y) && !this.dragging) ? CursorStyle.HAND : CursorStyle.MOVE),
+                                        content
+                                )
                         )
                 );
             });
@@ -433,13 +434,13 @@ public class Xlyder extends StatefulWidget {
 
         protected void move(Constraints constraints, double dx, double dy) {
             this.dragValue.add(
-                dx / (constraints.maxWidth() - this.handleSize.width()),
-                dy / (constraints.maxHeight() - this.handleSize.height())
+                    dx / (constraints.maxWidth() - this.handleSize.width()),
+                    dy / (constraints.maxHeight() - this.handleSize.height())
             );
 
             this.applyValue(
-                Mth.clamp(this.dragValue.x, 0, 1),
-                Mth.clamp(this.dragValue.y, 0, 1)
+                    Mth.clamp(this.dragValue.x, 0, 1),
+                    Mth.clamp(this.dragValue.y, 0, 1)
             );
         }
 
@@ -460,11 +461,13 @@ public class Xlyder extends StatefulWidget {
             var widget = this.widget();
             double newX = widget.value.x();
             double newY = widget.value.y();
-            if (newNormalizedX != null) newX = widget.xSliderFunction.deNormalize(newNormalizedX, widget.min.x, widget.max.x);
-            if (newNormalizedY != null) newY = widget.ySliderFunction.deNormalize(newNormalizedY, widget.min.y, widget.max.y);
+            if (newNormalizedX != null)
+                newX = widget.xSliderFunction.deNormalize(newNormalizedX, widget.min.x, widget.max.x);
+            if (newNormalizedY != null)
+                newY = widget.ySliderFunction.deNormalize(newNormalizedY, widget.min.y, widget.max.y);
             widget.onChanged.accept(
-                widget.xStep != null ? Math.round(newX / widget.xStep) * widget.xStep : newX,
-                widget.yStep != null ? Math.round(newY / widget.yStep) * widget.yStep : newY
+                    widget.xStep != null ? Math.round(newX / widget.xStep) * widget.xStep : newX,
+                    widget.yStep != null ? Math.round(newY / widget.yStep) * widget.yStep : newY
             );
         }
     }

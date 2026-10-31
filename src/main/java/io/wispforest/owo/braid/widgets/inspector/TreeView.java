@@ -73,7 +73,8 @@ public class TreeView extends StatefulWidget {
             if (inspectorState.revealSource != null) {
                 this.revealSubscription = inspectorState.revealSource.subscribe(event -> this.setState(() -> {
                     if (event.path().contains(this.widget().node.instance())) this.collapsed = false;
-                    if (event.target() == this.widget().node.instance()) this.schedulePostLayoutCallback(() -> Scrollable.reveal(this.context(), Insets.all(20)));
+                    if (event.target() == this.widget().node.instance())
+                        this.schedulePostLayoutCallback(() -> Scrollable.reveal(this.context(), Insets.all(20)));
                 }));
             }
         }
@@ -90,20 +91,20 @@ public class TreeView extends StatefulWidget {
 
         private Widget buildCollapsible(Widget title, Widget content) {
             return new Interactable(
-                SHORTCUTS,
-                w -> w.addCallbackAction(SetCollapsedIntent.class, (ignored, intent) -> this.setState(() -> this.collapsed = intent.collapsed())),
-                new LazyCollapsible(
-                    false,
-                    this.collapsed,
-                    nowCollapsed -> this.setState(() -> this.collapsed = nowCollapsed),
-                    new MouseArea(
-                        w -> w
-                            .enterCallback(() -> this.setState(() -> this.branchHovered = true))
-                            .exitCallback(() -> this.setState(() -> this.branchHovered = false)),
-                        title
-                    ),
-                    content
-                )
+                    SHORTCUTS,
+                    w -> w.addCallbackAction(SetCollapsedIntent.class, (ignored, intent) -> this.setState(() -> this.collapsed = intent.collapsed())),
+                    new LazyCollapsible(
+                            false,
+                            this.collapsed,
+                            nowCollapsed -> this.setState(() -> this.collapsed = nowCollapsed),
+                            new MouseArea(
+                                    w -> w
+                                            .enterCallback(() -> this.setState(() -> this.branchHovered = true))
+                                            .exitCallback(() -> this.setState(() -> this.branchHovered = false)),
+                                    title
+                            ),
+                            content
+                    )
             );
         }
 
@@ -120,21 +121,21 @@ public class TreeView extends StatefulWidget {
 
             if (children.isEmpty()) {
                 entry = new Row(
-                    MainAxisAlignment.START,
-                    CrossAxisAlignment.CENTER,
-                    new Sized(12, 12, new SpriteWidget(Owo.id("braid_inspector_leaf"))),
-                    title
+                        MainAxisAlignment.START,
+                        CrossAxisAlignment.CENTER,
+                        new Sized(12, 12, new SpriteWidget(Owo.id("braid_inspector_leaf"))),
+                        title
                 );
             } else if (children.size() == 1) {
                 if (tree.parentChildCount == 1) {
                     entry = new Column(
-                        new Row(
-                            MainAxisAlignment.START,
-                            CrossAxisAlignment.CENTER,
-                            new Sized(12, 12, new SpriteWidget(Owo.id("braid_collapsible_open_disabled"))),
-                            title
-                        ),
-                        new TreeView(children.getFirst(), 1)
+                            new Row(
+                                    MainAxisAlignment.START,
+                                    CrossAxisAlignment.CENTER,
+                                    new Sized(12, 12, new SpriteWidget(Owo.id("braid_collapsible_open_disabled"))),
+                                    title
+                            ),
+                            new TreeView(children.getFirst(), 1)
                     );
                 } else {
                     entry = buildCollapsible(title, new TreeView(children.getFirst(), 1));
@@ -142,57 +143,58 @@ public class TreeView extends StatefulWidget {
             } else {
                 var lineColor = this.branchHovered ? Color.WHITE : Color.mix(.5f, Color.WHITE, Color.BLACK);
                 entry = buildCollapsible(title, new Column(
-                    IntStream.range(0, children.size())
-                        .mapToObj(i -> new Stack(
-                            new Align(
-                                Alignment.TOP_LEFT,
-                                new Padding(
-                                    Insets.left(6),
-                                    new Sized(1, i == children.size() - 1 ? 7 : Double.POSITIVE_INFINITY, new Box(lineColor))
-                                )
-                            ),
-                            new Align(
-                                Alignment.TOP_LEFT,
-                                new Padding(
-                                    Insets.top(6).withLeft(6),
-                                    new Sized(5, 1, new Box(lineColor))
-                                )
-                            ),
-                            new Align(
-                                Alignment.TOP_LEFT,
-                                new MouseArea(
-                                    w -> w
-                                        .enterCallback(() -> this.setState(() -> this.branchHovered = true))
-                                        .exitCallback(() -> this.setState(() -> this.branchHovered = false)),
-                                    new Sized(10, Double.POSITIVE_INFINITY, EmptyWidget.INSTANCE)
-                                )
-                            ),
-                            new StackBase(
-                                new Padding(
-                                    Insets.left(10),
-                                    new TreeView(children.get(i), children.size())
-                                )
-                            )
-                        )).toList()
+                        IntStream.range(0, children.size())
+                                .mapToObj(i -> new Stack(
+                                        new Align(
+                                                Alignment.TOP_LEFT,
+                                                new Padding(
+                                                        Insets.left(6),
+                                                        new Sized(1, i == children.size() - 1 ? 7 : Double.POSITIVE_INFINITY, new Box(lineColor))
+                                                )
+                                        ),
+                                        new Align(
+                                                Alignment.TOP_LEFT,
+                                                new Padding(
+                                                        Insets.top(6).withLeft(6),
+                                                        new Sized(5, 1, new Box(lineColor))
+                                                )
+                                        ),
+                                        new Align(
+                                                Alignment.TOP_LEFT,
+                                                new MouseArea(
+                                                        w -> w
+                                                                .enterCallback(() -> this.setState(() -> this.branchHovered = true))
+                                                                .exitCallback(() -> this.setState(() -> this.branchHovered = false)),
+                                                        new Sized(10, Double.POSITIVE_INFINITY, EmptyWidget.INSTANCE)
+                                                )
+                                        ),
+                                        new StackBase(
+                                                new Padding(
+                                                        Insets.left(10),
+                                                        new TreeView(children.get(i), children.size())
+                                                )
+                                        )
+                                )).toList()
                 ));
             }
 
             return new AnimatedBox(
-                this.highlight ? Duration.ZERO : Duration.ofMillis(1250),
-                Easing.IN_OUT_SINE,
-                this.highlight ? Color.hsv((tree.node.depth() % 15) / 15d, .75, 1, .5) : new Color(0),
-                true,
-                entry
+                    this.highlight ? Duration.ZERO : Duration.ofMillis(1250),
+                    Easing.IN_OUT_SINE,
+                    this.highlight ? Color.hsv((tree.node.depth() % 15) / 15d, .75, 1, .5) : new Color(0),
+                    true,
+                    entry
             );
         }
     }
 
     // ---
 
-    record SetCollapsedIntent(boolean collapsed) implements Intent {}
+    record SetCollapsedIntent(boolean collapsed) implements Intent {
+    }
 
     static final Map<List<ShortcutTrigger>, Intent> SHORTCUTS = Map.of(
-        List.of(ShortcutTrigger.LEFT), new SetCollapsedIntent(true),
-        List.of(ShortcutTrigger.RIGHT), new SetCollapsedIntent(false)
+            List.of(ShortcutTrigger.LEFT), new SetCollapsedIntent(true),
+            List.of(ShortcutTrigger.RIGHT), new SetCollapsedIntent(false)
     );
 }

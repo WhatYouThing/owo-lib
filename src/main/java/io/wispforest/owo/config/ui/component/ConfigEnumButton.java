@@ -1,39 +1,41 @@
 package io.wispforest.owo.config.ui.component;
 
-import net.minecraft.locale.Language;
+import com.mojang.blaze3d.platform.InputConstants;
 import io.wispforest.owo.config.Option;
 import io.wispforest.owo.ui.component.ButtonComponent;
 import io.wispforest.owo.ui.core.Sizing;
 import net.minecraft.client.input.InputWithModifiers;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.input.MouseButtonInfo;
-import net.minecraft.client.resources.language.I18n;
+import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.Locale;
 
 @ApiStatus.Internal
 public class ConfigEnumButton extends ButtonComponent implements OptionValueProvider {
 
-    @Nullable protected Option<? extends Enum<?>> backingOption = null;
-    @Nullable protected Enum<?>[] backingValues = null;
+    @Nullable
+    protected Option<? extends Enum<?>> backingOption = null;
+    @Nullable
+    protected Enum<?>[] backingValues = null;
     protected int selectedIndex = 0;
 
     protected boolean wasRightClicked = false;
 
     public ConfigEnumButton() {
-        super(Component.empty(), button -> {});
+        super(Component.empty(), button -> {
+        });
         this.verticalSizing(Sizing.fixed(20));
         this.updateMessage();
     }
 
     @Override
     public boolean onMouseDown(MouseButtonEvent click, boolean doubled) {
-        this.wasRightClicked = click.button() == GLFW.GLFW_MOUSE_BUTTON_RIGHT;
+        this.wasRightClicked = click.button() == InputConstants.MOUSE_BUTTON_RIGHT;
         return super.onMouseDown(click, doubled);
     }
 
@@ -54,7 +56,7 @@ public class ConfigEnumButton extends ButtonComponent implements OptionValueProv
 
     @Override
     protected boolean isValidClickButton(MouseButtonInfo input) {
-        return input.button() == GLFW.GLFW_MOUSE_BUTTON_RIGHT || super.isValidClickButton(input);
+        return input.button() == InputConstants.MOUSE_BUTTON_RIGHT || super.isValidClickButton(input);
     }
 
     protected void updateMessage() {

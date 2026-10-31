@@ -21,10 +21,10 @@ public class MessageXlyder extends StatelessWidget {
     public final Component message;
 
     public MessageXlyder(
-        Vector2dc value,
-        Component message,
-        @Nullable WidgetSetupCallback<Xlyder> setupCallback,
-        @Nullable XlyderCallback onChanged
+            Vector2dc value,
+            Component message,
+            @Nullable WidgetSetupCallback<Xlyder> setupCallback,
+            @Nullable XlyderCallback onChanged
     ) {
         this.value = value;
         this.setupCallback = setupCallback;
@@ -33,30 +33,30 @@ public class MessageXlyder extends StatelessWidget {
     }
 
     public MessageXlyder(
-        Vector2dc value,
-        Component message,
-        @Nullable WidgetSetupCallback<Xlyder> setupCallback,
-        boolean active,
-        XlyderCallback onChanged
+            Vector2dc value,
+            Component message,
+            @Nullable WidgetSetupCallback<Xlyder> setupCallback,
+            boolean active,
+            XlyderCallback onChanged
     ) {
         this(value, message, setupCallback, active ? onChanged : null);
     }
 
     public MessageXlyder(
-        double x, double y,
-        Component message,
-        @Nullable WidgetSetupCallback<Xlyder> setupCallback,
-        @Nullable XlyderCallback onChanged
+            double x, double y,
+            Component message,
+            @Nullable WidgetSetupCallback<Xlyder> setupCallback,
+            @Nullable XlyderCallback onChanged
     ) {
         this(new Vector2d(x, y), message, setupCallback, onChanged);
     }
 
     public MessageXlyder(
-        double x, double y,
-        Component message,
-        @Nullable WidgetSetupCallback<Xlyder> setupCallback,
-        boolean active,
-        XlyderCallback onChanged
+            double x, double y,
+            Component message,
+            @Nullable WidgetSetupCallback<Xlyder> setupCallback,
+            boolean active,
+            XlyderCallback onChanged
     ) {
         this(new Vector2d(x, y), message, setupCallback, active ? onChanged : null);
     }
@@ -64,16 +64,16 @@ public class MessageXlyder extends StatelessWidget {
     @Override
     public Widget build(BuildContext context) {
         return new Stack(
-            new Xlyder(
-                this.value,
-                this.setupCallback, this.onChanged
-            ),
-            //TODO: abstract this styling?
-            new Label(
-                LabelStyle.SHADOW,
-                false,
-                this.message
-            )
+                new Xlyder(
+                        this.value,
+                        this.setupCallback, this.onChanged
+                ),
+                //TODO: abstract this styling?
+                new Label(
+                        LabelStyle.SHADOW,
+                        false,
+                        this.message
+                )
         );
     }
 

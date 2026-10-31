@@ -43,11 +43,11 @@ public class Flex extends MultiChildInstanceWidget {
     public final CrossAxisAlignment crossAxisAlignment;
 
     public Flex(
-        LayoutAxis mainAxis,
-        MainAxisAlignment mainAxisAlignment,
-        CrossAxisAlignment crossAxisAlignment,
-        @Nullable Widget separator,
-        List<? extends Widget> children
+            LayoutAxis mainAxis,
+            MainAxisAlignment mainAxisAlignment,
+            CrossAxisAlignment crossAxisAlignment,
+            @Nullable Widget separator,
+            List<? extends Widget> children
     ) {
         super(Util.make(() -> {
             if (separator == null || children.size() < 2) return children;
@@ -68,10 +68,10 @@ public class Flex extends MultiChildInstanceWidget {
 
     /// Create a flex without a separator
     public Flex(
-        LayoutAxis mainAxis,
-        MainAxisAlignment mainAxisAlignment,
-        CrossAxisAlignment crossAxisAlignment,
-        Widget... children
+            LayoutAxis mainAxis,
+            MainAxisAlignment mainAxisAlignment,
+            CrossAxisAlignment crossAxisAlignment,
+            Widget... children
     ) {
         this(mainAxis, mainAxisAlignment, crossAxisAlignment, null, Arrays.asList(children));
     }

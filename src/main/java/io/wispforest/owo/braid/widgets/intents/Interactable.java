@@ -32,9 +32,9 @@ public class Interactable extends StatefulWidget {
     public final Widget child;
 
     public Interactable(
-        @Nullable Map<List<ShortcutTrigger>, Intent> shortcuts,
-        WidgetSetupCallback<Interactable> setup,
-        Widget child
+            @Nullable Map<List<ShortcutTrigger>, Intent> shortcuts,
+            WidgetSetupCallback<Interactable> setup,
+            Widget child
     ) {
         this.shortcuts = shortcuts != null ? shortcuts : Map.of();
         this.child = child;
@@ -43,19 +43,19 @@ public class Interactable extends StatefulWidget {
 
     public static Widget primary(@Nullable Runnable onClick, @Nullable WidgetSetupCallback<Interactable> setup, Widget child) {
         return new Interactable(
-            CLICK_SHORTCUT,
-            widget -> {
-                if (onClick != null) {
-                    widget
-                        .addAction(PrimaryActionIntent.class, Action.callback((context, intent) -> onClick.run()))
-                        .cursorStyle(CursorStyle.HAND);
-                }
+                CLICK_SHORTCUT,
+                widget -> {
+                    if (onClick != null) {
+                        widget
+                                .addAction(PrimaryActionIntent.class, Action.callback((context, intent) -> onClick.run()))
+                                .cursorStyle(CursorStyle.HAND);
+                    }
 
-                if (setup != null) {
-                    setup.setup(widget);
-                }
-            },
-            child
+                    if (setup != null) {
+                        setup.setup(widget);
+                    }
+                },
+                child
         );
     }
 
@@ -171,7 +171,7 @@ public class Interactable extends StatefulWidget {
     // ---
 
     private static final Map<List<ShortcutTrigger>, Intent> CLICK_SHORTCUT = Map.of(
-        List.of(ShortcutTrigger.LEFT_CLICK), PrimaryActionIntent.INSTANCE
+            List.of(ShortcutTrigger.LEFT_CLICK), PrimaryActionIntent.INSTANCE
     );
 
     // ---
@@ -181,21 +181,21 @@ public class Interactable extends StatefulWidget {
         public Widget build(BuildContext context) {
             var widget = this.widget();
             return new Actions(
-                actions -> actions
-                    .focusable(false)
-                    .actions(this.widget().actions),
-                new Shortcuts(
-                    widget.shortcuts,
-                    shortcuts -> shortcuts
-                        .enterCallback(this.widget().enterCallback)
-                        .exitCallback(this.widget().exitCallback)
-                        .cursorStyleSupplier(this.widget().cursorStyleSupplier)
-                        .focusGainedCallback(this.widget().focusGainedCallback)
-                        .focusLostCallback(this.widget().focusLostCallback)
-                        .skipTraversal(this.widget().skipTraversal)
-                        .autoFocus(this.widget().autoFocus),
-                    widget.child
-                )
+                    actions -> actions
+                            .focusable(false)
+                            .actions(this.widget().actions),
+                    new Shortcuts(
+                            widget.shortcuts,
+                            shortcuts -> shortcuts
+                                    .enterCallback(this.widget().enterCallback)
+                                    .exitCallback(this.widget().exitCallback)
+                                    .cursorStyleSupplier(this.widget().cursorStyleSupplier)
+                                    .focusGainedCallback(this.widget().focusGainedCallback)
+                                    .focusLostCallback(this.widget().focusLostCallback)
+                                    .skipTraversal(this.widget().skipTraversal)
+                                    .autoFocus(this.widget().autoFocus),
+                            widget.child
+                    )
             );
         }
     }

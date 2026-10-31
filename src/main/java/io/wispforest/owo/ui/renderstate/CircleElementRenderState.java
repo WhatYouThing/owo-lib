@@ -1,7 +1,7 @@
 package io.wispforest.owo.ui.renderstate;
 
-import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import io.wispforest.owo.ui.core.Color;
 import net.minecraft.client.gui.navigation.ScreenPosition;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
@@ -11,16 +11,16 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix3x2f;
 
 public record CircleElementRenderState(
-    RenderPipeline pipeline,
-    Matrix3x2f pose,
-    ScreenRectangle scissorArea,
-    int centerX,
-    int centerY,
-    double angleFrom,
-    double angleTo,
-    int segments,
-    double radius,
-    Color color
+        RenderPipeline pipeline,
+        Matrix3x2f pose,
+        ScreenRectangle scissorArea,
+        int centerX,
+        int centerY,
+        double angleFrom,
+        double angleTo,
+        int segments,
+        double radius,
+        Color color
 ) implements GuiElementRenderState {
     @Override
     public void buildVertices(VertexConsumer vertices) {
@@ -32,7 +32,7 @@ public record CircleElementRenderState(
         for (int i = this.segments; i >= 0; i--) {
             double theta = Math.toRadians(this.angleFrom) + i * angleStep;
             vertices.addVertexWith2DPose(this.pose, (float) (this.centerX - Math.cos(theta) * this.radius), (float) (this.centerY - Math.sin(theta) * this.radius))
-                .setColor(vColor);
+                    .setColor(vColor);
         }
     }
 
@@ -53,10 +53,10 @@ public record CircleElementRenderState(
 
     @Override
     public ScreenRectangle bounds() {
-        var screenRect =  new ScreenRectangle(
-            new ScreenPosition((int) (this.centerX - this.radius), (int) (this.centerY - this.radius)),
-            (int) Math.ceil(this.radius * 2),
-            (int) Math.ceil(this.radius * 2)
+        var screenRect = new ScreenRectangle(
+                new ScreenPosition((int) (this.centerX - this.radius), (int) (this.centerY - this.radius)),
+                (int) Math.ceil(this.radius * 2),
+                (int) Math.ceil(this.radius * 2)
         ).transformMaxBounds(this.pose);
 
         return this.scissorArea != null ? this.scissorArea.intersection(screenRect) : screenRect;

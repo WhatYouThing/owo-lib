@@ -21,7 +21,8 @@ public class CheckboxComponent extends Checkbox {
     protected final Observable<Boolean> listeners;
 
     protected CheckboxComponent(Component message) {
-        super(0, 0, 0, message, Minecraft.getInstance().font, false, (checkbox, checked) -> {});
+        super(0, 0, 0, message, Minecraft.getInstance().font, false, (checkbox, checked) -> {
+        });
         this.listeners = Observable.of(this.selected());
         this.sizing(Sizing.content(), Sizing.fixed(20));
     }
@@ -52,7 +53,7 @@ public class CheckboxComponent extends Checkbox {
     @Override
     public void setMessage(Component message) {
         super.setMessage(message);
-        ((CheckboxAccessor)this).owo$getTextWidget().setMessage(message);
+        ((CheckboxAccessor) this).owo$getTextWidget().setMessage(message);
     }
 
     @Override

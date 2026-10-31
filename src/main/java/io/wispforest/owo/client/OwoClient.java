@@ -27,24 +27,24 @@ import org.jetbrains.annotations.ApiStatus;
 public class OwoClient implements ClientModInitializer {
 
     private static final String LINUX_RENDERDOC_WARNING = """
-        
-        ========================================
-        Ignored 'owo.renderdocPath' property as this Minecraft instance is not running on Windows.
-        Please populate the LD_PRELOAD environment variable instead
-        ========================================""";
+            
+            ========================================
+            Ignored 'owo.renderdocPath' property as this Minecraft instance is not running on Windows.
+            Please populate the LD_PRELOAD environment variable instead
+            ========================================""";
 
     private static final String MAC_RENDERDOC_WARNING = """
-        
-        ========================================
-        Ignored 'owo.renderdocPath' property as this Minecraft instance is not running on Windows.
-        RenderDoc is not supported on macOS
-        ========================================""";
+            
+            ========================================
+            Ignored 'owo.renderdocPath' property as this Minecraft instance is not running on Windows.
+            RenderDoc is not supported on macOS
+            ========================================""";
 
     private static final String GENERIC_RENDERDOC_WARNING = """
-        
-        ========================================
-        Ignored 'owo.renderdocPath' property as this Minecraft instance is not running on Windows.
-        ========================================""";
+            
+            ========================================
+            Ignored 'owo.renderdocPath' property as this Minecraft instance is not running on Windows.
+            ========================================""";
 
     @Override
     public void onInitializeClient() {

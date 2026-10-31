@@ -12,7 +12,8 @@ public final class UISounds {
 
     public static final SoundEvent UI_INTERACTION = SoundEvent.createVariableRangeEvent(Owo.id("ui.owo.interaction"));
 
-    private UISounds() {}
+    private UISounds() {
+    }
 
     @Environment(EnvType.CLIENT)
     public static void play(SoundEvent event) {

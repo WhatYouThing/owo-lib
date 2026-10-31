@@ -20,7 +20,8 @@ public class SearchAnchorComponent extends BaseUIComponent {
     protected final Supplier<String>[] searchTextSources;
     protected final Option.Key key;
 
-    protected Consumer<ConfigScreen.SearchHighlighterComponent> highlightConfigurator = highlight -> {};
+    protected Consumer<ConfigScreen.SearchHighlighterComponent> highlightConfigurator = highlight -> {
+    };
 
     @SafeVarargs
     public SearchAnchorComponent(ParentUIComponent anchorFrame, Option.Key key, Supplier<String>... searchTextSources) {
@@ -33,7 +34,8 @@ public class SearchAnchorComponent extends BaseUIComponent {
     }
 
     @Override
-    public void draw(OwoUIGraphics graphics, int mouseX, int mouseY, float partialTicks, float delta) {}
+    public void draw(OwoUIGraphics graphics, int mouseX, int mouseY, float partialTicks, float delta) {
+    }
 
     public ParentUIComponent anchorFrame() {
         return this.anchorFrame;

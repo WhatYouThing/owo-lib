@@ -77,18 +77,18 @@ public class ParticleSystemController {
         this.ownerClassName = ReflectionUtils.getCallingClassName(2);
 
         var instanceEndec = Endec.<ParticleSystemInstance<?>, Integer>dispatched(
-            index -> {
-                @SuppressWarnings("unchecked")
-                var system = (ParticleSystem<Object>) systemsByIndex.get(index);
-                return system.endec.xmap(x -> new ParticleSystemInstance<>(system, x), x -> x.data);
-            },
-            instance -> instance.system.index,
-            Endec.VAR_INT
+                index -> {
+                    @SuppressWarnings("unchecked")
+                    var system = (ParticleSystem<Object>) systemsByIndex.get(index);
+                    return system.endec.xmap(x -> new ParticleSystemInstance<>(system, x), x -> x.data);
+                },
+                instance -> instance.system.index,
+                Endec.VAR_INT
         );
         var endec = StructEndecBuilder.of(
-            MinecraftEndecs.VEC3.fieldOf("pos", ParticleSystemPayload::pos),
-            instanceEndec.fieldOf("instance", ParticleSystemPayload::instance),
-            (pos, instance) -> new ParticleSystemPayload(payloadId, pos, instance)
+                MinecraftEndecs.VEC3.fieldOf("pos", ParticleSystemPayload::pos),
+                instanceEndec.fieldOf("instance", ParticleSystemPayload::instance),
+                (pos, instance) -> new ParticleSystemPayload(payloadId, pos, instance)
         );
 
         PayloadTypeRegistry.clientboundPlay().register(payloadId, CodecUtils.toPacketCodec(endec));
@@ -190,7 +190,8 @@ public class ParticleSystemController {
         }
     }
 
-    private record ParticleSystemPayload(CustomPacketPayload.Type<ParticleSystemPayload> id, Vec3 pos, ParticleSystemInstance<?> instance) implements CustomPacketPayload {
+    private record ParticleSystemPayload(CustomPacketPayload.Type<ParticleSystemPayload> id, Vec3 pos,
+                                         ParticleSystemInstance<?> instance) implements CustomPacketPayload {
         @Override
         public Type<? extends CustomPacketPayload> type() {
             return id;

@@ -80,5 +80,6 @@ public class BraidDisplayBinding {
 
     // ---
 
-    public record DisplayHitResult(BraidDisplay display, Vector2dc point) {}
+    public record DisplayHitResult(BraidDisplay display, Vector2dc point) {
+    }
 }

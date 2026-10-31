@@ -19,10 +19,10 @@ public class MessageSlider extends StatelessWidget {
     public final Component message;
 
     public MessageSlider(
-        double value,
-        Component message,
-        @Nullable WidgetSetupCallback<Slider> setupCallback,
-        @Nullable SliderCallback onChanged
+            double value,
+            Component message,
+            @Nullable WidgetSetupCallback<Slider> setupCallback,
+            @Nullable SliderCallback onChanged
     ) {
         this.value = value;
         this.setupCallback = setupCallback;
@@ -31,11 +31,11 @@ public class MessageSlider extends StatelessWidget {
     }
 
     public MessageSlider(
-        double value,
-        Component message,
-        @Nullable WidgetSetupCallback<Slider> setupCallback,
-        boolean active,
-        SliderCallback onChanged
+            double value,
+            Component message,
+            @Nullable WidgetSetupCallback<Slider> setupCallback,
+            boolean active,
+            SliderCallback onChanged
     ) {
         this(value, message, setupCallback, active ? onChanged : null);
     }
@@ -43,16 +43,16 @@ public class MessageSlider extends StatelessWidget {
     @Override
     public Widget build(BuildContext context) {
         return new Stack(
-            new Slider(
-                this.value,
-                this.setupCallback, this.onChanged
-            ),
-            //TODO: abstract this styling?
-            new Label(
-                LabelStyle.SHADOW,
-                false,
-                this.message
-            )
+                new Slider(
+                        this.value,
+                        this.setupCallback, this.onChanged
+                ),
+                //TODO: abstract this styling?
+                new Label(
+                        LabelStyle.SHADOW,
+                        false,
+                        this.message
+                )
         );
     }
 }

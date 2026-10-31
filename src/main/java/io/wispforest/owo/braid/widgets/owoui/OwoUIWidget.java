@@ -36,17 +36,17 @@ public class OwoUIWidget extends StatefulWidget {
         @Override
         public Widget build(BuildContext context) {
             return new Align(
-                Alignment.TOP_LEFT,
-                new Focusable(
-                    widget -> widget
-                        .focusLostCallback(() -> ((OwoUIWidgetWrapper.Instance) this.owoUiContext.instance()).onFocusLost())
-                        .keyDownCallback((keyCode, modifiers) -> ((OwoUIWidgetWrapper.Instance) this.owoUiContext.instance()).onKeyDown(keyCode, modifiers))
-                        .charCallback((charCode, modifiers) -> ((OwoUIWidgetWrapper.Instance) this.owoUiContext.instance()).onChar(charCode, modifiers)),
-                    new Builder(owoUiContext -> {
-                        this.owoUiContext = owoUiContext;
-                        return new OwoUIWidgetWrapper(component);
-                    })
-                )
+                    Alignment.TOP_LEFT,
+                    new Focusable(
+                            widget -> widget
+                                    .focusLostCallback(() -> ((OwoUIWidgetWrapper.Instance) this.owoUiContext.instance()).onFocusLost())
+                                    .keyDownCallback((keyCode, modifiers) -> ((OwoUIWidgetWrapper.Instance) this.owoUiContext.instance()).onKeyDown(keyCode, modifiers))
+                                    .charCallback((charCode, modifiers) -> ((OwoUIWidgetWrapper.Instance) this.owoUiContext.instance()).onChar(charCode, modifiers)),
+                            new Builder(owoUiContext -> {
+                                this.owoUiContext = owoUiContext;
+                                return new OwoUIWidgetWrapper(component);
+                            })
+                    )
             );
         }
     }

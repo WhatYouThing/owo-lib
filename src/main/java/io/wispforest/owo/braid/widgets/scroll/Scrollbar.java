@@ -29,34 +29,34 @@ public class Scrollbar extends StatelessWidget {
     @Override
     public Widget build(BuildContext context) {
         return new ListenableBuilder(
-            this.controller,
-            buildContext -> {
-                return new LayoutBuilder(
-                    (ctx, constraints) -> {
-                        var currentOffset = this.controller.offset;
-                        var maxOffset = this.controller.maxOffset;
+                this.controller,
+                buildContext -> {
+                    return new LayoutBuilder(
+                            (ctx, constraints) -> {
+                                var currentOffset = this.controller.offset;
+                                var maxOffset = this.controller.maxOffset;
 
-                        var containerSize = constraints.maxOnAxis(this.axis);
-                        var childSize = containerSize + maxOffset;
-                        var scrollbarLength = Math.floor(Math.min((containerSize / childSize) * containerSize, containerSize));
+                                var containerSize = constraints.maxOnAxis(this.axis);
+                                var childSize = containerSize + maxOffset;
+                                var scrollbarLength = Math.floor(Math.min((containerSize / childSize) * containerSize, containerSize));
 
-                        return maxOffset != 0 ? new Slider(
-                            currentOffset,
-                            widget -> widget
-                                .style(new SliderStyle<>(
-                                    this.track,
-                                    active -> this.handle,
-                                    Math.max(5, scrollbarLength),
-                                    null
-                                ))
-                                .min(this.axis.choose(0d, maxOffset))
-                                .max(this.axis.choose(maxOffset, 0d))
-                                .axis(this.axis),
-                            this.controller::jumpTo
-                        ) : new Padding(Insets.none());
-                    }
-                );
-            }
+                                return maxOffset != 0 ? new Slider(
+                                        currentOffset,
+                                        widget -> widget
+                                                .style(new SliderStyle<>(
+                                                        this.track,
+                                                        active -> this.handle,
+                                                        Math.max(5, scrollbarLength),
+                                                        null
+                                                ))
+                                                .min(this.axis.choose(0d, maxOffset))
+                                                .max(this.axis.choose(maxOffset, 0d))
+                                                .axis(this.axis),
+                                        this.controller::jumpTo
+                                ) : new Padding(Insets.none());
+                            }
+                    );
+                }
         );
     }
 }

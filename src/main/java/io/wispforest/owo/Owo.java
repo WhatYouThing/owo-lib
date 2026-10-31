@@ -31,10 +31,10 @@ public class Owo implements ModInitializer {
     private static MinecraftServer SERVER;
 
     public static final Component PREFIX = Component.empty().withStyle(ChatFormatting.GRAY)
-        .append(withColor("o", 0x3955e5))
-        .append(withColor("ω", 0x13a6f0))
-        .append(withColor("o", 0x3955e5))
-        .append(Component.literal(" > ").withStyle(ChatFormatting.GRAY));
+            .append(withColor("o", 0x3955e5))
+            .append(withColor("ω", 0x13a6f0))
+            .append(withColor("o", 0x3955e5))
+            .append(Component.literal(" > ").withStyle(ChatFormatting.GRAY));
 
     static {
         boolean debug = FabricLoader.getInstance().isDevelopmentEnvironment();

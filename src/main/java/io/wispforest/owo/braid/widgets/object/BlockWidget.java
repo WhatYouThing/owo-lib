@@ -74,8 +74,8 @@ public class BlockWidget extends StatefulWidget {
         @Override
         public void didUpdateWidget(BlockWidget oldWidget) {
             if (this.widget().blockState == oldWidget.blockState
-                && this.widget().blockEntity == oldWidget.blockEntity
-                && Objects.equals(this.widget().blockEntityNbt, oldWidget.blockEntityNbt)) {
+                    && this.widget().blockEntity == oldWidget.blockEntity
+                    && Objects.equals(this.widget().blockEntityNbt, oldWidget.blockEntityNbt)) {
                 return;
             }
 
@@ -84,16 +84,16 @@ public class BlockWidget extends StatefulWidget {
 
         private void resetBlockEntity() {
             this.internalBlockEntity = this.widget().blockEntity == null
-                ? prepareBlockEntity(this.widget().blockState, this.widget().blockEntityNbt)
-                : null;
+                    ? prepareBlockEntity(this.widget().blockState, this.widget().blockEntityNbt)
+                    : null;
         }
 
         @Override
         public Widget build(BuildContext context) {
             return new RawBlockWidget(
-                this.widget().blockState,
-                this.internalBlockEntity != null ? this.internalBlockEntity : this.widget().blockEntity,
-                this.widget().transform
+                    this.widget().blockState,
+                    this.internalBlockEntity != null ? this.internalBlockEntity : this.widget().blockEntity,
+                    this.widget().transform
             );
         }
 

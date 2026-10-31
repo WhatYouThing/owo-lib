@@ -82,8 +82,8 @@ public class TextAreaComponent extends MultiLineEditBox {
 
         if (this.displayCharCount.get()) {
             var text = this.editBox.hasCharacterLimit()
-                ? Component.translatable("gui.multiLineEditBox.character_limit", this.editBox.value().length(), this.editBox.characterLimit())
-                : Component.literal(String.valueOf(this.editBox.value().length()));
+                    ? Component.translatable("gui.multiLineEditBox.character_limit", this.editBox.value().length(), this.editBox.characterLimit())
+                    : Component.literal(String.valueOf(this.editBox.value().length()));
 
             var textRenderer = Minecraft.getInstance().font;
             context.text(textRenderer, text, this.getX() + this.width - textRenderer.width(text), this.getY() + this.height + 3, 0xa0a0a0);

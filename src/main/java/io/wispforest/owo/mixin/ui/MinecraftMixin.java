@@ -27,22 +27,22 @@ public class MinecraftMixin {
     }
 
     @Inject(method = "runTick", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/Window;setErrorSection(Ljava/lang/String;)V", ordinal = 1))
-    private void beforeRender(boolean tick, CallbackInfo ci) {
+    private void beforeRender(boolean advanceGameTime, CallbackInfo ci) {
         ClientRenderCallback.BEFORE.invoker().onRender((Minecraft) (Object) this);
     }
 
-    @Inject(method = "renderFrame", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/GpuSurface;present()V", shift = At.Shift.AFTER))
-    private void afterRender(boolean tick, CallbackInfo ci) {
+    @Inject(method = "renderFrame", at = @At(value = "INVOKE", target = "Lcom/mojang/renderpearl/api/device/GpuSurface;present()V", shift = At.Shift.AFTER))
+    private void afterRender(boolean advanceGameTime, CallbackInfo ci) {
         ClientRenderCallback.AFTER.invoker().onRender((Minecraft) (Object) this);
     }
 
     @Inject(method = "renderFrame", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;frameTimeNs:J", opcode = Opcodes.PUTFIELD))
-    private void beforeSwap(boolean tick, CallbackInfo ci) {
+    private void beforeSwap(boolean advanceGameTime, CallbackInfo ci) {
         ClientRenderCallback.BEFORE_SWAP.invoker().onRender((Minecraft) (Object) this);
     }
 
     @Inject(method = "<init>", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;window:Lcom/mojang/blaze3d/platform/Window;", opcode = Opcodes.PUTFIELD, shift = At.Shift.AFTER))
-    private void initBlurRenderer(GameConfig args, CallbackInfo ci) {
+    private void initBlurRenderer(GameConfig gameConfig, CallbackInfo ci) {
         BlurQuadElementRenderState.initialize((Minecraft) (Object) this);
     }
 }

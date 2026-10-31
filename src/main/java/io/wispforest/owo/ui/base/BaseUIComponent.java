@@ -21,8 +21,10 @@ import java.util.function.Consumer;
  */
 public abstract class BaseUIComponent implements UIComponent {
 
-    @Nullable protected ParentUIComponent parent = null;
-    @Nullable protected String id = null;
+    @Nullable
+    protected ParentUIComponent parent = null;
+    @Nullable
+    protected String id = null;
 
     protected boolean mounted = false;
 

@@ -90,96 +90,96 @@ public class Window extends StatefulWidget {
         @Override
         public Widget build(BuildContext context) {
             return new ListenableBuilder(
-                this.controller,
-                (buildContext, child) -> {
-                    var titleBar = new ArrayList<Widget>();
-                    if (this.widget().collapsible) {
-                        titleBar.add(Interactable.primary(
-                            () -> this.controller.toggleCollapsed(),
-                            new Padding(
-                                Insets.of(2, 0, 0, 4),
-                                new Label(Component.literal(this.controller.collapsed() ? "⏶" : "⏷"))
-                            )
-                        ));
-                    }
-
-                    titleBar.add(new Flexible(new Label(new LabelStyle(Alignment.LEFT, null, null, null), false, Label.Overflow.ELLIPSIS, this.widget().title)));
-
-                    if (this.widget().onClose != null) {
-                        titleBar.add(Interactable.primary(
-                            () -> this.widget().onClose.run(),
-                            new HoverStyledLabel(Component.literal("x"), Style.EMPTY.applyFormat(ChatFormatting.RED))
-                        ));
-                    }
-
-                    return new DragArenaElement(
-                        Math.ceil(this.controller.x()),
-                        Math.ceil(this.controller.y()),
-                        new MouseArea(
-                            widget -> widget
-                                //TODO: decide what to do with buttons here
-                                .clickCallback((x, y, button, modifiers) -> {
-                                    if (button != 0) return false;
-                                    this.draggingEdges = this.edgesAt(x, y);
-                                    this.draggingSize = this.controller.size();
-                                    return true;
-                                })
-                                .dragCallback((x, y, dx, dy) -> this.resize(dx, dy))
-                                .dragEndCallback(() -> {
-                                    this.draggingEdges = null;
-                                    this.draggingSize = null;
-                                })
-                                .cursorStyleSupplier((x, y) -> this.cursorStyleFor(this.edgesAt(x, y))),
-                            new Padding(
-                                Insets.all(4),
-                                new HitTestTrap(
-                                    new MouseArea(
-                                        widget -> widget
-                                            .dragCallback((x, y, dx, dy) -> {
-                                                this.controller.setX(this.controller.x() + dx);
-                                                this.controller.setY(this.controller.y() + dy);
-                                            }),
-                                        new Sized(
-                                            Size.of(
-                                                this.controller.size().width(),
-                                                this.controller.size().height() + 15
-                                            ).floor(),
-                                            new Column(
-                                                new Sized(
-                                                    null,
-                                                    15.0,
-                                                    new Box(
-                                                        Color.BLACK.withA(.75),
-                                                        new Padding(
-                                                            Insets.horizontal(4),
-                                                            new Row(titleBar)
-                                                        )
-                                                    )
-                                                ),
-                                                new Flexible(
-                                                    new Visibility(
-                                                        !this.controller.collapsed(),
-                                                        false,
-                                                        child
-                                                    )
-                                                )
-                                            )
-                                        )
+                    this.controller,
+                    (buildContext, child) -> {
+                        var titleBar = new ArrayList<Widget>();
+                        if (this.widget().collapsible) {
+                            titleBar.add(Interactable.primary(
+                                    () -> this.controller.toggleCollapsed(),
+                                    new Padding(
+                                            Insets.of(2, 0, 0, 4),
+                                            new Label(Component.literal(this.controller.collapsed() ? "⏶" : "⏷"))
                                     )
+                            ));
+                        }
+
+                        titleBar.add(new Flexible(new Label(new LabelStyle(Alignment.LEFT, null, null, null), false, Label.Overflow.ELLIPSIS, this.widget().title)));
+
+                        if (this.widget().onClose != null) {
+                            titleBar.add(Interactable.primary(
+                                    () -> this.widget().onClose.run(),
+                                    new HoverStyledLabel(Component.literal("x"), Style.EMPTY.applyFormat(ChatFormatting.RED))
+                            ));
+                        }
+
+                        return new DragArenaElement(
+                                Math.ceil(this.controller.x()),
+                                Math.ceil(this.controller.y()),
+                                new MouseArea(
+                                        widget -> widget
+                                                //TODO: decide what to do with buttons here
+                                                .clickCallback((x, y, button, modifiers) -> {
+                                                    if (button != 0) return false;
+                                                    this.draggingEdges = this.edgesAt(x, y);
+                                                    this.draggingSize = this.controller.size();
+                                                    return true;
+                                                })
+                                                .dragCallback((x, y, dx, dy) -> this.resize(dx, dy))
+                                                .dragEndCallback(() -> {
+                                                    this.draggingEdges = null;
+                                                    this.draggingSize = null;
+                                                })
+                                                .cursorStyleSupplier((x, y) -> this.cursorStyleFor(this.edgesAt(x, y))),
+                                        new Padding(
+                                                Insets.all(4),
+                                                new HitTestTrap(
+                                                        new MouseArea(
+                                                                widget -> widget
+                                                                        .dragCallback((x, y, dx, dy) -> {
+                                                                            this.controller.setX(this.controller.x() + dx);
+                                                                            this.controller.setY(this.controller.y() + dy);
+                                                                        }),
+                                                                new Sized(
+                                                                        Size.of(
+                                                                                this.controller.size().width(),
+                                                                                this.controller.size().height() + 15
+                                                                        ).floor(),
+                                                                        new Column(
+                                                                                new Sized(
+                                                                                        null,
+                                                                                        15.0,
+                                                                                        new Box(
+                                                                                                Color.BLACK.withA(.75),
+                                                                                                new Padding(
+                                                                                                        Insets.horizontal(4),
+                                                                                                        new Row(titleBar)
+                                                                                                )
+                                                                                        )
+                                                                                ),
+                                                                                new Flexible(
+                                                                                        new Visibility(
+                                                                                                !this.controller.collapsed(),
+                                                                                                false,
+                                                                                                child
+                                                                                        )
+                                                                                )
+                                                                        )
+                                                                )
+                                                        )
+                                                )
+                                        )
                                 )
+                        );
+                    },
+                    new Box(
+                            Color.BLACK.withA(.65),
+                            new Padding(
+                                    Insets.all(4),
+                                    new Clip(
+                                            this.widget().content
+                                    )
                             )
-                        )
-                    );
-                },
-                new Box(
-                    Color.BLACK.withA(.65),
-                    new Padding(
-                        Insets.all(4),
-                        new Clip(
-                            this.widget().content
-                        )
                     )
-                )
             );
         }
 
@@ -218,8 +218,8 @@ public class Window extends StatefulWidget {
 
         private void applySize(Size size) {
             this.controller.setSize(Size.of(
-                Mth.clamp(size.width(), this.widget().minSize.width(), this.widget().maxSize.width()),
-                Mth.clamp(size.height(), this.widget().minSize.height(), this.widget().maxSize.height())
+                    Mth.clamp(size.width(), this.widget().minSize.width(), this.widget().maxSize.width()),
+                    Mth.clamp(size.height(), this.widget().minSize.height(), this.widget().maxSize.height())
             ));
         }
 

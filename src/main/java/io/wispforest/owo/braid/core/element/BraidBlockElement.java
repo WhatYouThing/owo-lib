@@ -20,13 +20,13 @@ import org.joml.Matrix3x2f;
 import org.joml.Matrix4f;
 
 public record BraidBlockElement(
-    BlockState block,
-    @Nullable BlockEntityRenderState entity,
-    Matrix4f transform,
-    Matrix3x2f pose,
-    double width,
-    double height,
-    ScreenRectangle scissorArea
+        BlockState block,
+        @Nullable BlockEntityRenderState entity,
+        Matrix4f transform,
+        Matrix3x2f pose,
+        double width,
+        double height,
+        ScreenRectangle scissorArea
 ) implements PictureInPictureRenderState {
 
     @Override
@@ -69,8 +69,8 @@ public record BraidBlockElement(
         var bounds = new ScreenRectangle(0, 0, (int) this.width, (int) this.height).transformMaxBounds(this.pose);
 
         return this.scissorArea != null
-            ? this.scissorArea.intersection(bounds)
-            : bounds;
+                ? this.scissorArea.intersection(bounds)
+                : bounds;
     }
 
     public static class Renderer extends PictureInPictureRenderer<BraidBlockElement> {
@@ -90,10 +90,10 @@ public record BraidBlockElement(
             if (state.block.getRenderShape() != RenderShape.INVISIBLE) {
                 var blockModelRenderState = new BlockModelRenderState();
                 Minecraft.getInstance().getModelManager().getBlockModelSet().get(state.block).update(
-                    blockModelRenderState,
-                    state.block,
-                    BlockDisplayContext.create(),
-                    67
+                        blockModelRenderState,
+                        state.block,
+                        BlockDisplayContext.create(),
+                        67
                 );
 
                 blockModelRenderState.submit(matrices, collector, LightCoordsUtil.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 0);

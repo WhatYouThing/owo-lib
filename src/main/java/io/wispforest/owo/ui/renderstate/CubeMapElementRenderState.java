@@ -1,8 +1,7 @@
 package io.wispforest.owo.ui.renderstate;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.textures.GpuTextureView;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.renderpearl.api.textures.GpuTextureView;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
@@ -15,10 +14,10 @@ import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
 
 public record CubeMapElementRenderState(
-    CubeMap cubeMap,
-    boolean rotate,
-    ScreenRectangle bounds,
-    ScreenRectangle scissorArea
+        CubeMap cubeMap,
+        boolean rotate,
+        ScreenRectangle bounds,
+        ScreenRectangle scissorArea
 ) implements PictureInPictureRenderState {
 
     public static OutputOverride outputOverride = null;
@@ -77,11 +76,14 @@ public record CubeMapElementRenderState(
             dummyContext.guiRenderState.reset();
 
             try {
+                // TODO: override variables removed, and this hack probably no longer works
+                /*
                 CubeMapElementRenderState.outputOverride = new OutputOverride(
                     RenderSystem.outputColorTextureOverride,
                     RenderSystem.outputDepthTextureOverride,
                     0xFF000000
                 );
+                 */
 
                 // TODO: we should probably investigate syncing this to the actual panorama
                 //  rotation at some point
@@ -105,5 +107,6 @@ public record CubeMapElementRenderState(
         }
     }
 
-    public record OutputOverride(GpuTextureView color, GpuTextureView depth, int resetColor) {}
+    public record OutputOverride(GpuTextureView color, GpuTextureView depth, int resetColor) {
+    }
 }

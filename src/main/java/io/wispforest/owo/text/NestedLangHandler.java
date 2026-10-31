@@ -20,9 +20,9 @@ public class NestedLangHandler {
     }
 
     private static Set<Map.Entry<String, JsonElement>> deNest(
-        String prefix,
-        Set<Map.Entry<String, JsonElement>> entries,
-        String suffix
+            String prefix,
+            Set<Map.Entry<String, JsonElement>> entries,
+            String suffix
     ) {
         var returned = new HashSet<Map.Entry<String, JsonElement>>();
         for (var entry : entries) {
@@ -33,25 +33,25 @@ public class NestedLangHandler {
             var listMatcher = NESTED_LIST_PATTERN.matcher(key);
             if (value.isJsonObject() && objectMatcher.matches()) {
                 returned.addAll(deNest(
-                    prefix + objectMatcher.group(1),
-                    value.getAsJsonObject().entrySet(),
-                    objectMatcher.group(2) + suffix
+                        prefix + objectMatcher.group(1),
+                        value.getAsJsonObject().entrySet(),
+                        objectMatcher.group(2) + suffix
                 ));
             } else if (value.isJsonArray() && listMatcher.matches()) {
                 var start = Mth.getInt(listMatcher.group(2), 1);
                 var array = value.getAsJsonArray();
                 for (int i = 0; i < array.size(); i++) {
                     returned.addAll(deNest(
-                        prefix + listMatcher.group(1),
-                        Set.of(Map.entry(String.valueOf((start + i)), array.get(i))),
-                        listMatcher.group(3) + suffix
+                            prefix + listMatcher.group(1),
+                            Set.of(Map.entry(String.valueOf((start + i)), array.get(i))),
+                            listMatcher.group(3) + suffix
                     ));
                 }
             } else {
                 returned.add(Map.entry(
-                    key.isEmpty()
-                        ? prefix.replaceAll(EMPTY_STRIP_PATTERN.pattern(), "") + suffix
-                        : prefix + key + suffix, value
+                        key.isEmpty()
+                                ? prefix.replaceAll(EMPTY_STRIP_PATTERN.pattern(), "") + suffix
+                                : prefix + key + suffix, value
                 ));
             }
         }

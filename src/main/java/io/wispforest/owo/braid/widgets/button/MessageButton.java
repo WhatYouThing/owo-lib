@@ -28,15 +28,15 @@ public class MessageButton extends StatelessWidget {
     @Override
     public Widget build(BuildContext context) {
         return new Button(
-            this.onClick,
-            //TODO: abstract away the million places where a ternary operator is used to determine the label style for a possibly disabled button
-            new Label(
-                this.onClick == null || ControlsOverride.controlsDisabled(context)
-                    ? new LabelStyle(null, Color.formatting(ChatFormatting.GRAY), null, false)
-                    : LabelStyle.SHADOW,
-                true,
-                this.text
-            )
+                this.onClick,
+                //TODO: abstract away the million places where a ternary operator is used to determine the label style for a possibly disabled button
+                new Label(
+                        this.onClick == null || ControlsOverride.controlsDisabled(context)
+                                ? new LabelStyle(null, Color.formatting(ChatFormatting.GRAY), null, false)
+                                : LabelStyle.SHADOW,
+                        true,
+                        this.text
+                )
         );
     }
 }

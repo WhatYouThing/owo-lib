@@ -43,6 +43,7 @@ public class Easing {
     // ---
 
     private final Function function;
+
     public Easing(Function function) {
         this.function = function;
     }

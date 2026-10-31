@@ -66,8 +66,8 @@ public class FocusScope extends Focusable {
             }
 
             var nowFocused = primary != null
-                ? Stream.concat(Stream.of(primary), primary.ancestors()).takeWhile(state -> state != this).collect(Collectors.toList())
-                : new ArrayList<Focusable.State<?>>();
+                    ? Stream.concat(Stream.of(primary), primary.ancestors()).takeWhile(state -> state != this).collect(Collectors.toList())
+                    : new ArrayList<Focusable.State<?>>();
 
             for (var state : nowFocused) {
                 if (this.focusedDescendants.contains(state)) {
@@ -136,8 +136,8 @@ public class FocusScope extends Focusable {
             var descendants = this.descendants.get();
 
             var searchStartIdx = !this.focusedDescendants.isEmpty()
-                ? descendants.indexOf(this.focusedDescendants.getFirst())
-                : (forwards ? -1 : 0);
+                    ? descendants.indexOf(this.focusedDescendants.getFirst())
+                    : (forwards ? -1 : 0);
             var offset = forwards ? 1 : -1;
 
             var nextFocusIdx = searchStartIdx;
@@ -176,18 +176,18 @@ public class FocusScope extends Focusable {
             var focusedCenter = FocusTraversalCandidate.of(this.focusedDescendants.getFirst()).center();
 
             var candidates = descendants.stream()
-                .filter(state -> !state.widget().skipTraversal())
-                .map(FocusTraversalCandidate::of)
-                .filter(candidate -> {
-                    return this.filterCandidate(candidate, focusedBounds, direction);
-                })
-                .collect(Collectors.toList());
+                    .filter(state -> !state.widget().skipTraversal())
+                    .map(FocusTraversalCandidate::of)
+                    .filter(candidate -> {
+                        return this.filterCandidate(candidate, focusedBounds, direction);
+                    })
+                    .collect(Collectors.toList());
 
             var candidatesInBand = candidates.stream()
-                .filter(candidate -> {
-                    return this.filterInBand(candidate, focusedBounds, direction);
-                })
-                .collect(Collectors.toList());
+                    .filter(candidate -> {
+                        return this.filterInBand(candidate, focusedBounds, direction);
+                    })
+                    .collect(Collectors.toList());
 
             if (!candidatesInBand.isEmpty()) {
                 candidatesInBand.sort(this.sortInBand(focusedCenter, direction));
@@ -217,8 +217,10 @@ public class FocusScope extends Focusable {
 
         private boolean filterInBand(FocusTraversalCandidate candidate, AABB focusedBounds, FocusTraversalDirection direction) {
             return switch (direction) {
-                case LEFT, RIGHT -> candidate.aabb().minY < focusedBounds.maxY && candidate.aabb().maxY > focusedBounds.minY;
-                case UP, DOWN -> candidate.aabb().minX < focusedBounds.maxX && candidate.aabb().maxX > focusedBounds.minX;
+                case LEFT, RIGHT ->
+                        candidate.aabb().minY < focusedBounds.maxY && candidate.aabb().maxY > focusedBounds.minY;
+                case UP, DOWN ->
+                        candidate.aabb().minX < focusedBounds.maxX && candidate.aabb().maxX > focusedBounds.minX;
                 default -> throw new IllegalStateException();
             };
         }
@@ -226,23 +228,25 @@ public class FocusScope extends Focusable {
         private Comparator<FocusTraversalCandidate> sortInBand(Vector2d focusedCenter, FocusTraversalDirection direction) {
             return switch (direction) {
                 case LEFT -> Comparator.<FocusTraversalCandidate>comparingDouble(candidate -> -candidate.center().x)
-                    .thenComparingDouble(candidate -> Math.abs(candidate.center().y - focusedCenter.y));
+                        .thenComparingDouble(candidate -> Math.abs(candidate.center().y - focusedCenter.y));
                 case RIGHT -> Comparator.<FocusTraversalCandidate>comparingDouble(candidate -> candidate.center().x)
-                    .thenComparingDouble(candidate -> Math.abs(candidate.center().y - focusedCenter.y));
+                        .thenComparingDouble(candidate -> Math.abs(candidate.center().y - focusedCenter.y));
                 case UP -> Comparator.<FocusTraversalCandidate>comparingDouble(candidate -> -candidate.center().y)
-                    .thenComparingDouble(candidate -> Math.abs(candidate.center().x - focusedCenter.x));
+                        .thenComparingDouble(candidate -> Math.abs(candidate.center().x - focusedCenter.x));
                 case DOWN -> Comparator.<FocusTraversalCandidate>comparingDouble(candidate -> candidate.center().y)
-                    .thenComparingDouble(candidate -> Math.abs(candidate.center().x - focusedCenter.x));
+                        .thenComparingDouble(candidate -> Math.abs(candidate.center().x - focusedCenter.x));
                 default -> throw new IllegalStateException();
             };
         }
 
         private Comparator<FocusTraversalCandidate> sortOutOfBand(Vector2d focusedCenter, FocusTraversalDirection direction) {
             return switch (direction) {
-                case LEFT, RIGHT -> Comparator.<FocusTraversalCandidate>comparingDouble(candidate -> Math.abs(candidate.center().y - focusedCenter.y))
-                    .thenComparingDouble(candidate -> Math.abs(candidate.center().x - focusedCenter.x));
-                case UP, DOWN -> Comparator.<FocusTraversalCandidate>comparingDouble(candidate -> Math.abs(candidate.center().x - focusedCenter.x))
-                    .thenComparingDouble(candidate -> Math.abs(candidate.center().y - focusedCenter.y));
+                case LEFT, RIGHT ->
+                        Comparator.<FocusTraversalCandidate>comparingDouble(candidate -> Math.abs(candidate.center().y - focusedCenter.y))
+                                .thenComparingDouble(candidate -> Math.abs(candidate.center().x - focusedCenter.x));
+                case UP, DOWN ->
+                        Comparator.<FocusTraversalCandidate>comparingDouble(candidate -> Math.abs(candidate.center().x - focusedCenter.x))
+                                .thenComparingDouble(candidate -> Math.abs(candidate.center().y - focusedCenter.y));
                 default -> throw new IllegalStateException();
             };
         }
@@ -304,14 +308,14 @@ public class FocusScope extends Focusable {
         @Override
         public Widget build(BuildContext context) {
             return new Stack(
-                new StackBase(
-                    new FocusStateProvider<>(
-                        this,
-                        State.class,
-                        this.level,
-                        super.build(context)
+                    new StackBase(
+                            new FocusStateProvider<>(
+                                    this,
+                                    State.class,
+                                    this.level,
+                                    super.build(context)
+                            )
                     )
-                )
 //                new CustomDraw((ctx, transform) -> {
 //                    if (this.focusedDescendants.isEmpty()) return;
 //
@@ -380,14 +384,15 @@ class FocusScopeProxy extends StatefulProxy {
     }
 }
 
-record FocusEntry(Focusable.State<?> state, FocusLevel level) {}
+record FocusEntry(Focusable.State<?> state, FocusLevel level) {
+}
 
 record FocusTraversalCandidate(Focusable.State<?> state, AABB aabb, Vector2d center) {
     public static FocusTraversalCandidate of(Focusable.State<?> state) {
         var aabb = state.context().instance().computeGlobalBounds();
         var center = new Vector2d(
-            aabb.minX + (aabb.maxX - aabb.minX) / 2,
-            aabb.minY + (aabb.maxY - aabb.minY) / 2
+                aabb.minX + (aabb.maxX - aabb.minX) / 2,
+                aabb.minY + (aabb.maxY - aabb.minY) / 2
         );
 
         return new FocusTraversalCandidate(state, aabb, center);

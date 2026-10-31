@@ -111,8 +111,8 @@ public class Actions extends StatefulWidget {
         }
 
         return intents != null
-            ? (Action<I>) intents.state.widget().actions.get(intent.getClass())
-            : null;
+                ? (Action<I>) intents.state.widget().actions.get(intent.getClass())
+                : null;
     }
 
     // ---
@@ -122,10 +122,10 @@ public class Actions extends StatefulWidget {
         public Widget build(BuildContext context) {
             var widget = this.widget();
             return new ActionsProvider(
-                this,
-                widget.focusable
-                    ? new Focusable(focusable -> focusable.autoFocus(widget.autoFocus).skipTraversal(this.widget().skipTraversal), widget.child)
-                    : widget.child
+                    this,
+                    widget.focusable
+                            ? new Focusable(focusable -> focusable.autoFocus(widget.autoFocus).skipTraversal(this.widget().skipTraversal), widget.child)
+                            : widget.child
             );
         }
     }

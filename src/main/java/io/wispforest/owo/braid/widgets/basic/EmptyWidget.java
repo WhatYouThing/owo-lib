@@ -9,7 +9,8 @@ public class EmptyWidget extends StatelessWidget {
 
     public static final EmptyWidget INSTANCE = new EmptyWidget();
 
-    private EmptyWidget() {}
+    private EmptyWidget() {
+    }
 
     @Override
     public Widget build(BuildContext context) {

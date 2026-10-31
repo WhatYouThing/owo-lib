@@ -13,7 +13,8 @@ public final class CustomTextRegistry {
     private static final Map<String, MapCodec<? extends ComponentContents>> TYPES = new HashMap<>();
     private static ExtraCodecs.LateBoundIdMapper<String, MapCodec<? extends ComponentContents>> codecIdMapper;
 
-    private CustomTextRegistry() {}
+    private CustomTextRegistry() {
+    }
 
     public static void register(String triggerField, MapCodec<? extends ComponentContents> codec) {
         TYPES.put(triggerField, codec);

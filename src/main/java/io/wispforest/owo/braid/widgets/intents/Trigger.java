@@ -41,8 +41,8 @@ public sealed interface Trigger {
         @Override
         public Trigger withModifiers(@Nullable KeyModifiers modifiers) {
             return !Objects.equals(this.modifiers, modifiers)
-                ? new Key(this.keyCode, modifiers)
-                : this;
+                    ? new Key(this.keyCode, modifiers)
+                    : this;
         }
     }
 
@@ -60,8 +60,8 @@ public sealed interface Trigger {
         @Override
         public Trigger withModifiers(@Nullable KeyModifiers modifiers) {
             return !Objects.equals(this.modifiers, modifiers)
-                ? new Mouse(this.button, modifiers)
-                : this;
+                    ? new Mouse(this.button, modifiers)
+                    : this;
         }
     }
 }

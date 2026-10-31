@@ -9,5 +9,6 @@ public abstract class LeafWidgetInstance<T extends InstanceWidget> extends Widge
     }
 
     @Override
-    public void visitChildren(Visitor visitor) {}
+    public void visitChildren(Visitor visitor) {
+    }
 }

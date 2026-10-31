@@ -11,7 +11,6 @@ import io.wispforest.owo.braid.framework.widget.Widget;
 import io.wispforest.owo.braid.widgets.basic.Box;
 import io.wispforest.owo.braid.widgets.basic.Center;
 import io.wispforest.owo.braid.widgets.basic.Padding;
-import io.wispforest.owo.braid.widgets.basic.Sized;
 import io.wispforest.owo.braid.widgets.checkbox.Checkbox;
 import io.wispforest.owo.braid.widgets.checkbox.CheckboxStyle;
 import io.wispforest.owo.braid.widgets.flex.*;
@@ -50,46 +49,46 @@ public class InstanceDetails extends StatefulWidget {
 
                 children = new ArrayList<>();
                 children.add(new Grid(
-                    LayoutAxis.VERTICAL,
-                    2,
-                    Grid.CellFit.tight(),
-                    colorRows(
-                        Color.rgb(0x111319),
+                        LayoutAxis.VERTICAL,
                         2,
-                        gatherProperties(instance).stream().<Widget>map(Label::new).toList()
-                    )
+                        Grid.CellFit.tight(),
+                        colorRows(
+                                Color.rgb(0x111319),
+                                2,
+                                gatherProperties(instance).stream().<Widget>map(Label::new).toList()
+                        )
                 ));
 
                 if (instance.debugHasVisualizers()) {
                     children.add(new Padding(
-                        Insets.of(5, 0, 5, 0),
-                        new Row(
-                            MainAxisAlignment.START,
-                            CrossAxisAlignment.CENTER,
-                            new Checkbox(
-                                CheckboxStyle.BRAID,
-                                instance.debugDrawVisualizers,
-                                nowChecked -> setState(() -> {
-                                    instance.debugDrawVisualizers = nowChecked;
-                                })
-                            ),
-                            new Padding(
-                                Insets.left(5),
-                                Label.literal("draw visualizers")
+                            Insets.of(5, 0, 5, 0),
+                            new Row(
+                                    MainAxisAlignment.START,
+                                    CrossAxisAlignment.CENTER,
+                                    new Checkbox(
+                                            CheckboxStyle.BRAID,
+                                            instance.debugDrawVisualizers,
+                                            nowChecked -> setState(() -> {
+                                                instance.debugDrawVisualizers = nowChecked;
+                                            })
+                                    ),
+                                    new Padding(
+                                            Insets.left(5),
+                                            Label.literal("draw visualizers")
+                                    )
                             )
-                        )
                     ));
                 }
 
                 children.addAll(List.of(
-                    new Flexible(new Padding(Insets.none())),
-                    new Label(Component.literal(instanceClassName))
+                        new Flexible(new Padding(Insets.none())),
+                        new Label(Component.literal(instanceClassName))
                 ));
             } else {
                 children = List.of(new Flexible(
-                    new Center(
-                        new Label(Component.literal("no instance selected"))
-                    )
+                        new Center(
+                                new Label(Component.literal("no instance selected"))
+                        )
                 ));
             }
 
@@ -98,11 +97,11 @@ public class InstanceDetails extends StatefulWidget {
 //                new Sized(
 //                    150,
 //                    null,
-                    return new Column(
-                        Stream.concat(
+            return new Column(
+                    Stream.concat(
                             Stream.of(new Padding(Insets.bottom(3), new Label(Component.literal("Instance Details")))),
                             children.stream()
-                        ).toList()
+                    ).toList()
 //                    )
 //                )
             );

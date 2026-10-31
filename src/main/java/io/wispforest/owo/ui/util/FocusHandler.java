@@ -1,18 +1,20 @@
 package io.wispforest.owo.ui.util;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import io.wispforest.owo.ui.core.ParentUIComponent;
 import io.wispforest.owo.ui.core.UIComponent;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 
 public class FocusHandler {
 
     protected final ParentUIComponent root;
-    @Nullable protected UIComponent focused = null;
-    @Nullable protected UIComponent.FocusSource lastFocusSource = null;
+    @Nullable
+    protected UIComponent focused = null;
+    @Nullable
+    protected UIComponent.FocusSource lastFocusSource = null;
 
     public FocusHandler(ParentUIComponent root) {
         this.root = root;
@@ -60,7 +62,7 @@ public class FocusHandler {
 
         var closest = this.focused;
         switch (keyCode) {
-            case GLFW.GLFW_KEY_RIGHT -> {
+            case InputConstants.KEY_RIGHT -> {
                 int closestX = Integer.MAX_VALUE, closestY = Integer.MAX_VALUE;
 
                 for (var child : allChildren) {
@@ -73,39 +75,42 @@ public class FocusHandler {
                     closestY = Math.abs(child.y() - this.focused.y());
                 }
             }
-            case GLFW.GLFW_KEY_LEFT -> {
+            case InputConstants.KEY_LEFT -> {
                 int closestX = 0, closestY = Integer.MAX_VALUE;
 
                 for (var child : allChildren) {
                     if (child == this.focused) continue;
                     if (child.x() + child.width() > this.focused.x() ||
-                            child.x() + child.width() < closestX || Math.abs(child.y() - this.focused.y()) > closestY) continue;
+                            child.x() + child.width() < closestX || Math.abs(child.y() - this.focused.y()) > closestY)
+                        continue;
 
                     closest = child;
                     closestX = child.x() + child.width();
                     closestY = Math.abs(child.y() - this.focused.y());
                 }
             }
-            case GLFW.GLFW_KEY_UP -> {
+            case InputConstants.KEY_UP -> {
                 int closestX = Integer.MAX_VALUE, closestY = 0;
 
                 for (var child : allChildren) {
                     if (child == this.focused) continue;
                     if (child.y() + child.height() > this.focused.y() ||
-                            child.y() + child.height() < closestY || Math.abs(child.x() - this.focused.x()) > closestX) continue;
+                            child.y() + child.height() < closestY || Math.abs(child.x() - this.focused.x()) > closestX)
+                        continue;
 
                     closest = child;
                     closestX = Math.abs(child.x() - this.focused.x());
                     closestY = child.y() + child.height();
                 }
             }
-            case GLFW.GLFW_KEY_DOWN -> {
+            case InputConstants.KEY_DOWN -> {
                 int closestX = Integer.MAX_VALUE, closestY = Integer.MAX_VALUE;
 
                 for (var child : allChildren) {
                     if (child == this.focused) continue;
                     if (child.y() < this.focused.y() + this.focused.height() ||
-                            child.y() + child.height() > closestY || Math.abs(child.x() - this.focused.x()) > closestX) continue;
+                            child.y() + child.height() > closestY || Math.abs(child.x() - this.focused.x()) > closestX)
+                        continue;
 
                     closest = child;
                     closestX = Math.abs(child.x() - this.focused.x());

@@ -14,11 +14,11 @@ import net.minecraft.world.item.CreativeModeTab;
  * define the contents, use {@code null} as the tag
  */
 public record ItemGroupTab(
-    Icon icon,
-    Component name,
-    ContentSupplier contentSupplier,
-    Identifier texture,
-    boolean primary
+        Icon icon,
+        Component name,
+        ContentSupplier contentSupplier,
+        Identifier texture,
+        boolean primary
 ) implements OwoItemGroup.ButtonDefinition {
 
     public static final Identifier DEFAULT_TEXTURE = Owo.id("textures/gui/tabs.png");

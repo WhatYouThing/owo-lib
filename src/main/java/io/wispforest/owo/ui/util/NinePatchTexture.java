@@ -1,6 +1,6 @@
 package io.wispforest.owo.ui.util;
 
-import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import io.wispforest.endec.Endec;
 import io.wispforest.endec.StructEndec;
 import io.wispforest.endec.impl.StructEndecBuilder;
@@ -103,36 +103,36 @@ public class NinePatchTexture {
 
         if (width > doubleCornerWidth && height > doubleCornerHeight) {
             context.blit(pipeline, this.texture, x + this.cornerPatchSize().width(), y + this.cornerPatchSize().height(),
-                this.u + this.cornerPatchSize().width(), this.v + this.cornerPatchSize().height(),
-                width - doubleCornerWidth, height - doubleCornerHeight,
-                this.centerPatchSize().width(), this.centerPatchSize().height(),
-                this.textureSize.width(), this.textureSize.height(), color.argb());
+                    this.u + this.cornerPatchSize().width(), this.v + this.cornerPatchSize().height(),
+                    width - doubleCornerWidth, height - doubleCornerHeight,
+                    this.centerPatchSize().width(), this.centerPatchSize().height(),
+                    this.textureSize.width(), this.textureSize.height(), color.argb());
         }
 
         if (width > doubleCornerWidth) {
             context.blit(pipeline, this.texture, x + this.cornerPatchSize().width(), y,
-                this.u + this.cornerPatchSize().width(), this.v,
-                width - doubleCornerWidth, this.cornerPatchSize().height(),
-                this.centerPatchSize().width(), this.cornerPatchSize().height(),
-                this.textureSize.width(), this.textureSize.height(), color.argb());
+                    this.u + this.cornerPatchSize().width(), this.v,
+                    width - doubleCornerWidth, this.cornerPatchSize().height(),
+                    this.centerPatchSize().width(), this.cornerPatchSize().height(),
+                    this.textureSize.width(), this.textureSize.height(), color.argb());
             context.blit(pipeline, this.texture, x + this.cornerPatchSize().width(), y + height - this.cornerPatchSize().height(),
-                this.u + this.cornerPatchSize().width(), this.v + bottomEdge,
-                width - doubleCornerWidth, this.cornerPatchSize().height(),
-                this.centerPatchSize().width(), this.cornerPatchSize().height(),
-                this.textureSize.width(), this.textureSize.height(), color.argb());
+                    this.u + this.cornerPatchSize().width(), this.v + bottomEdge,
+                    width - doubleCornerWidth, this.cornerPatchSize().height(),
+                    this.centerPatchSize().width(), this.cornerPatchSize().height(),
+                    this.textureSize.width(), this.textureSize.height(), color.argb());
         }
 
         if (height > doubleCornerHeight) {
             context.blit(pipeline, this.texture, x, y + this.cornerPatchSize().height(),
-                this.u, this.v + this.cornerPatchSize().height(),
-                this.cornerPatchSize().width(), height - doubleCornerHeight,
-                this.cornerPatchSize().width(), this.centerPatchSize().height(),
-                this.textureSize.width(), this.textureSize.height(), color.argb());
+                    this.u, this.v + this.cornerPatchSize().height(),
+                    this.cornerPatchSize().width(), height - doubleCornerHeight,
+                    this.cornerPatchSize().width(), this.centerPatchSize().height(),
+                    this.textureSize.width(), this.textureSize.height(), color.argb());
             context.blit(pipeline, this.texture, x + width - this.cornerPatchSize().width(), y + this.cornerPatchSize().height(),
-                this.u + rightEdge, this.v + this.cornerPatchSize().height(),
-                this.cornerPatchSize().width(), height - doubleCornerHeight,
-                this.cornerPatchSize().width(), this.centerPatchSize().height(),
-                this.textureSize.width(), this.textureSize.height(), color.argb());
+                    this.u + rightEdge, this.v + this.cornerPatchSize().height(),
+                    this.cornerPatchSize().width(), height - doubleCornerHeight,
+                    this.cornerPatchSize().width(), this.centerPatchSize().height(),
+                    this.textureSize.width(), this.textureSize.height(), color.argb());
         }
     }
 
@@ -152,11 +152,11 @@ public class NinePatchTexture {
                 while (leftoverWidth > 0) {
                     int drawWidth = Math.min(this.centerPatchSize().width(), leftoverWidth);
                     context.blit(pipeline, this.texture,
-                        x + this.cornerPatchSize().width() + leftoverWidth - drawWidth, y + this.cornerPatchSize().height() + leftoverHeight - drawHeight,
-                        this.u + this.cornerPatchSize().width() + this.centerPatchSize().width() - drawWidth, this.v + this.cornerPatchSize().height() + this.centerPatchSize().height() - drawHeight,
-                        drawWidth, drawHeight,
-                        drawWidth, drawHeight,
-                        this.textureSize.width(), this.textureSize.height(), color.argb());
+                            x + this.cornerPatchSize().width() + leftoverWidth - drawWidth, y + this.cornerPatchSize().height() + leftoverHeight - drawHeight,
+                            this.u + this.cornerPatchSize().width() + this.centerPatchSize().width() - drawWidth, this.v + this.cornerPatchSize().height() + this.centerPatchSize().height() - drawHeight,
+                            drawWidth, drawHeight,
+                            drawWidth, drawHeight,
+                            this.textureSize.width(), this.textureSize.height(), color.argb());
 
                     leftoverWidth -= this.centerPatchSize().width();
                 }
@@ -170,15 +170,15 @@ public class NinePatchTexture {
                 int drawWidth = Math.min(this.centerPatchSize().width(), leftoverWidth);
 
                 context.blit(pipeline, this.texture, x + this.cornerPatchSize().width() + leftoverWidth - drawWidth, y,
-                    this.u + this.cornerPatchSize().width() + this.centerPatchSize().width() - drawWidth, this.v,
-                    drawWidth, this.cornerPatchSize().height(),
-                    drawWidth, this.cornerPatchSize().height(),
-                    this.textureSize.width(), this.textureSize.height(), color.argb());
+                        this.u + this.cornerPatchSize().width() + this.centerPatchSize().width() - drawWidth, this.v,
+                        drawWidth, this.cornerPatchSize().height(),
+                        drawWidth, this.cornerPatchSize().height(),
+                        this.textureSize.width(), this.textureSize.height(), color.argb());
                 context.blit(pipeline, this.texture, x + this.cornerPatchSize().width() + leftoverWidth - drawWidth, y + height - this.cornerPatchSize().height(),
-                    this.u + this.cornerPatchSize().width() + this.centerPatchSize().width() - drawWidth, this.v + bottomEdge,
-                    drawWidth, this.cornerPatchSize().height(),
-                    drawWidth, this.cornerPatchSize().height(),
-                    this.textureSize.width(), this.textureSize.height(), color.argb());
+                        this.u + this.cornerPatchSize().width() + this.centerPatchSize().width() - drawWidth, this.v + bottomEdge,
+                        drawWidth, this.cornerPatchSize().height(),
+                        drawWidth, this.cornerPatchSize().height(),
+                        this.textureSize.width(), this.textureSize.height(), color.argb());
 
                 leftoverWidth -= this.centerPatchSize().width();
             }
@@ -189,15 +189,15 @@ public class NinePatchTexture {
             while (leftoverHeight > 0) {
                 int drawHeight = Math.min(this.centerPatchSize().height(), leftoverHeight);
                 context.blit(pipeline, this.texture, x, y + this.cornerPatchSize().height() + leftoverHeight - drawHeight,
-                    this.u, this.v + this.cornerPatchSize().height() + this.centerPatchSize().height() - drawHeight,
-                    this.cornerPatchSize().width(), drawHeight,
-                    this.cornerPatchSize().width(), drawHeight,
-                    this.textureSize.width(), this.textureSize.height(), color.argb());
+                        this.u, this.v + this.cornerPatchSize().height() + this.centerPatchSize().height() - drawHeight,
+                        this.cornerPatchSize().width(), drawHeight,
+                        this.cornerPatchSize().width(), drawHeight,
+                        this.textureSize.width(), this.textureSize.height(), color.argb());
                 context.blit(pipeline, this.texture, x + width - this.cornerPatchSize().width(), y + this.cornerPatchSize().height() + leftoverHeight - drawHeight,
-                    this.u + rightEdge, this.v + this.cornerPatchSize().height() + this.centerPatchSize().height() - drawHeight,
-                    this.cornerPatchSize().width(), drawHeight,
-                    this.cornerPatchSize().width(), drawHeight,
-                    this.textureSize.width(), this.textureSize.height(), color.argb());
+                        this.u + rightEdge, this.v + this.cornerPatchSize().height() + this.centerPatchSize().height() - drawHeight,
+                        this.cornerPatchSize().width(), drawHeight,
+                        this.cornerPatchSize().width(), drawHeight,
+                        this.textureSize.width(), this.textureSize.height(), color.argb());
 
                 leftoverHeight -= this.centerPatchSize().height();
             }
@@ -234,25 +234,26 @@ public class NinePatchTexture {
     }
 
     public static final Endec<NinePatchTexture> ENDEC = StructEndecBuilder.of(
-        MinecraftEndecs.IDENTIFIER.fieldOf("texture", (texture) -> texture.texture),
-        Endec.INT.optionalFieldOf("u", (texture) -> texture.u, 0),
-        Endec.INT.optionalFieldOf("v", (texture) -> texture.v, 0),
-        PatchSizing.ENDEC.flatFieldOf((texture) -> texture.patchSizing),
-        StructEndecBuilder.of(
-            Endec.INT.fieldOf("texture_width", Size::width),
-            Endec.INT.fieldOf("texture_height", Size::height),
-            Size::of
-        ).flatFieldOf((texture) -> texture.textureSize),
-        Endec.BOOLEAN.fieldOf("repeat", (texture) -> texture.repeat),
-        NinePatchTexture::new
+            MinecraftEndecs.IDENTIFIER.fieldOf("texture", (texture) -> texture.texture),
+            Endec.INT.optionalFieldOf("u", (texture) -> texture.u, 0),
+            Endec.INT.optionalFieldOf("v", (texture) -> texture.v, 0),
+            PatchSizing.ENDEC.flatFieldOf((texture) -> texture.patchSizing),
+            StructEndecBuilder.of(
+                    Endec.INT.fieldOf("texture_width", Size::width),
+                    Endec.INT.fieldOf("texture_height", Size::height),
+                    Size::of
+            ).flatFieldOf((texture) -> texture.textureSize),
+            Endec.BOOLEAN.fieldOf("repeat", (texture) -> texture.repeat),
+            NinePatchTexture::new
     );
 
-    public record PatchSizing(@Nullable Size patchSize, @Nullable Size cornerPatchSize, @Nullable Size centerPatchSize) {
+    public record PatchSizing(@Nullable Size patchSize, @Nullable Size cornerPatchSize,
+                              @Nullable Size centerPatchSize) {
         public static final StructEndec<PatchSizing> ENDEC = StructEndecBuilder.of(
-            Size.ENDEC.nullableOf().optionalFieldOf("patch_size", PatchSizing::patchSize, () -> null),
-            Size.ENDEC.nullableOf().optionalFieldOf("corner_patch_size", PatchSizing::cornerPatchSize, () -> null),
-            Size.ENDEC.nullableOf().optionalFieldOf("center_patch_size", PatchSizing::centerPatchSize, () -> null),
-            PatchSizing::new
+                Size.ENDEC.nullableOf().optionalFieldOf("patch_size", PatchSizing::patchSize, () -> null),
+                Size.ENDEC.nullableOf().optionalFieldOf("corner_patch_size", PatchSizing::cornerPatchSize, () -> null),
+                Size.ENDEC.nullableOf().optionalFieldOf("center_patch_size", PatchSizing::centerPatchSize, () -> null),
+                PatchSizing::new
         );
 
         public PatchSizing {

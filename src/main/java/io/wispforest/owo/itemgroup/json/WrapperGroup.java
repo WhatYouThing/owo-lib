@@ -29,7 +29,8 @@ public class WrapperGroup extends OwoItemGroup {
 
     @SuppressWarnings("unchecked")
     public WrapperGroup(CreativeModeTab parent, Identifier parentId, List<ItemGroupTab> tabs, List<ItemGroupButton> buttons) {
-        super(parentId, owoItemGroup -> {}, () -> Icon.of(parent::getIconItem), 4, 4, null, null, null, true, false, false);
+        super(parentId, owoItemGroup -> {
+        }, () -> Icon.of(parent::getIconItem), 4, 4, null, null, null, true, false, false);
 
         int parentRawId = BuiltInRegistries.CREATIVE_MODE_TAB.getId(parent);
 

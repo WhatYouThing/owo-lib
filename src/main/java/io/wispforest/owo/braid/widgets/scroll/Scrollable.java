@@ -28,12 +28,12 @@ public class Scrollable extends StatefulWidget {
     public final Widget child;
 
     public Scrollable(
-        boolean horizontal,
-        boolean vertical,
-        @Nullable ScrollController horizontalController,
-        @Nullable ScrollController verticalController,
-        @Nullable ScrollAnimationSettings animationSettings,
-        Widget child
+            boolean horizontal,
+            boolean vertical,
+            @Nullable ScrollController horizontalController,
+            @Nullable ScrollController verticalController,
+            @Nullable ScrollAnimationSettings animationSettings,
+            Widget child
     ) {
         this.horizontal = horizontal;
         this.vertical = vertical;
@@ -90,10 +90,10 @@ public class Scrollable extends StatefulWidget {
             transform.transformToWidget(matrix);
 
             var box = new Aabb2d(
-                transform.x() - padding.left(),
-                transform.y() - padding.top(),
-                transform.width() + padding.horizontal(),
-                transform.height() + padding.vertical()
+                    transform.x() - padding.left(),
+                    transform.y() - padding.top(),
+                    transform.width() + padding.horizontal(),
+                    transform.height() + padding.vertical()
             ).transform(matrix);
 
             revealAabb(context, box);
@@ -105,8 +105,8 @@ public class Scrollable extends StatefulWidget {
             var revealInstance = context.instance();
 
             var transform = revealInstance.computeTransformFrom(scrollInstance).invert().translate(
-                this.horizontalController != null ? (float) this.horizontalController.offset : 0,
-                this.verticalController != null ? (float) this.verticalController.offset : 0
+                    this.horizontalController != null ? (float) this.horizontalController.offset : 0,
+                    this.verticalController != null ? (float) this.verticalController.offset : 0
             );
 
             box.transform(transform);
@@ -174,53 +174,53 @@ public class Scrollable extends StatefulWidget {
         public Widget build(BuildContext context) {
             var widgetSettings = this.widget().animationSettings;
             var animationSettings = widgetSettings != null
-                ? (widgetSettings != ScrollAnimationSettings.NO_ANIMATION ? widgetSettings : null)
-                : DefaultScrollAnimationSettings.maybeOf(context);
+                    ? (widgetSettings != ScrollAnimationSettings.NO_ANIMATION ? widgetSettings : null)
+                    : DefaultScrollAnimationSettings.maybeOf(context);
 
             return new Clip(
-                new MouseArea(
-                    widget -> widget
-                        .scrollCallback((horizontal, vertical) -> {
-                            var verticalDelta = vertical * -15;
-                            var horizontalDelta = horizontal * -15;
+                    new MouseArea(
+                            widget -> widget
+                                    .scrollCallback((horizontal, vertical) -> {
+                                        var verticalDelta = vertical * -15;
+                                        var horizontalDelta = horizontal * -15;
 
-                            if (AppState.of(context).eventBinding.activeModifiers().shift()) {
-                                if (this.widget().horizontal) {
-                                    if (animationSettings != null) {
-                                        this.horizontalController.animateBy(verticalDelta, animationSettings.duration(), animationSettings.easing());
-                                    } else {
-                                        this.horizontalController.jumpBy(verticalDelta);
-                                    }
-                                }
-                            } else {
-                                if (this.widget().vertical) {
-                                    if (animationSettings != null) {
-                                        this.verticalController.animateBy(verticalDelta, animationSettings.duration(), animationSettings.easing());
-                                    } else {
-                                        this.verticalController.jumpBy(verticalDelta);
-                                    }
-                                }
-                            }
+                                        if (AppState.of(context).eventBinding.activeModifiers().shift()) {
+                                            if (this.widget().horizontal) {
+                                                if (animationSettings != null) {
+                                                    this.horizontalController.animateBy(verticalDelta, animationSettings.duration(), animationSettings.easing());
+                                                } else {
+                                                    this.horizontalController.jumpBy(verticalDelta);
+                                                }
+                                            }
+                                        } else {
+                                            if (this.widget().vertical) {
+                                                if (animationSettings != null) {
+                                                    this.verticalController.animateBy(verticalDelta, animationSettings.duration(), animationSettings.easing());
+                                                } else {
+                                                    this.verticalController.jumpBy(verticalDelta);
+                                                }
+                                            }
+                                        }
 
-                            if (this.widget().horizontal) {
-                                if (animationSettings != null) {
-                                    this.horizontalController.animateBy(horizontalDelta, animationSettings.duration(), animationSettings.easing());
-                                } else {
-                                    this.horizontalController.jumpBy(horizontalDelta);
-                                }
-                            }
-                            return true;
-                        }),
-                    new ListenableBuilder(
-                        this.listenable,
-                        (innerContext, child) -> new RawScrollView(
-                            this.horizontalController,
-                            this.verticalController,
-                            new ScrollableProvider(this, child)
-                        ),
-                        this.widget().child
+                                        if (this.widget().horizontal) {
+                                            if (animationSettings != null) {
+                                                this.horizontalController.animateBy(horizontalDelta, animationSettings.duration(), animationSettings.easing());
+                                            } else {
+                                                this.horizontalController.jumpBy(horizontalDelta);
+                                            }
+                                        }
+                                        return true;
+                                    }),
+                            new ListenableBuilder(
+                                    this.listenable,
+                                    (innerContext, child) -> new RawScrollView(
+                                            this.horizontalController,
+                                            this.verticalController,
+                                            new ScrollableProvider(this, child)
+                                    ),
+                                    this.widget().child
+                            )
                     )
-                )
             );
         }
     }

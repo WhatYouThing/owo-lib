@@ -26,7 +26,8 @@ public final class ModDataLoader {
 
     private static final Path DATA_PATH = FabricLoader.getInstance().getGameDir().resolve("moddata");
 
-    private ModDataLoader() {}
+    private ModDataLoader() {
+    }
 
     /**
      * Loads the data the {@code consumer} requests
@@ -72,7 +73,7 @@ public final class ModDataLoader {
                 stream.forEach(path -> {
                     if (!path.toString().endsWith(".json") && !path.toString().endsWith(".json5")) return;
                     try {
-                        final InputStreamReader tabData = new InputStreamReader(DataExtensionUtil.coerceJson(Files.newInputStream(path)) );
+                        final InputStreamReader tabData = new InputStreamReader(DataExtensionUtil.coerceJson(Files.newInputStream(path)));
 
                         foundFiles.put(Identifier.fromNamespaceAndPath(namespace, FilenameUtils.removeExtension(targetPath.relativize(path).toString())), GSON.fromJson(tabData, JsonObject.class));
                     } catch (IOException e) {

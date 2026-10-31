@@ -32,9 +32,11 @@ import java.util.function.Consumer;
 @Mixin(AbstractWidget.class)
 public abstract class AbstractWidgetMixin implements UIComponentStub, net.minecraft.client.gui.components.events.GuiEventListener {
 
-    @Shadow public boolean active;
+    @Shadow
+    public boolean active;
 
-    @Shadow protected boolean isHovered;
+    @Shadow
+    protected boolean isHovered;
 
     @Unique
     protected VanillaWidgetComponent wrapper = null;

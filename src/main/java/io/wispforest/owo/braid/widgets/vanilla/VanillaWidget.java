@@ -49,21 +49,21 @@ public class VanillaWidget<T extends Renderable & GuiEventListener> extends Stat
         @Override
         public Widget build(BuildContext context) {
             return new Center(
-                new Focusable(
-                    focusable -> focusable
-                        .keyDownCallback((keyCode, modifiers) -> this.instance().onKeyDown(keyCode, modifiers))
-                        .keyUpCallback((keyCode, modifiers) -> this.instance().onKeyUp(keyCode, modifiers))
-                        .charCallback((charCode, modifiers) -> this.instance().onChar(charCode, modifiers))
-                        .focusGainedCallback(() -> this.instance().onFocusGained())
-                        .focusLostCallback(() -> this.instance().onFocusLost()),
-                    new Sized(
-                        this.widget().size,
-                        new Builder(vanillaContext -> {
-                            this.vanillaContext = vanillaContext;
-                            return new VanillaWidgetWrapper<>(widget);
-                        })
+                    new Focusable(
+                            focusable -> focusable
+                                    .keyDownCallback((keyCode, modifiers) -> this.instance().onKeyDown(keyCode, modifiers))
+                                    .keyUpCallback((keyCode, modifiers) -> this.instance().onKeyUp(keyCode, modifiers))
+                                    .charCallback((charCode, modifiers) -> this.instance().onChar(charCode, modifiers))
+                                    .focusGainedCallback(() -> this.instance().onFocusGained())
+                                    .focusLostCallback(() -> this.instance().onFocusLost()),
+                            new Sized(
+                                    this.widget().size,
+                                    new Builder(vanillaContext -> {
+                                        this.vanillaContext = vanillaContext;
+                                        return new VanillaWidgetWrapper<>(widget);
+                                    })
+                            )
                     )
-                )
             );
         }
     }

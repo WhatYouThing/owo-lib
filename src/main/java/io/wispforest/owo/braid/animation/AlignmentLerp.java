@@ -12,8 +12,8 @@ public class AlignmentLerp extends Lerp<Alignment> {
     @Override
     protected Alignment at(double t) {
         return Alignment.of(
-            Mth.lerp(t, this.start.horizontal(), this.end.horizontal()),
-            Mth.lerp(t, this.start.vertical(), this.end.vertical())
+                Mth.lerp(t, this.start.horizontal(), this.end.horizontal()),
+                Mth.lerp(t, this.start.vertical(), this.end.vertical())
         );
     }
 }

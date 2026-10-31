@@ -6,7 +6,8 @@ import net.minecraft.network.chat.Component;
 
 public final class UIContainers {
 
-    private UIContainers() {}
+    private UIContainers() {
+    }
 
     // ------
     // Layout

@@ -23,7 +23,6 @@ import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.FormattedCharSequence;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector2f;
 
 import java.util.List;
 import java.util.Objects;
@@ -66,9 +65,9 @@ public class RawLabel extends LeafInstanceWidget {
         @Override
         public void setWidget(RawLabel widget) {
             if (Objects.equals(this.widget.style, widget.style)
-                && this.widget.softWrap == widget.softWrap
-                && this.widget.ellipsize == widget.ellipsize
-                && Objects.equals(this.widget.text, widget.text)) {
+                    && this.widget.softWrap == widget.softWrap
+                    && this.widget.ellipsize == widget.ellipsize
+                    && Objects.equals(this.widget.text, widget.text)) {
                 return;
             }
 
@@ -89,8 +88,8 @@ public class RawLabel extends LeafInstanceWidget {
 
                 var trimmedLastLine = font.substrByWidth(wrappedLines.getLast(), maxWidth - ellipsisLength);
                 wrappedLines.set(
-                    wrappedLines.size() - 1,
-                    FormattedText.composite(trimmedLastLine, ellipsis)
+                        wrappedLines.size() - 1,
+                        FormattedText.composite(trimmedLastLine, ellipsis)
                 );
             }
 
@@ -151,12 +150,12 @@ public class RawLabel extends LeafInstanceWidget {
 
             for (int lineIdx = 0; lineIdx < this.renderText.size(); lineIdx++) {
                 graphics.text(
-                    font,
-                    this.renderText.get(lineIdx),
-                    (int) this.widget.style.textAlignment().alignHorizontal(this.transform.width(), this.renderTextWidths.getDouble(lineIdx)),
-                    (int) yOffset + lineIdx * font.lineHeight,
-                    this.widget.style.baseColor().argb(),
-                    this.widget.style.shadow()
+                        font,
+                        this.renderText.get(lineIdx),
+                        (int) this.widget.style.textAlignment().alignHorizontal(this.transform.width(), this.renderTextWidths.getDouble(lineIdx)),
+                        (int) yOffset + lineIdx * font.lineHeight,
+                        this.widget.style.baseColor().argb(),
+                        this.widget.style.shadow()
                 );
             }
         }
@@ -170,9 +169,9 @@ public class RawLabel extends LeafInstanceWidget {
 
             for (int lineIdx = 0; lineIdx < this.renderText.size(); lineIdx++) {
                 collector.accept(
-                    (int) this.widget.style.textAlignment().alignHorizontal(this.transform.width(), this.renderTextWidths.getDouble(lineIdx)),
-                    (int) yOffset + lineIdx * font.lineHeight,
-                    this.renderText.get(lineIdx)
+                        (int) this.widget.style.textAlignment().alignHorizontal(this.transform.width(), this.renderTextWidths.getDouble(lineIdx)),
+                        (int) yOffset + lineIdx * font.lineHeight,
+                        this.renderText.get(lineIdx)
                 );
             }
         }
@@ -217,5 +216,6 @@ public class RawLabel extends LeafInstanceWidget {
         }
     }
 
-    public record TextMetrics(int width, int height, DoubleList lineWidths) {}
+    public record TextMetrics(int width, int height, DoubleList lineWidths) {
+    }
 }

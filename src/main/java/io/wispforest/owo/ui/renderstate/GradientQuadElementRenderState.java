@@ -1,7 +1,7 @@
 package io.wispforest.owo.ui.renderstate;
 
-import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import io.wispforest.owo.ui.core.Color;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.render.TextureSetup;
@@ -10,14 +10,14 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix3x2f;
 
 public record GradientQuadElementRenderState(
-    RenderPipeline pipeline,
-    Matrix3x2f pose,
-    ScreenRectangle bounds,
-    ScreenRectangle scissorArea,
-    Color colorTL,
-    Color colorTR,
-    Color colorBL,
-    Color colorBR
+        RenderPipeline pipeline,
+        Matrix3x2f pose,
+        ScreenRectangle bounds,
+        ScreenRectangle scissorArea,
+        Color colorTL,
+        Color colorTR,
+        Color colorBL,
+        Color colorBR
 ) implements GuiElementRenderState {
 
     @Override

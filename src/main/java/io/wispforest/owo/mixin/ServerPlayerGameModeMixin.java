@@ -20,7 +20,7 @@ public class ServerPlayerGameModeMixin {
     private void incrementUseState(ServerPlayer player, Level world, ItemStack stack, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         var result = cir.getReturnValue();
 
-        if(((OwoItemExtensions) stack.getItem()).owo$shouldTrackUsageStat() || (result instanceof InteractionResult.Success successResult && successResult.wasItemInteraction())) {
+        if (((OwoItemExtensions) stack.getItem()).owo$shouldTrackUsageStat() || (result instanceof InteractionResult.Success successResult && successResult.wasItemInteraction())) {
             player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
         }
     }

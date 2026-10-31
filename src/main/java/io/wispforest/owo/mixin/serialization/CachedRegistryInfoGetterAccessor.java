@@ -7,5 +7,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(RegistryOps.HolderLookupAdapter.class)
 public interface CachedRegistryInfoGetterAccessor {
-    @Accessor("lookupProvider") HolderLookup.Provider owo$getRegistriesLookup();
+    @Accessor("lookupProvider")
+    HolderLookup.Provider owo$getRegistriesLookup();
 }

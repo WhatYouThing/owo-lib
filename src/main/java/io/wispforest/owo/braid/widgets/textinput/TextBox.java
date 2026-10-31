@@ -19,16 +19,16 @@ public class TextBox extends StatefulWidget {
     private final EditableText editableText;
 
     public TextBox(
-        TextEditingController controller,
-        WidgetSetupCallback<EditableText> setupCallback
+            TextEditingController controller,
+            WidgetSetupCallback<EditableText> setupCallback
     ) {
         this.controller = controller;
         this.editableText = new EditableText(
-            controller,
-            widget -> {
-                setupCallback.setup(widget);
-                widget.suggestion(widget.suggestion().copy().withStyle(style -> style.applyTo(Style.EMPTY.withColor(CommonColors.GRAY))));
-            }
+                controller,
+                widget -> {
+                    setupCallback.setup(widget);
+                    widget.suggestion(widget.suggestion().copy().withStyle(style -> style.applyTo(Style.EMPTY.withColor(CommonColors.GRAY))));
+                }
         );
     }
 
@@ -44,24 +44,24 @@ public class TextBox extends StatefulWidget {
         @Override
         public Widget build(BuildContext context) {
             return new Box(
-                //TODO: use panel instead of box here
-                this.focused ? Color.WHITE : new Color(CommonColors.LIGHT_GRAY),
-                new Focusable(
-                    widget -> widget
-                        .focusGainedCallback(() -> this.setState(() -> this.focused = true))
-                        .focusLostCallback(() -> this.setState(() -> this.focused = false))
-                        .skipTraversal(true),
-                    new Padding(
-                        Insets.all(1),
-                        new Box(
-                            Color.BLACK,
+                    //TODO: use panel instead of box here
+                    this.focused ? Color.WHITE : new Color(CommonColors.LIGHT_GRAY),
+                    new Focusable(
+                            widget -> widget
+                                    .focusGainedCallback(() -> this.setState(() -> this.focused = true))
+                                    .focusLostCallback(() -> this.setState(() -> this.focused = false))
+                                    .skipTraversal(true),
                             new Padding(
-                                Insets.all(2),
-                                this.widget().editableText
+                                    Insets.all(1),
+                                    new Box(
+                                            Color.BLACK,
+                                            new Padding(
+                                                    Insets.all(2),
+                                                    this.widget().editableText
+                                            )
+                                    )
                             )
-                        )
                     )
-                )
             );
         }
     }

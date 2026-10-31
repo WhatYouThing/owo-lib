@@ -69,25 +69,25 @@ public class CyclingButton<T> extends StatelessWidget {
         if (this.onChanged != null && !ControlsOverride.controlsDisabled(context)) {
             // TODO: properly override the style once this is setupcallbackified
             var clickSound = DefaultButtonStyle.maybeOf(context) instanceof ButtonStyle style
-                ? style.clickSound()
-                : null;
+                    ? style.clickSound()
+                    : null;
 
             return new Cycler<>(
-                this.values,
-                this.currentValue,
-                this.wrap,
-                this.onChanged,
-                (currentValue, currentIndex, cycle) -> {
-                    return new CyclingClickable(
-                        cycle,
-                        clickSound,
-                        true,
-                        new Button(
-                            () -> cycle.cycle(1),
-                            this.child
-                        )
-                    );
-                }
+                    this.values,
+                    this.currentValue,
+                    this.wrap,
+                    this.onChanged,
+                    (currentValue, currentIndex, cycle) -> {
+                        return new CyclingClickable(
+                                cycle,
+                                clickSound,
+                                true,
+                                new Button(
+                                        () -> cycle.cycle(1),
+                                        this.child
+                                )
+                        );
+                    }
             );
         }
 

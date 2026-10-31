@@ -17,6 +17,7 @@ import io.wispforest.owo.braid.widgets.flex.Row;
 import io.wispforest.owo.braid.widgets.intents.Interactable;
 import io.wispforest.owo.braid.widgets.stack.Stack;
 import io.wispforest.owo.braid.widgets.stack.StackBase;
+
 import java.util.ArrayList;
 
 public class Collapsible extends StatefulWidget {
@@ -52,53 +53,53 @@ public class Collapsible extends StatefulWidget {
 
             if (this.widget().showVerticalRule) {
                 body.add(new Align(
-                    Alignment.LEFT,
-                    new Padding(
-                        Insets.left(6),
-                        new Sized(
-                            1,
-                            Double.POSITIVE_INFINITY,
-                            new Box(
-                                this.hovered ? Color.WHITE : Color.mix(.5f, Color.WHITE, Color.BLACK)
-                            )
+                        Alignment.LEFT,
+                        new Padding(
+                                Insets.left(6),
+                                new Sized(
+                                        1,
+                                        Double.POSITIVE_INFINITY,
+                                        new Box(
+                                                this.hovered ? Color.WHITE : Color.mix(.5f, Color.WHITE, Color.BLACK)
+                                        )
+                                )
                         )
-                    )
                 ));
             }
 
             body.add(new StackBase(
-                this.widget().showVerticalRule
-                    ? new Padding(Insets.left(10), this.widget().content)
-                    : this.widget().content
+                    this.widget().showVerticalRule
+                            ? new Padding(Insets.left(10), this.widget().content)
+                            : this.widget().content
             ));
 
             return new Column(
-                new MouseArea(
-                    widget -> widget
-                        .enterCallback(this.widget().showVerticalRule ? () -> this.setState(() -> this.hovered = true) : null)
-                        .exitCallback(this.widget().showVerticalRule ? () -> this.setState(() -> this.hovered = false) : null),
-                    new Row(
-                        MainAxisAlignment.START,
-                        CrossAxisAlignment.CENTER,
-                        new Sized(
-                            12,
-                            12,
-                            Interactable.primary(
-                                () -> this.widget().onToggled.onToggled(!this.widget().collapsed),
-                                new Center(
-                                    new SpriteWidget(Owo.id(this.widget().collapsed ? "braid_collapsible_closed" : "braid_collapsible_open"))
-                                )
+                    new MouseArea(
+                            widget -> widget
+                                    .enterCallback(this.widget().showVerticalRule ? () -> this.setState(() -> this.hovered = true) : null)
+                                    .exitCallback(this.widget().showVerticalRule ? () -> this.setState(() -> this.hovered = false) : null),
+                            new Row(
+                                    MainAxisAlignment.START,
+                                    CrossAxisAlignment.CENTER,
+                                    new Sized(
+                                            12,
+                                            12,
+                                            Interactable.primary(
+                                                    () -> this.widget().onToggled.onToggled(!this.widget().collapsed),
+                                                    new Center(
+                                                            new SpriteWidget(Owo.id(this.widget().collapsed ? "braid_collapsible_closed" : "braid_collapsible_open"))
+                                                    )
+                                            )
+                                    ),
+                                    this.widget().title
                             )
-                        ),
-                        this.widget().title
+                    ),
+                    new Visibility(
+                            !this.widget().collapsed,
+                            new Stack(
+                                    body
+                            )
                     )
-                ),
-                new Visibility(
-                    !this.widget().collapsed,
-                    new Stack(
-                        body
-                    )
-                )
             );
         }
     }

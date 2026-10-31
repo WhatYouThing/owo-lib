@@ -33,7 +33,8 @@ public class ListenableBuilder extends StatefulWidget {
 
     public static class State extends WidgetState<ListenableBuilder> {
 
-        private final Runnable listener = () -> this.setState(() -> {});
+        private final Runnable listener = () -> this.setState(() -> {
+        });
 
         @Override
         public void init() {

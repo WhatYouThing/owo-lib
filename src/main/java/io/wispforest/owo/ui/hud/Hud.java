@@ -84,7 +84,7 @@ public class Hud {
     private static void initializeAdapter() {
         var window = Minecraft.getInstance().getWindow();
         adapter = OwoUIAdapter.createWithoutScreen(
-            0, 0, window.getGuiScaledWidth(), window.getGuiScaledHeight(), HudContainer::new
+                0, 0, window.getGuiScaledWidth(), window.getGuiScaledHeight(), HudContainer::new
         );
 
         adapter.inflateAndMount();

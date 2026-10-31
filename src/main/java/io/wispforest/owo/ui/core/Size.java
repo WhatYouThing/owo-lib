@@ -13,7 +13,7 @@ import org.jetbrains.annotations.ApiStatus;
  */
 public record Size(int width, int height) {
 
-    public static final Endec<Size> ENDEC =StructEndecBuilder.of(
+    public static final Endec<Size> ENDEC = StructEndecBuilder.of(
             Endec.INT.fieldOf("width", Size::width),
             Endec.INT.fieldOf("height", Size::height),
             Size::of
@@ -23,7 +23,8 @@ public record Size(int width, int height) {
 
     @ApiStatus.Internal
     @Deprecated(forRemoval = true)
-    public Size {}
+    public Size {
+    }
 
     public static Size of(int width, int height) {
         return new Size(width, height);

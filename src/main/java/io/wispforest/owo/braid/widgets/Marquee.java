@@ -123,12 +123,12 @@ public class Marquee extends StatefulWidget {
         @Override
         public void init() {
             this.animation = new Animation(
-                this.widget().easing,
-                this.widget().durationPerPixel,
-                this::scheduleAnimationCallback,
-                this::onAnimationStep,
-                this::onAnimationFinished,
-                Animation.Target.START
+                    this.widget().easing,
+                    this.widget().durationPerPixel,
+                    this::scheduleAnimationCallback,
+                    this::onAnimationStep,
+                    this::onAnimationFinished,
+                    Animation.Target.START
             );
 
             this.controller.addListener(() -> {
@@ -150,8 +150,8 @@ public class Marquee extends StatefulWidget {
 
         private void updateAnimationDuration() {
             this.animation.duration = Duration.ofNanos((long) Math.max(
-                this.widget().minDuration.toNanos(),
-                this.widget().durationPerPixel.toNanos() * this.controller.maxOffset()
+                    this.widget().minDuration.toNanos(),
+                    this.widget().durationPerPixel.toNanos() * this.controller.maxOffset()
             ));
         }
 
@@ -164,36 +164,36 @@ public class Marquee extends StatefulWidget {
 
             this.cancelDelayedCallback(this.callbackId);
             this.callbackId = this.scheduleDelayedCallback(
-                this.widget().pauseTime,
-                () -> this.animation.towards(atTarget == Animation.Target.END ? Animation.Target.START : Animation.Target.END)
+                    this.widget().pauseTime,
+                    () -> this.animation.towards(atTarget == Animation.Target.END ? Animation.Target.START : Animation.Target.END)
             );
         }
 
         @Override
         public Widget build(BuildContext context) {
             return new MouseArea(
-                widget -> {
-                    if (!this.widget().pauseWhileHovered) return;
-                    widget
-                        .enterCallback(() -> {
-                            this.pausedAnimationTarget = this.animation.target();
-                            this.animation.pause();
-                        })
-                        .exitCallback(() -> {
-                            if (this.pausedAnimationTarget == null) return;
-                            this.animation.towards(this.pausedAnimationTarget, false);
-                        });
-                },
-                new Clip(
-                    new ListenableBuilder(
-                        this.controller,
-                        buildContext -> new RawScrollView(
-                            this.widget().axis == LayoutAxis.HORIZONTAL ? this.controller : null,
-                            this.widget().axis == LayoutAxis.VERTICAL ? this.controller : null,
-                            this.widget().child
-                        )
+                    widget -> {
+                        if (!this.widget().pauseWhileHovered) return;
+                        widget
+                                .enterCallback(() -> {
+                                    this.pausedAnimationTarget = this.animation.target();
+                                    this.animation.pause();
+                                })
+                                .exitCallback(() -> {
+                                    if (this.pausedAnimationTarget == null) return;
+                                    this.animation.towards(this.pausedAnimationTarget, false);
+                                });
+                    },
+                    new Clip(
+                            new ListenableBuilder(
+                                    this.controller,
+                                    buildContext -> new RawScrollView(
+                                            this.widget().axis == LayoutAxis.HORIZONTAL ? this.controller : null,
+                                            this.widget().axis == LayoutAxis.VERTICAL ? this.controller : null,
+                                            this.widget().child
+                                    )
+                            )
                     )
-                )
             );
         }
     }

@@ -41,30 +41,30 @@ public class LayerAlignment extends StatefulWidget {
 
     public static LayerAlignment atVanillaWidget(Predicate<AbstractWidget> anchorPredicate, AnchorJustification justification, Widget widget) {
         return new LayerAlignment(
-            context -> {
-                var anchor = LayerContext.findWidget(context, anchorPredicate);
-                if (anchor == null) return null;
+                context -> {
+                    var anchor = LayerContext.findWidget(context, anchorPredicate);
+                    if (anchor == null) return null;
 
-                return new Vector2d(
-                    anchor.getX() + justification.anchorX() * anchor.getWidth(),
-                    anchor.getY() + justification.anchorY() * anchor.getHeight()
-                );
-            },
-            justification,
-            widget
+                    return new Vector2d(
+                            anchor.getX() + justification.anchorX() * anchor.getWidth(),
+                            anchor.getY() + justification.anchorY() * anchor.getHeight()
+                    );
+                },
+                justification,
+                widget
         );
     }
 
     public static LayerAlignment atContainerScreenCoordinates(double xOffset, double yOffset, Widget widget) {
         return new LayerAlignment(
-            context -> {
-                var root = LayerContext.containerScreenRootOf(context);
-                if (root == null) return null;
+                context -> {
+                    var root = LayerContext.containerScreenRootOf(context);
+                    if (root == null) return null;
 
-                return root.add(xOffset, yOffset);
-            },
-            null,
-            widget
+                    return root.add(xOffset, yOffset);
+                },
+                null,
+                widget
         );
     }
 
@@ -86,7 +86,7 @@ public class LayerAlignment extends StatefulWidget {
         @Override
         public void didUpdateWidget(LayerAlignment oldWidget) {
             this.widgetChanged = oldWidget.widget != this.widget().widget
-                || !Objects.equals(oldWidget.justification, this.widget().justification);
+                    || !Objects.equals(oldWidget.justification, this.widget().justification);
         }
 
         @Override
@@ -101,10 +101,10 @@ public class LayerAlignment extends StatefulWidget {
 
                 if (this.entry == null) {
                     this.entry = Overlay.of(this.context()).add(
-                        new OverlayEntryBuilder(
-                            this.prepareWidget(),
-                            new RelativePosition(this.context(), offset.x, offset.y)
-                        )
+                            new OverlayEntryBuilder(
+                                    this.prepareWidget(),
+                                    new RelativePosition(this.context(), offset.x, offset.y)
+                            )
                     );
                 } else if (this.widgetChanged || this.entry.x != offset.x || this.entry.y != offset.y) {
                     this.widgetChanged = false;
@@ -116,12 +116,12 @@ public class LayerAlignment extends StatefulWidget {
                 }
             });
         }
-        
+
         private Widget prepareWidget() {
             var justification = this.widget().justification;
             return justification != null
-                ? new Justify(justification.widgetX(), justification.widgetY(), this.widget().widget)
-                : this.widget().widget;
+                    ? new Justify(justification.widgetX(), justification.widgetY(), this.widget().widget)
+                    : this.widget().widget;
         }
 
         @Override

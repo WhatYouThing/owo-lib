@@ -1,6 +1,5 @@
 package io.wispforest.owo.braid.widgets.inspector;
 
-import net.minecraft.resources.Identifier;
 import io.wispforest.owo.Owo;
 import io.wispforest.owo.braid.core.Alignment;
 import io.wispforest.owo.braid.core.Color;
@@ -29,13 +28,12 @@ import io.wispforest.owo.braid.widgets.splitpane.SplitChild;
 import io.wispforest.owo.braid.widgets.splitpane.SplitPane;
 import io.wispforest.owo.braid.widgets.splitpane.SplitPaneStyle;
 import io.wispforest.owo.braid.widgets.stack.Stack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FontDescription;
 import net.minecraft.network.chat.Style;
-import org.lwjgl.glfw.GLFW;
+import net.minecraft.resources.Identifier;
+import org.lwjgl.sdl.SDLVideo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class InspectorWidget extends StatefulWidget {
@@ -63,136 +61,136 @@ public class InspectorWidget extends StatefulWidget {
         @Override
         public void init() {
             this.streamListen(
-                widget -> widget.inspector.onRefresh(),
-                unit -> setState(() -> {})
+                    widget -> widget.inspector.onRefresh(),
+                    unit -> setState(() -> {
+                    })
             );
 
             this.streamListen(
-                widget -> widget.inspector.onReveal(),
-                event -> this.inspectorState.setState(() -> {
-                    this.inspectorState.selectedElement = event.target();
-                    this.inspectorState.lastRevealEvent = event;
-                })
+                    widget -> widget.inspector.onReveal(),
+                    event -> this.inspectorState.setState(() -> {
+                        this.inspectorState.selectedElement = event.target();
+                        this.inspectorState.lastRevealEvent = event;
+                    })
             );
         }
 
         @Override
         public Widget build(BuildContext context) {
             return new DefaultScrollAnimationSettings(
-                ScrollAnimationSettings.DEFAULT,
-                new SharedState<>(
-                    () -> {
-                        var state = new InspectorState();
-                        state.revealSource = this.widget().inspector.onReveal();
-                        return state;
-                    },
-                    new Builder(stateContext -> {
-                        this.inspectorState = SharedState.getWithoutDependency(stateContext, InspectorState.class);
+                    ScrollAnimationSettings.DEFAULT,
+                    new SharedState<>(
+                            () -> {
+                                var state = new InspectorState();
+                                state.revealSource = this.widget().inspector.onReveal();
+                                return state;
+                            },
+                            new Builder(stateContext -> {
+                                this.inspectorState = SharedState.getWithoutDependency(stateContext, InspectorState.class);
 
-                        return new Box(
-                            Color.rgb(0x1d2026),
-                            new DefaultLabelStyle(
-                                new LabelStyle(null, null, Style.EMPTY.withFont(new FontDescription.Resource(Identifier.withDefaultNamespace("uniform"))), null),
-                                new SplitPane(
-                                    LayoutAxis.HORIZONTAL,
-                                    new SplitPaneStyle(1d, null, null, null, null, null),
-                                    new SplitPane(
-                                        LayoutAxis.HORIZONTAL,
-                                        new SplitPaneStyle(1d, null, null, null, null, null),
-                                        new SplitChild(
-                                            pane -> pane.weight(0),
-                                            new ScrollableWithBars(
-                                                null,
-                                                null,
-                                                null,
-                                                3,
-                                                (axis, controller) -> new FlatScrollbar(axis, controller, Color.rgb(0xabb0bf), Color.rgb(0xabb0bf)),
-                                                new Align(
-                                                    Alignment.TOP_LEFT,
-                                                    new TreeView(new InspectorTreeNode.Proxy(this.widget().rootProxy))
-                                                )
-                                            )
-                                        ),
-                                        new Flexible(
-                                            new Stack(
-                                                new ScrollableWithBars(
-                                                    null,
-                                                    null,
-                                                    null,
-                                                    3,
-                                                    (axis, controller) -> new FlatScrollbar(axis, controller, Color.rgb(0xabb0bf), Color.rgb(0xabb0bf)),
-                                                    new Align(
-                                                        Alignment.TOP_LEFT,
-                                                        new TreeView(new InspectorTreeNode.Instance(this.widget().rootInstance))
-                                                    )
-                                                ),
-                                                new Align(
-                                                    Alignment.BOTTOM_RIGHT,
-                                                    new Padding(
-                                                        Insets.all(5),
-                                                        new Row(
-                                                            new Padding(Insets.horizontal(1)),
-                                                            List.of(
-                                                                new Sized(
-                                                                    20,
-                                                                    20,
-                                                                    new Tooltip(
-                                                                        Component.literal(this.alwaysOnTop ? "window behavior:\nalways on top" : "window behavior:\nnormal"),
-                                                                        new Button(
-                                                                            () -> this.setState(() -> {
-                                                                                this.alwaysOnTop = !this.alwaysOnTop;
-                                                                                GLFW.glfwSetWindowAttrib(
-                                                                                    this.widget().inspector.currentWindow.backendWindow.handle(),
-                                                                                    GLFW.GLFW_FLOATING,
-                                                                                    this.alwaysOnTop ? GLFW.GLFW_TRUE : GLFW.GLFW_FALSE
-                                                                                );
-                                                                            }),
-                                                                            new SpriteWidget(
-                                                                                this.alwaysOnTop
-                                                                                    ? Owo.id("braid_inspector_always_on_top")
-                                                                                    : Owo.id("braid_inspector_not_always_on_top")
-                                                                            )
+                                return new Box(
+                                        Color.rgb(0x1d2026),
+                                        new DefaultLabelStyle(
+                                                new LabelStyle(null, null, Style.EMPTY.withFont(new FontDescription.Resource(Identifier.withDefaultNamespace("uniform"))), null),
+                                                new SplitPane(
+                                                        LayoutAxis.HORIZONTAL,
+                                                        new SplitPaneStyle(1d, null, null, null, null, null),
+                                                        new SplitPane(
+                                                                LayoutAxis.HORIZONTAL,
+                                                                new SplitPaneStyle(1d, null, null, null, null, null),
+                                                                new SplitChild(
+                                                                        pane -> pane.weight(0),
+                                                                        new ScrollableWithBars(
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                3,
+                                                                                (axis, controller) -> new FlatScrollbar(axis, controller, Color.rgb(0xabb0bf), Color.rgb(0xabb0bf)),
+                                                                                new Align(
+                                                                                        Alignment.TOP_LEFT,
+                                                                                        new TreeView(new InspectorTreeNode.Proxy(this.widget().rootProxy))
+                                                                                )
                                                                         )
-                                                                    )
                                                                 ),
-                                                                new Sized(
-                                                                    20,
-                                                                    20,
-                                                                    new Tooltip(
-                                                                        Component.literal("reassemble app"),
-                                                                        new Button(
-                                                                            () -> this.widget().inspector.subject.rebuildRoot(),
-                                                                            new SpriteWidget(Owo.id("braid_inspector_reassemble"))
+                                                                new Flexible(
+                                                                        new Stack(
+                                                                                new ScrollableWithBars(
+                                                                                        null,
+                                                                                        null,
+                                                                                        null,
+                                                                                        3,
+                                                                                        (axis, controller) -> new FlatScrollbar(axis, controller, Color.rgb(0xabb0bf), Color.rgb(0xabb0bf)),
+                                                                                        new Align(
+                                                                                                Alignment.TOP_LEFT,
+                                                                                                new TreeView(new InspectorTreeNode.Instance(this.widget().rootInstance))
+                                                                                        )
+                                                                                ),
+                                                                                new Align(
+                                                                                        Alignment.BOTTOM_RIGHT,
+                                                                                        new Padding(
+                                                                                                Insets.all(5),
+                                                                                                new Row(
+                                                                                                        new Padding(Insets.horizontal(1)),
+                                                                                                        List.of(
+                                                                                                                new Sized(
+                                                                                                                        20,
+                                                                                                                        20,
+                                                                                                                        new Tooltip(
+                                                                                                                                Component.literal(this.alwaysOnTop ? "window behavior:\nalways on top" : "window behavior:\nnormal"),
+                                                                                                                                new Button(
+                                                                                                                                        () -> this.setState(() -> {
+                                                                                                                                            this.alwaysOnTop = !this.alwaysOnTop;
+                                                                                                                                            SDLVideo.SDL_SetWindowAlwaysOnTop(
+                                                                                                                                                    this.widget().inspector.currentWindow.backendWindow.handle(),
+                                                                                                                                                    this.alwaysOnTop
+                                                                                                                                            );
+                                                                                                                                        }),
+                                                                                                                                        new SpriteWidget(
+                                                                                                                                                this.alwaysOnTop
+                                                                                                                                                        ? Owo.id("braid_inspector_always_on_top")
+                                                                                                                                                        : Owo.id("braid_inspector_not_always_on_top")
+                                                                                                                                        )
+                                                                                                                                )
+                                                                                                                        )
+                                                                                                                ),
+                                                                                                                new Sized(
+                                                                                                                        20,
+                                                                                                                        20,
+                                                                                                                        new Tooltip(
+                                                                                                                                Component.literal("reassemble app"),
+                                                                                                                                new Button(
+                                                                                                                                        () -> this.widget().inspector.subject.rebuildRoot(),
+                                                                                                                                        new SpriteWidget(Owo.id("braid_inspector_reassemble"))
+                                                                                                                                )
+                                                                                                                        )
+                                                                                                                ),
+                                                                                                                new Sized(
+                                                                                                                        20,
+                                                                                                                        20,
+                                                                                                                        new Tooltip(
+                                                                                                                                Component.literal("pick widget"),
+                                                                                                                                new Button(
+                                                                                                                                        () -> this.widget().inspector.pick(BraidInspector.PickEvent.START),
+                                                                                                                                        new SpriteWidget(Owo.id("braid_inspector_pick"))
+                                                                                                                                )
+                                                                                                                        )
+                                                                                                                )
+                                                                                                        )
+                                                                                                )
+                                                                                        )
+                                                                                )
                                                                         )
-                                                                    )
-                                                                ),
-                                                                new Sized(
-                                                                    20,
-                                                                    20,
-                                                                    new Tooltip(
-                                                                        Component.literal("pick widget"),
-                                                                        new Button(
-                                                                            () -> this.widget().inspector.pick(BraidInspector.PickEvent.START),
-                                                                            new SpriteWidget(Owo.id("braid_inspector_pick"))
-                                                                        )
-                                                                    )
                                                                 )
-                                                            )
+                                                        ),
+                                                        new SplitChild(
+                                                                pane -> pane.size(150),
+                                                                new InstanceDetails()
                                                         )
-                                                    )
                                                 )
-                                            )
                                         )
-                                    ),
-                                    new SplitChild(
-                                        pane -> pane.size(150),
-                                        new InstanceDetails()
-                                    )
-                                )
-                            )
-                        );
-                    })
-                )
+                                );
+                            })
+                    )
             );
         }
     }

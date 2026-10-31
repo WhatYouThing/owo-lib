@@ -114,8 +114,8 @@ public class EntityRenderStateWidget extends LeafInstanceWidget {
 
             if (this.widget.scaleToFit) {
                 this.baseScale = Math.min(
-                    this.transform.width() / renderState.boundingBoxWidth,
-                    this.transform.height() / renderState.boundingBoxHeight
+                        this.transform.width() / renderState.boundingBoxWidth,
+                        this.transform.height() / renderState.boundingBoxHeight
                 ) * .6;
             }
         }
@@ -166,13 +166,13 @@ public class EntityRenderStateWidget extends LeafInstanceWidget {
                 var cursor4x4Buffer = graphics.pose().get4x4(new float[16]);
 
                 var cursorTransform = new Matrix4f()
-                    .set(cursor4x4Buffer)
-                    // we do this ugly cursor-specific offset here to account for the
-                    // centering being indiscriminately applied inside the PIP renderer
-                    .translate((float) (this.transform.width() / 2), 0, 0)
-                    .mul(entitySpaceToWidgetSpace)
-                    .mul(entityTransform)
-                    .invert();
+                        .set(cursor4x4Buffer)
+                        // we do this ugly cursor-specific offset here to account for the
+                        // centering being indiscriminately applied inside the PIP renderer
+                        .translate((float) (this.transform.width() / 2), 0, 0)
+                        .mul(entitySpaceToWidgetSpace)
+                        .mul(entityTransform)
+                        .invert();
 
                 var localCursorPos = cursorTransform.transform(new Vector4f((float) globalCursorPos.x(), (float) globalCursorPos.y(), 0, 1));
 
@@ -228,11 +228,11 @@ public class EntityRenderStateWidget extends LeafInstanceWidget {
             }
 
             graphics.guiRenderState.addPicturesInPictureState(new BraidEntityElement(
-                state,
-                new Matrix4f().mul(entitySpaceToWidgetSpace).mul(entityTransform),
-                new Matrix3x2f(graphics.pose()),
-                this.transform.width(), this.transform.height(),
-                graphics.scissorStack.peek()
+                    state,
+                    new Matrix4f().mul(entitySpaceToWidgetSpace).mul(entityTransform),
+                    new Matrix3x2f(graphics.pose()),
+                    this.transform.width(), this.transform.height(),
+                    graphics.scissorStack.peek()
             ));
 
 //            if (state instanceof LivingEntity living) living.yHeadRotO = lastHeadYaw;

@@ -39,7 +39,7 @@ public interface MatrixStackTransformer {
         return this;
     }
 
-    default Matrix3x2fStack getMatrixStack(){
+    default Matrix3x2fStack getMatrixStack() {
         throw new IllegalStateException("getMatrices() method hasn't been override leading to exception!");
     }
 }

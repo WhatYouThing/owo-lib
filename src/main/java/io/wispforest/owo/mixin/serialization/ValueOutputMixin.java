@@ -13,9 +13,11 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(ValueOutput.class)
 public interface ValueOutputMixin extends MapCarrierEncodable {
 
-    @Shadow <T> void store(String key, Codec<T> codec, T value);
+    @Shadow
+    <T> void store(String key, Codec<T> codec, T value);
 
-    @Shadow void discard(String key);
+    @Shadow
+    void discard(String key);
 
     @Override
     default <T> void put(SerializationContext ctx, @NotNull KeyedEndec<T> key, @NotNull T value) {

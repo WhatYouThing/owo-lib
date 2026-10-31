@@ -41,16 +41,16 @@ public class BlockComponent extends BaseUIComponent {
                 entity = renderer.createRenderState();
 
                 renderer.extractRenderState(
-                    this.entity, entity, partialTicks, Vec3.ZERO, null
+                        this.entity, entity, partialTicks, Vec3.ZERO, null
                 );
             }
         }
 
         graphics.guiRenderState.addPicturesInPictureState(new BlockElementRenderState(
-            this.state,
-            entity,
-            new ScreenRectangle(this.x, this.y, this.width, this.height),
-            graphics.scissorStack.peek()
+                this.state,
+                entity,
+                new ScreenRectangle(this.x, this.y, this.width, this.height),
+                graphics.scissorStack.peek()
         ));
     }
 

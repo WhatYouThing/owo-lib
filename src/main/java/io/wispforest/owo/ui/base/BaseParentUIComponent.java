@@ -62,7 +62,8 @@ public abstract class BaseParentUIComponent extends BaseUIComponent implements P
      * @param mouseX The mouse pointer's x-coordinate
      * @param mouseY The mouse pointer's y-coordinate
      */
-    protected void parentUpdate(float delta, int mouseX, int mouseY) {}
+    protected void parentUpdate(float delta, int mouseX, int mouseY) {
+    }
 
     @Override
     public void draw(OwoUIGraphics graphics, int mouseX, int mouseY, float partialTicks, float delta) {
@@ -211,7 +212,7 @@ public abstract class BaseParentUIComponent extends BaseUIComponent implements P
         }
 
         return ParentUIComponent.super.onMouseDown(click, doubled)
-            || super.onMouseDown(click, doubled);
+                || super.onMouseDown(click, doubled);
     }
 
     @Override
@@ -313,19 +314,19 @@ public abstract class BaseParentUIComponent extends BaseUIComponent implements P
         switch (positioning.type) {
             case LAYOUT -> layoutFunc.accept(child);
             case ABSOLUTE -> child.mount(
-                this,
-                this.x + positioning.x + componentMargins.left() + padding.left(),
-                this.y + positioning.y + componentMargins.top() + padding.top()
+                    this,
+                    this.x + positioning.x + componentMargins.left() + padding.left(),
+                    this.y + positioning.y + componentMargins.top() + padding.top()
             );
             case RELATIVE -> child.mount(
-                this,
-                this.x + padding.left() + componentMargins.left() + Math.round((positioning.x / 100f) * (this.width() - child.fullSize().width() - padding.horizontal())),
-                this.y + padding.top() + componentMargins.top() + Math.round((positioning.y / 100f) * (this.height() - child.fullSize().height() - padding.vertical()))
+                    this,
+                    this.x + padding.left() + componentMargins.left() + Math.round((positioning.x / 100f) * (this.width() - child.fullSize().width() - padding.horizontal())),
+                    this.y + padding.top() + componentMargins.top() + Math.round((positioning.y / 100f) * (this.height() - child.fullSize().height() - padding.vertical()))
             );
             case ACROSS -> child.mount(
-                this,
-                this.x + padding.left() + componentMargins.left() + Math.round((positioning.x / 100f) * (this.width() - padding.horizontal())),
-                this.y + padding.top() + componentMargins.top() + Math.round((positioning.y / 100f) * (this.height() - padding.vertical()))
+                    this,
+                    this.x + padding.left() + componentMargins.left() + Math.round((positioning.x / 100f) * (this.width() - padding.horizontal())),
+                    this.y + padding.top() + componentMargins.top() + Math.round((positioning.y / 100f) * (this.height() - padding.vertical()))
             );
         }
     }
@@ -372,8 +373,8 @@ public abstract class BaseParentUIComponent extends BaseUIComponent implements P
         final var padding = this.padding.get();
 
         return Size.of(
-            Mth.lerpInt(this.horizontalSizing.get().contentFactor(), this.width - padding.horizontal(), thisSpace.width() - padding.horizontal()),
-            Mth.lerpInt(this.verticalSizing.get().contentFactor(), this.height - padding.vertical(), thisSpace.height() - padding.vertical())
+                Mth.lerpInt(this.horizontalSizing.get().contentFactor(), this.width - padding.horizontal(), thisSpace.width() - padding.horizontal()),
+                Mth.lerpInt(this.verticalSizing.get().contentFactor(), this.height - padding.vertical(), thisSpace.height() - padding.vertical())
         );
     }
 

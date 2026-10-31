@@ -8,4 +8,5 @@ import io.wispforest.owo.ui.core.UIComponent;
  * screens from closing when said component is focused and the
  * inventory key is pressed
  */
-public interface GreedyInputUIComponent extends UIComponent {}
+public interface GreedyInputUIComponent extends UIComponent {
+}

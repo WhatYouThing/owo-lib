@@ -13,12 +13,12 @@ public class BraidLogo extends StatelessWidget {
     @Override
     public Widget build(BuildContext context) {
         return new Sized(
-            64, 64,
-            new TextureWidget(
-                TEXTURE_ID,
-                TextureWidget.Wrap.STRETCH,
-                Color.WHITE
-            )
+                64, 64,
+                new TextureWidget(
+                        TEXTURE_ID,
+                        TextureWidget.Wrap.STRETCH,
+                        Color.WHITE
+                )
         );
     }
 

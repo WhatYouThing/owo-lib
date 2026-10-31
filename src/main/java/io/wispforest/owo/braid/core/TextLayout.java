@@ -13,11 +13,11 @@ public class TextLayout {
         var lines = new ArrayList<Line>();
 
         font.getSplitter().splitLines(
-            text,
-            maxWidth,
-            baseStyle,
-            false,
-            (style, start, end) -> lines.add(new Line(style, start, end))
+                text,
+                maxWidth,
+                baseStyle,
+                false,
+                (style, start, end) -> lines.add(new Line(style, start, end))
         );
 
         if (text.endsWith("\n")) {
@@ -51,7 +51,8 @@ public class TextLayout {
         }
     }
 
-    public record EditMetrics(int width, int height, List<LineMetrics> lineMetrics) {}
+    public record EditMetrics(int width, int height, List<LineMetrics> lineMetrics) {
+    }
 
     private record Line(Style style, int beginIdx, int endIdx) {
         public Component substring(String fullContent) {

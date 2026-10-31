@@ -69,18 +69,18 @@ public class MessageCyclingButton<T> extends StatelessWidget {
     @Override
     public Widget build(BuildContext context) {
         return new CyclingButton<>(
-            this.values,
-            this.currentValue,
-            this.wrap,
-            this.onChanged,
-            //TODO: abstract away the million places where a ternary operator is used to determine the label style for a possibly disabled button
-            new Label(
-                this.onChanged == null || ControlsOverride.controlsDisabled(context)
-                    ? new LabelStyle(null, Color.formatting(ChatFormatting.GRAY), null, false)
-                    : LabelStyle.SHADOW,
-                true,
-                this.text
-            )
+                this.values,
+                this.currentValue,
+                this.wrap,
+                this.onChanged,
+                //TODO: abstract away the million places where a ternary operator is used to determine the label style for a possibly disabled button
+                new Label(
+                        this.onChanged == null || ControlsOverride.controlsDisabled(context)
+                                ? new LabelStyle(null, Color.formatting(ChatFormatting.GRAY), null, false)
+                                : LabelStyle.SHADOW,
+                        true,
+                        this.text
+                )
         );
     }
 

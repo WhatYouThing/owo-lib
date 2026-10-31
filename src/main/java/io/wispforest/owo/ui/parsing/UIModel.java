@@ -372,5 +372,6 @@ public class UIModel {
     }
 
     private record ExpansionFrame(Function<String, String> parameterSupplier,
-                                  Function<String, Element> childSupplier) {}
+                                  Function<String, Element> childSupplier) {
+    }
 }

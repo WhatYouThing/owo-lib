@@ -37,9 +37,9 @@ public class Slider extends StatefulWidget {
     protected @Nullable SliderStyle<Double> style;
 
     public Slider(
-        double value,
-        @Nullable WidgetSetupCallback<Slider> setupCallback,
-        @Nullable SliderCallback onChanged
+            double value,
+            @Nullable WidgetSetupCallback<Slider> setupCallback,
+            @Nullable SliderCallback onChanged
     ) {
         this.value = value;
         this.onChanged = onChanged;
@@ -47,10 +47,10 @@ public class Slider extends StatefulWidget {
     }
 
     public Slider(
-        double value,
-        @Nullable WidgetSetupCallback<Slider> setupCallback,
-        boolean active,
-        SliderCallback onChanged
+            double value,
+            @Nullable WidgetSetupCallback<Slider> setupCallback,
+            boolean active,
+            SliderCallback onChanged
     ) {
         this(value, setupCallback, active ? onChanged : null);
     }
@@ -178,8 +178,8 @@ public class Slider extends StatefulWidget {
             var trueMin = Math.min(widget.max, widget.min);
             var trueMax = Math.max(widget.max, widget.min);
             this.incrementStep = widget.incrementStep != null
-                ? widget.function.normalize(widget.incrementStep, trueMin, trueMax)
-                : widget.step != null
+                    ? widget.function.normalize(widget.incrementStep, trueMin, trueMax)
+                    : widget.step != null
                     ? widget.function.normalize(widget.step, trueMin, trueMax)
                     : 0.01;
             this.draggingCursorStyle = null;
@@ -187,54 +187,58 @@ public class Slider extends StatefulWidget {
             return new LayoutBuilder((innerContext, constraints) -> {
                 var size = constraints.maxFiniteOrMinSize();
                 var content = new Stack(
-                    widget.axis.choose(Alignment.LEFT, Alignment.TOP),
-                    new Sized(size, track),
-                    new Padding(
-                        widget.axis.chooseCompute(
-                            () -> Insets.left(Math.floor((size.width() - this.handleSize) * this.normalizedValue)),
-                            () -> Insets.top(Math.floor((size.height() - this.handleSize) * (1 - this.normalizedValue)))
-                        ),
-                        widget.axis.chooseCompute(
-                            () -> new Sized(this.handleSize, size.height(), handle),
-                            () -> new Sized(size.width(), this.handleSize, handle)
+                        widget.axis.choose(Alignment.LEFT, Alignment.TOP),
+                        new Sized(size, track),
+                        new Padding(
+                                widget.axis.chooseCompute(
+                                        () -> Insets.left(Math.floor((size.width() - this.handleSize) * this.normalizedValue)),
+                                        () -> Insets.top(Math.floor((size.height() - this.handleSize) * (1 - this.normalizedValue)))
+                                ),
+                                widget.axis.chooseCompute(
+                                        () -> new Sized(this.handleSize, size.height(), handle),
+                                        () -> new Sized(size.width(), this.handleSize, handle)
+                                )
                         )
-                    )
                 );
                 return new Center(
-                    widget.onChanged == null || ControlsOverride.controlsDisabled(context)
-                        ? content
-                        : new Incrementor(
-                            widget.axis,
-                            increment -> this.applyValue(Mth.clamp(this.normalizedValue + this.incrementStep * increment, 0, 1)),
-                            new MouseArea(
-                                mouseArea -> mouseArea
-                                    //TODO: decide what to do with buttons here
-                                    .clickCallback((x, y, button, modifiers) -> {
-                                        if (button != 0) return false;
+                        widget.onChanged == null || ControlsOverride.controlsDisabled(context)
+                                ? content
+                                : new Incrementor(
+                                widget.axis,
+                                increment -> this.applyValue(Mth.clamp(this.normalizedValue + this.incrementStep * increment, 0, 1)),
+                                new MouseArea(
+                                        mouseArea -> mouseArea
+                                                //TODO: decide what to do with buttons here
+                                                .clickCallback((x, y, button, modifiers) -> {
+                                                    if (button != 0) return false;
 
-                                        if (widget.axis == LayoutAxis.VERTICAL) y = constraints.maxFiniteOrMinOnAxis(widget.axis) - y;
-                                        var initialDragValue = this.normalizedValue;
-                                        if (!this.isInHandle(constraints, x, y)) initialDragValue = this.setAbsolute(constraints, x, y);
+                                                    if (widget.axis == LayoutAxis.VERTICAL)
+                                                        y = constraints.maxFiniteOrMinOnAxis(widget.axis) - y;
+                                                    var initialDragValue = this.normalizedValue;
+                                                    if (!this.isInHandle(constraints, x, y))
+                                                        initialDragValue = this.setAbsolute(constraints, x, y);
 
-                                        this.dragValue = initialDragValue;
-                                        this.dragging = true;
-                                        return true;
-                                    })
-                                    .dragCallback((x, y, dx, dy) -> this.move(constraints, dx, widget.axis == LayoutAxis.VERTICAL ? -dy : dy))
-                                    .dragEndCallback(() -> {
-                                        this.dragging = false;
-                                        if (confirmSound != null) {
-                                            UISounds.play(confirmSound);
-                                        }
-                                    })
-                                    .cursorStyleSupplier((x, y) -> {
-                                        //TODO: invert the y passed in here cuz its cringe atm
-                                        if (!this.isInHandle(constraints, x, constraints.maxHeight() - y) && !this.dragging) return CursorStyle.HAND;
-                                        if (this.draggingCursorStyle == null) this.draggingCursorStyle = CursorStyle.forDraggingAlong(widget.axis, context.instance().computeGlobalTransform());
-                                        return this.draggingCursorStyle;
-                                    }),
-                                content
-                            )
+                                                    this.dragValue = initialDragValue;
+                                                    this.dragging = true;
+                                                    return true;
+                                                })
+                                                .dragCallback((x, y, dx, dy) -> this.move(constraints, dx, widget.axis == LayoutAxis.VERTICAL ? -dy : dy))
+                                                .dragEndCallback(() -> {
+                                                    this.dragging = false;
+                                                    if (confirmSound != null) {
+                                                        UISounds.play(confirmSound);
+                                                    }
+                                                })
+                                                .cursorStyleSupplier((x, y) -> {
+                                                    //TODO: invert the y passed in here cuz its cringe atm
+                                                    if (!this.isInHandle(constraints, x, constraints.maxHeight() - y) && !this.dragging)
+                                                        return CursorStyle.HAND;
+                                                    if (this.draggingCursorStyle == null)
+                                                        this.draggingCursorStyle = CursorStyle.forDraggingAlong(widget.axis, context.instance().computeGlobalTransform());
+                                                    return this.draggingCursorStyle;
+                                                }),
+                                        content
+                                )
                         )
                 );
             });

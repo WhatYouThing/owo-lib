@@ -21,7 +21,7 @@ public interface ValueInputMixin extends MapCarrierDecodable, FabricValueInput {
     @Override
     default <T> T getWithErrors(SerializationContext ctx, @NotNull KeyedEndec<T> key) {
         return this.read(key.key(), CodecUtils.toCodec(key.endec(), ctx))
-            .orElseGet(key::defaultValue);
+                .orElseGet(key::defaultValue);
     }
 
     @Override

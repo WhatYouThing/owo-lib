@@ -10,7 +10,9 @@ import java.util.List;
 
 public interface InspectorTreeNode {
     List<InspectorTreeNode> children();
+
     Widget buildTitle();
+
     int depth();
 
     @Nullable WidgetInstance<?> instance();

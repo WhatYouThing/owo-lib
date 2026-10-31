@@ -21,8 +21,8 @@ public class FlexInstance extends MultiChildWidgetInstance<Flex> {
     @Override
     public void setWidget(Flex widget) {
         if (this.widget.mainAxis == widget.mainAxis
-            && this.widget.mainAxisAlignment == widget.mainAxisAlignment
-            && this.widget.crossAxisAlignment == widget.crossAxisAlignment) {
+                && this.widget.mainAxisAlignment == widget.mainAxisAlignment
+                && this.widget.crossAxisAlignment == widget.crossAxisAlignment) {
             return;
         }
 
@@ -36,36 +36,36 @@ public class FlexInstance extends MultiChildWidgetInstance<Flex> {
         var crossAxis = mainAxis.opposite();
 
         var crossAxisMinimum =
-            widget.crossAxisAlignment == CrossAxisAlignment.STRETCH
-                ? constraints.maxOnAxis(crossAxis)
-                : constraints.minOnAxis(crossAxis);
+                widget.crossAxisAlignment == CrossAxisAlignment.STRETCH
+                        ? constraints.maxOnAxis(crossAxis)
+                        : constraints.minOnAxis(crossAxis);
 
         var childConstraints = Constraints.of(
-            mainAxis == LayoutAxis.VERTICAL ? crossAxisMinimum : 0,
-            mainAxis == LayoutAxis.HORIZONTAL ? crossAxisMinimum : 0,
-            mainAxis == LayoutAxis.VERTICAL ? constraints.maxOnAxis(crossAxis) : Double.POSITIVE_INFINITY,
-            mainAxis == LayoutAxis.HORIZONTAL ? constraints.maxOnAxis(crossAxis) : Double.POSITIVE_INFINITY
+                mainAxis == LayoutAxis.VERTICAL ? crossAxisMinimum : 0,
+                mainAxis == LayoutAxis.HORIZONTAL ? crossAxisMinimum : 0,
+                mainAxis == LayoutAxis.VERTICAL ? constraints.maxOnAxis(crossAxis) : Double.POSITIVE_INFINITY,
+                mainAxis == LayoutAxis.HORIZONTAL ? constraints.maxOnAxis(crossAxis) : Double.POSITIVE_INFINITY
         );
 
         // first, lay out all non-flex children and store their sizes
         var childSizes = this.children.stream()
-            .filter(element -> !(element.parentData instanceof FlexParentData))
-            .map((e) -> e.layout(childConstraints))
-            .collect(Collectors.toList());
+                .filter(element -> !(element.parentData instanceof FlexParentData))
+                .map((e) -> e.layout(childConstraints))
+                .collect(Collectors.toList());
 
         // now, compute the remaining space on the main axis
         var remainingSpace = Math.max(
-            constraints.maxOnAxis(mainAxis) - BraidUtils.fold(childSizes, 0.0, (acc, size) -> acc + size.getExtent(mainAxis)),
-            0
+                constraints.maxOnAxis(mainAxis) - BraidUtils.fold(childSizes, 0.0, (acc, size) -> acc + size.getExtent(mainAxis)),
+                0
         );
 
         // get the flex children and compute the total flex factor in order
         // to divvy up the remaining space properly later
         var flexChildren = Iterables.filter(children, (element) -> element.parentData instanceof FlexParentData);
         var totalFlexFactor = BraidUtils.fold(
-            flexChildren,
-            0.0,
-            (previousValue, element) -> previousValue + ((FlexParentData) element.parentData).flexFactor
+                flexChildren,
+                0.0,
+                (previousValue, element) -> previousValue + ((FlexParentData) element.parentData).flexFactor
         );
 
         // lay out all flex children with (for now) tight constraints
@@ -73,25 +73,25 @@ public class FlexInstance extends MultiChildWidgetInstance<Flex> {
         for (var child : flexChildren) {
             var space = remainingSpace * (((FlexParentData) child.parentData).flexFactor / totalFlexFactor);
             childSizes.add(
-                child.layout(
-                    childConstraints.respecting(
-                        Constraints.tightOnAxis(
-                            mainAxis == LayoutAxis.HORIZONTAL ? space : null,
-                            mainAxis == LayoutAxis.VERTICAL ? space : null
-                        )
+                    child.layout(
+                            childConstraints.respecting(
+                                    Constraints.tightOnAxis(
+                                            mainAxis == LayoutAxis.HORIZONTAL ? space : null,
+                                            mainAxis == LayoutAxis.VERTICAL ? space : null
+                                    )
+                            )
                     )
-                )
             );
         }
 
         // compute and apply the final size of ourselves
         var size = BraidUtils.fold(
-            childSizes,
-            Size.zero(),
-            (acc, elem) -> mainAxis.createSize(
-                acc.getExtent(mainAxis) + elem.getExtent(mainAxis),
-                Math.max(acc.getExtent(crossAxis), elem.getExtent(crossAxis))
-            )
+                childSizes,
+                Size.zero(),
+                (acc, elem) -> mainAxis.createSize(
+                        acc.getExtent(mainAxis) + elem.getExtent(mainAxis),
+                        Math.max(acc.getExtent(crossAxis), elem.getExtent(crossAxis))
+                )
         ).constrained(constraints);
 
         this.transform.setSize(size);
@@ -108,10 +108,10 @@ public class FlexInstance extends MultiChildWidgetInstance<Flex> {
             child.transform.setCoordinate(mainAxis, mainAxisOffset);
 
             child.transform.setCoordinate(
-                crossAxis,
-                this.widget.crossAxisAlignment.computeChildOffset(
-                    size.getExtent(crossAxis) - child.transform.getExtent(crossAxis)
-                )
+                    crossAxis,
+                    this.widget.crossAxisAlignment.computeChildOffset(
+                            size.getExtent(crossAxis) - child.transform.getExtent(crossAxis)
+                    )
             );
 
             mainAxisOffset += child.transform.getExtent(mainAxis) + betweenSpace;
@@ -140,9 +140,9 @@ public class FlexInstance extends MultiChildWidgetInstance<Flex> {
     private double measureMainAxis(double crossExtent) {
         var horizontal = this.widget.mainAxis == LayoutAxis.HORIZONTAL;
         var nonFlexSize = this.children.stream()
-            .filter(element -> !(element.parentData instanceof FlexParentData))
-            .mapToDouble(e -> horizontal ? e.getIntrinsicWidth(crossExtent) : e.getIntrinsicHeight(crossExtent))
-            .sum();
+                .filter(element -> !(element.parentData instanceof FlexParentData))
+                .mapToDouble(e -> horizontal ? e.getIntrinsicWidth(crossExtent) : e.getIntrinsicHeight(crossExtent))
+                .sum();
 
         var totalFlexFactor = 0.0;
 
@@ -187,8 +187,8 @@ public class FlexInstance extends MultiChildWidgetInstance<Flex> {
             var childSpace = (mainExtent - nonFlexSize) * (totalFlexFactor / ((FlexParentData) child.parentData).flexFactor);
 
             crossSize = Math.max(
-                crossSize,
-                horizontal ? child.getIntrinsicHeight(childSpace) : child.getIntrinsicWidth(childSpace)
+                    crossSize,
+                    horizontal ? child.getIntrinsicHeight(childSpace) : child.getIntrinsicWidth(childSpace)
             );
         }
 

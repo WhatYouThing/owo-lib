@@ -5,6 +5,7 @@ import blue.endless.jankson.JsonGrammar;
 import blue.endless.jankson.api.SyntaxError;
 import com.google.common.collect.MapMaker;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.packs.resources.ResourceManager;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.io.ByteArrayInputStream;
@@ -22,15 +23,16 @@ public class DataExtensionUtil {
 
     public static final Set<String> JSON5_ENABLED_PACKS = newSetFromMap(new MapMaker().weakKeys().makeMap());
 
-    private DataExtensionUtil() {}
+    private DataExtensionUtil() {
+    }
 
     public static InputStream coerceJson(InputStream inputStream) {
         try {
             return new CoercedByteArrayInputStream(JANKSON
-                .get()
-                .load(inputStream)
-                .toJson(JsonGrammar.STRICT)
-                .getBytes(StandardCharsets.UTF_8)
+                    .get()
+                    .load(inputStream)
+                    .toJson(JsonGrammar.STRICT)
+                    .getBytes(StandardCharsets.UTF_8)
             );
         } catch (IOException | SyntaxError e) {
             throw new RuntimeException("Failed to convert JSON5 to JSON", e);
@@ -43,7 +45,7 @@ public class DataExtensionUtil {
         }
     }
 
-    public interface OptInIdentifierPredicate extends Predicate<Identifier> {
+    public interface OptInIdentifierPredicate extends ResourceManager.Selector {
         static OptInIdentifierPredicate of(Predicate<Identifier> delegate) {
             return delegate instanceof OptInIdentifierPredicate optIn ? optIn : delegate::test;
         }

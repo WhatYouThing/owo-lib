@@ -29,6 +29,7 @@ public class UIParsing {
      * mods, use {@link #registerFactory(Identifier, Function)}, which takes an
      * identifier instead
      */
+    @Deprecated
     @ApiStatus.Internal
     public static void registerFactory(String componentTagName, Function<Element, UIComponent> factory) {
         if (COMPONENT_FACTORIES.containsKey(componentTagName)) {
@@ -311,7 +312,8 @@ public class UIParsing {
         // Widgets
         registerFactory("label", element -> UIComponents.label(Component.empty()));
         registerFactory("box", element -> UIComponents.box(Sizing.content(), Sizing.content()));
-        registerFactory("button", element -> UIComponents.button(Component.empty(), (ButtonComponent button) -> {}));
+        registerFactory("button", element -> UIComponents.button(Component.empty(), (ButtonComponent button) -> {
+        }));
         registerFactory("checkbox", element -> UIComponents.checkbox(Component.empty()));
         registerFactory("text-box", element -> UIComponents.textBox(Sizing.content()));
         registerFactory("text-area", element -> UIComponents.textArea(Sizing.content(), Sizing.content()));

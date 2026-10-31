@@ -47,7 +47,8 @@ public abstract class Widget {
     }
 
     @SuppressWarnings("rawtypes")
-    private static final WidgetSetupCallback NO_SETUP = widget -> {};
+    private static final WidgetSetupCallback NO_SETUP = widget -> {
+    };
 }
 
 class ImmutableWidgetError extends Error {

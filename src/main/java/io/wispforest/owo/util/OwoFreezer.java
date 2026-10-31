@@ -14,7 +14,8 @@ public final class OwoFreezer {
     private static boolean IS_FROZEN = false;
     private static String FREEZER_CLASS = null;
 
-    private OwoFreezer() {}
+    private OwoFreezer() {
+    }
 
     /**
      * Registers an on freeze callback. The callback will be called when services are frozen

@@ -125,5 +125,6 @@ public class WidgetTransform {
         this.recompute();
     }
 
-    public void recompute() {}
+    public void recompute() {
+    }
 }

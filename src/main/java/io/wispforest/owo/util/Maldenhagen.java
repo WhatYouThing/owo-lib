@@ -12,7 +12,8 @@ import java.util.Set;
  */
 public final class Maldenhagen {
 
-    private Maldenhagen() {}
+    private Maldenhagen() {
+    }
 
     private static final Set<Block> COPIUM_INJECTED = new HashSet<>();
 

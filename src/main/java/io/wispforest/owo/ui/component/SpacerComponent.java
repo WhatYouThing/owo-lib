@@ -13,7 +13,8 @@ public class SpacerComponent extends BaseUIComponent {
     }
 
     @Override
-    public void draw(OwoUIGraphics graphics, int mouseX, int mouseY, float partialTicks, float delta) {}
+    public void draw(OwoUIGraphics graphics, int mouseX, int mouseY, float partialTicks, float delta) {
+    }
 
     public static SpacerComponent parse(Element element) {
         if (!element.hasAttribute("percent")) return UIComponents.spacer();

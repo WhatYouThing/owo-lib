@@ -13,4 +13,5 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface IterationIgnored {}
+public @interface IterationIgnored {
+}

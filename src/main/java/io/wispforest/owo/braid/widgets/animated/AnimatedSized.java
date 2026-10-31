@@ -43,9 +43,9 @@ public class AnimatedSized extends AutomaticallyAnimatedWidget {
         @Override
         public Widget build(BuildContext context) {
             return new Sized(
-                this.width.compute(this.animationValue()),
-                this.height.compute(this.animationValue()),
-                this.widget().child
+                    this.width.compute(this.animationValue()),
+                    this.height.compute(this.animationValue()),
+                    this.widget().child
             );
         }
     }

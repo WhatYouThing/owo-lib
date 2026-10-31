@@ -13,9 +13,9 @@ import net.minecraft.util.LightCoordsUtil;
 import org.jetbrains.annotations.Nullable;
 
 public record OwoItemElementRenderState(
-    ItemStackRenderState item,
-    ScreenRectangle bounds,
-    ScreenRectangle scissorArea
+        ItemStackRenderState item,
+        ScreenRectangle bounds,
+        ScreenRectangle scissorArea
 ) implements PictureInPictureRenderState {
 
     @Override

@@ -9,8 +9,8 @@ import io.wispforest.owo.ui.component.BoxComponent;
 import io.wispforest.owo.ui.component.ButtonComponent;
 import io.wispforest.owo.ui.component.ColorPickerComponent;
 import io.wispforest.owo.ui.component.UIComponents;
-import io.wispforest.owo.ui.container.UIContainers;
 import io.wispforest.owo.ui.container.FlowLayout;
+import io.wispforest.owo.ui.container.UIContainers;
 import io.wispforest.owo.ui.core.*;
 import io.wispforest.owo.ui.parsing.UIModel;
 import io.wispforest.owo.util.NumberReflection;
@@ -139,5 +139,6 @@ public interface OptionComponentFactory<T> {
      */
     Result<?, ?> make(UIModel model, Option<T> option);
 
-    record Result<B extends UIComponent, P extends OptionValueProvider>(B baseComponent, P optionProvider) {}
+    record Result<B extends UIComponent, P extends OptionValueProvider>(B baseComponent, P optionProvider) {
+    }
 }

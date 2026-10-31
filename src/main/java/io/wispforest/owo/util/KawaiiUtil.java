@@ -2,7 +2,8 @@ package io.wispforest.owo.util;
 
 public final class KawaiiUtil {
 
-    private KawaiiUtil() {}
+    private KawaiiUtil() {
+    }
 
     private static final String[] kaomoji = """
             (* ^ ω ^)

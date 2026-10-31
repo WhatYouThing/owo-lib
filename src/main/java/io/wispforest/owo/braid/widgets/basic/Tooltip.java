@@ -27,8 +27,8 @@ public class Tooltip extends SingleChildInstanceWidget {
 
     public Tooltip(Collection<Component> tooltip, Widget child) {
         this(
-            tooltip.stream().map(Component::getVisualOrderText).<ClientTooltipComponent>map(ClientTextTooltip::new).toList(),
-            child
+                tooltip.stream().map(Component::getVisualOrderText).<ClientTooltipComponent>map(ClientTextTooltip::new).toList(),
+                child
         );
     }
 
@@ -64,12 +64,12 @@ public class Tooltip extends SingleChildInstanceWidget {
 
         private void setup() {
             this.tooltip = widget.tooltipText != null
-                ? this.host().client().font
-                .split(widget.tooltipText, Integer.MAX_VALUE)
-                .stream()
-                .<ClientTooltipComponent>map(ClientTextTooltip::new)
-                .toList()
-                : widget.tooltip;
+                    ? this.host().client().font
+                    .split(widget.tooltipText, Integer.MAX_VALUE)
+                    .stream()
+                    .<ClientTooltipComponent>map(ClientTextTooltip::new)
+                    .toList()
+                    : widget.tooltip;
         }
 
         @Override

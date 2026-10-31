@@ -19,7 +19,9 @@ public record InsertingTextContent(int index) implements ComponentContents {
     public <T> Optional<T> visit(FormattedText.ContentConsumer<T> visitor) {
         var current = TranslationContext.getCurrent();
 
-        if (current == null || current.getArgs().length <= index) {return visitor.accept("%" + (index + 1) + "$s");}
+        if (current == null || current.getArgs().length <= index) {
+            return visitor.accept("%" + (index + 1) + "$s");
+        }
 
         Object arg = current.getArgs()[index];
 

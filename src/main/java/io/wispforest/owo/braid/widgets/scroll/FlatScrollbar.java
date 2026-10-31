@@ -10,13 +10,13 @@ import io.wispforest.owo.braid.widgets.basic.Padding;
 public class FlatScrollbar extends Scrollbar {
     public FlatScrollbar(LayoutAxis axis, ScrollController controller, Color color, Color hoveredColor) {
         super(
-            axis,
-            controller,
-            new Padding(Insets.none()),
-            new HoverableBuilder(
-                new Box(color),
-                new Box(hoveredColor)
-            )
+                axis,
+                controller,
+                new Padding(Insets.none()),
+                new HoverableBuilder(
+                        new Box(color),
+                        new Box(hoveredColor)
+                )
         );
     }
 }

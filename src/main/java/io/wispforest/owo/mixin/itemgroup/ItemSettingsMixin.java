@@ -21,14 +21,14 @@ public class ItemSettingsMixin implements OwoItemSettingsExtension {
         this.owo$group = ref.group();
         this.owo$tab = ref.tab();
 
-        return (Item.Properties)(Object) this;
+        return (Item.Properties) (Object) this;
     }
 
     @Override
     public Item.Properties group(OwoItemGroup group) {
         this.owo$group = group;
 
-        return (Item.Properties)(Object) this;
+        return (Item.Properties) (Object) this;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class ItemSettingsMixin implements OwoItemSettingsExtension {
     public Item.Properties tab(int tab) {
         this.owo$tab = tab;
 
-        return (Item.Properties)(Object) this;
+        return (Item.Properties) (Object) this;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ItemSettingsMixin implements OwoItemSettingsExtension {
     public Item.Properties stackGenerator(BiConsumer<Item, CreativeModeTab.Output> generator) {
         this.owo$stackGenerator = generator;
 
-        return (Item.Properties)(Object) this;
+        return (Item.Properties) (Object) this;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class ItemSettingsMixin implements OwoItemSettingsExtension {
     public Item.Properties trackUsageStat() {
         this.owo$trackUsageStat = true;
 
-        return (Item.Properties)(Object) this;
+        return (Item.Properties) (Object) this;
     }
 
     @Override

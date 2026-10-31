@@ -1,5 +1,6 @@
 package io.wispforest.owo.network;
 
+import com.mojang.datafixers.util.Pair;
 import io.wispforest.endec.Endec;
 import io.wispforest.endec.impl.StructEndecBuilder;
 import io.wispforest.owo.Owo;
@@ -29,7 +30,6 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerConfigurationPacketListenerImpl;
-import com.mojang.datafixers.util.Pair;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.HashMap;
@@ -51,7 +51,8 @@ public final class OwoHandshake {
     private static boolean HANDSHAKE_REQUIRED = false;
     private static boolean QUERY_RECEIVED = false;
 
-    private OwoHandshake() {}
+    private OwoHandshake() {
+    }
 
     // ------------
     // Registration
@@ -81,7 +82,8 @@ public final class OwoHandshake {
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
             if (!ENABLED) {
                 PayloadTypeRegistry.clientboundConfiguration().register(HandshakeOff.ID, StreamCodec.unit(new HandshakeOff()));
-                ClientConfigurationNetworking.registerGlobalReceiver(HandshakeOff.ID, (payload, context) -> {});
+                ClientConfigurationNetworking.registerGlobalReceiver(HandshakeOff.ID, (payload, context) -> {
+                });
             }
 
             ClientConfigurationNetworking.registerGlobalReceiver(HandshakeRequest.ID, OwoHandshake::syncClient);

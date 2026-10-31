@@ -18,10 +18,13 @@ public abstract class CompoundTagMixin implements MapCarrier {
 
     @Shadow
     public abstract @Nullable Tag get(String key);
+
     @Shadow
     public abstract @Nullable Tag put(String key, Tag element);
+
     @Shadow
     public abstract @org.jspecify.annotations.Nullable Tag remove(String key);
+
     @Shadow
     public abstract boolean contains(String key);
 

@@ -39,16 +39,16 @@ public class BraidScreen extends Screen implements DisposableScreen {
 
         if (this.state == null) {
             var widget = this.settings.useBraidAppWidget
-                ? new BraidApp(this.rootWidget)
-                : this.rootWidget;
+                    ? new BraidApp(this.rootWidget)
+                    : this.rootWidget;
 
             this.state = new AppState(
-                null,
-                AppState.formatName("BraidScreen", this.rootWidget),
-                this.minecraft,
-                this.surface,
-                this.eventBinding,
-                new BraidScreenProvider(this, widget)
+                    null,
+                    AppState.formatName("BraidScreen", this.rootWidget),
+                    this.minecraft,
+                    this.surface,
+                    this.eventBinding,
+                    new BraidScreenProvider(this, widget)
             );
         }
     }
@@ -59,7 +59,7 @@ public class BraidScreen extends Screen implements DisposableScreen {
 
         this.eventBinding.add(new MouseMoveEvent(mouseX, mouseY));
         this.state.processEvents(
-            this.minecraft.getDeltaTracker().getGameTimeDeltaTicks()
+                this.minecraft.getDeltaTracker().getGameTimeDeltaTicks()
         );
 
         this.state.draw(graphics);
@@ -95,13 +95,13 @@ public class BraidScreen extends Screen implements DisposableScreen {
 
     @Override
     public boolean keyPressed(KeyEvent input) {
-        this.eventBinding.add(new KeyPressEvent(input.key(), input.scancode(), input.modifiers()));
+        this.eventBinding.add(new KeyPressEvent(input.key(), input.keycode(), input.modifiers()));
         return super.keyPressed(input);
     }
 
     @Override
     public boolean keyReleased(KeyEvent input) {
-        this.eventBinding.add(new KeyReleaseEvent(input.key(), input.scancode(), input.modifiers()));
+        this.eventBinding.add(new KeyReleaseEvent(input.key(), input.keycode(), input.modifiers()));
         return true;
     }
 

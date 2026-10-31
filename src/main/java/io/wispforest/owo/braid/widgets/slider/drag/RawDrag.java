@@ -31,10 +31,10 @@ public class RawDrag extends StatefulWidget {
     protected @Nullable Double incrementStep = null;
 
     public RawDrag(
-        double value,
-        @Nullable WidgetSetupCallback<RawDrag> setupCallback,
-        @Nullable SliderCallback onChanged,
-        @Nullable Widget child
+            double value,
+            @Nullable WidgetSetupCallback<RawDrag> setupCallback,
+            @Nullable SliderCallback onChanged,
+            @Nullable Widget child
     ) {
         this.value = value;
         this.onChanged = onChanged;
@@ -189,39 +189,40 @@ public class RawDrag extends StatefulWidget {
         @Override
         public Widget build(BuildContext context) {
             var widget = this.widget();
-            this.normalizedValue = (widget.min != null && widget.max != null)? (widget.value - widget.min) / (widget.max - widget.min) : 0;
+            this.normalizedValue = (widget.min != null && widget.max != null) ? (widget.value - widget.min) / (widget.max - widget.min) : 0;
             this.draggingCursorStyle = null;
             return new LayoutBuilder((innerContext, constraints) -> {
                 var size = constraints.maxFiniteOrMinSize();
                 var content = new Sized(size, widget.child);
                 return new Center(
-                    widget.onChanged == null || ControlsOverride.controlsDisabled(context)
-                        ? content
-                        : new Incrementor(
-                            widget.axis,
-                            increment -> this.increment(constraints, increment),
-                            new MouseArea(
-                                mouseArea -> mouseArea
-                                    .clickCallback((x, y, button, modifiers) -> {
-                                        if (button != 0) return false;
-                                        this.dragValue = this.normalizedValue;
-                                        this.dragging = true;
-                                        return true;
-                                    })
-                                    .dragCallback((x, y, dx, dy) -> {
-                                        var delta = widget.axis.choose(dx, widget.axis == LayoutAxis.VERTICAL ? -dy : dy);
-                                        this.move(constraints, delta);
-                                    })
-                                    .dragEndCallback(() -> dragging = false)
-                                    .cursorStyleSupplier((x, y) -> {
-                                        if (dragging) {
-                                            if (draggingCursorStyle == null) this.draggingCursorStyle = CursorStyle.forDraggingAlong(widget.axis, context.instance().computeGlobalTransform());
-                                            return this.draggingCursorStyle;
-                                        }
-                                        return CursorStyle.HAND;
-                                    }),
-                                content
-                            )
+                        widget.onChanged == null || ControlsOverride.controlsDisabled(context)
+                                ? content
+                                : new Incrementor(
+                                widget.axis,
+                                increment -> this.increment(constraints, increment),
+                                new MouseArea(
+                                        mouseArea -> mouseArea
+                                                .clickCallback((x, y, button, modifiers) -> {
+                                                    if (button != 0) return false;
+                                                    this.dragValue = this.normalizedValue;
+                                                    this.dragging = true;
+                                                    return true;
+                                                })
+                                                .dragCallback((x, y, dx, dy) -> {
+                                                    var delta = widget.axis.choose(dx, widget.axis == LayoutAxis.VERTICAL ? -dy : dy);
+                                                    this.move(constraints, delta);
+                                                })
+                                                .dragEndCallback(() -> dragging = false)
+                                                .cursorStyleSupplier((x, y) -> {
+                                                    if (dragging) {
+                                                        if (draggingCursorStyle == null)
+                                                            this.draggingCursorStyle = CursorStyle.forDraggingAlong(widget.axis, context.instance().computeGlobalTransform());
+                                                        return this.draggingCursorStyle;
+                                                    }
+                                                    return CursorStyle.HAND;
+                                                }),
+                                        content
+                                )
                         )
                 );
             });

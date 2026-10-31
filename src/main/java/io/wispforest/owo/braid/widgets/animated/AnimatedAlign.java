@@ -8,7 +8,6 @@ import io.wispforest.owo.braid.widgets.basic.Align;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
-import java.util.OptionalDouble;
 
 public class AnimatedAlign extends AutomaticallyAnimatedWidget {
 
@@ -50,10 +49,10 @@ public class AnimatedAlign extends AutomaticallyAnimatedWidget {
         @Override
         public Widget build(BuildContext context) {
             return new Align(
-                this.alignment.compute(this.animationValue()),
-                this.widthFactor.compute(this.animationValue()),
-                this.heightFactor.compute(this.animationValue()),
-                this.widget().child
+                    this.alignment.compute(this.animationValue()),
+                    this.widthFactor.compute(this.animationValue()),
+                    this.heightFactor.compute(this.animationValue()),
+                    this.widget().child
             );
         }
     }

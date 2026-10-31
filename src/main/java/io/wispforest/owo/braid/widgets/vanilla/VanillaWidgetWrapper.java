@@ -1,6 +1,5 @@
 package io.wispforest.owo.braid.widgets.vanilla;
 
-import com.mojang.blaze3d.opengl.GlStateManager;
 import io.wispforest.owo.braid.core.BraidGraphics;
 import io.wispforest.owo.braid.core.Constraints;
 import io.wispforest.owo.braid.core.KeyModifiers;
@@ -47,8 +46,8 @@ public class VanillaWidgetWrapper<T extends Renderable & GuiEventListener> exten
             }
 
             var size = constraints.hasBoundedWidth() && constraints.hasBoundedHeight()
-                ? constraints.maxSize()
-                : constraints.minSize();
+                    ? constraints.maxSize()
+                    : constraints.minSize();
 
             if (widget.wrapped instanceof AbstractWidget abstractWidget) {
                 abstractWidget.setWidth((int) size.width());

@@ -61,16 +61,16 @@ public class TextureComponent extends BaseUIComponent {
         int rightEdge = Math.min(visibleArea.x() + visibleArea.width(), regionWidth);
 
         graphics.blit(this.blend ? RenderPipelines.GUI_TEXTURED : OwoUIPipelines.GUI_TEXTURED_NO_BLEND,
-            this.texture,
-            visibleArea.x(),
-            visibleArea.y(),
-            this.u + visibleArea.x(),
-            this.v + visibleArea.y(),
-            rightEdge - visibleArea.x(),
-            bottomEdge - visibleArea.y(),
-            rightEdge - visibleArea.x(),
-            bottomEdge - visibleArea.y(),
-            this.textureWidth, this.textureHeight
+                this.texture,
+                visibleArea.x(),
+                visibleArea.y(),
+                this.u + visibleArea.x(),
+                this.v + visibleArea.y(),
+                rightEdge - visibleArea.x(),
+                bottomEdge - visibleArea.y(),
+                rightEdge - visibleArea.x(),
+                bottomEdge - visibleArea.y(),
+                this.textureWidth, this.textureHeight
         );
 
         matrices.popMatrix();

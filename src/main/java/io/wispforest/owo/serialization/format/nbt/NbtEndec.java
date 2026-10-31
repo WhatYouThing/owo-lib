@@ -14,7 +14,8 @@ public final class NbtEndec implements Endec<Tag> {
     public static final Endec<Tag> ELEMENT = new NbtEndec();
     public static final Endec<CompoundTag> COMPOUND = new NbtEndec().xmap(CompoundTag.class::cast, compound -> compound);
 
-    private NbtEndec() {}
+    private NbtEndec() {
+    }
 
     @Override
     public void encode(SerializationContext ctx, Serializer<?> serializer, Tag value) {

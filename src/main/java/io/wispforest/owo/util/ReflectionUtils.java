@@ -13,7 +13,8 @@ import java.util.function.Function;
 @ApiStatus.Experimental
 public final class ReflectionUtils {
 
-    private ReflectionUtils() {}
+    private ReflectionUtils() {
+    }
 
     /**
      * Tries to instantiate the given class with a zero-args constructor call,
@@ -26,7 +27,8 @@ public final class ReflectionUtils {
     public static <C> C tryInstantiateWithNoArgs(Class<C> clazz) {
         try {
             return clazz.getConstructor().newInstance();
-        } catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+        } catch (InstantiationException | NoSuchMethodException | InvocationTargetException |
+                 IllegalAccessException e) {
             throw new RuntimeException((e instanceof NoSuchMethodException ? "No zero-args constructor defined on class " : "Could not instantiate class ") + clazz, e);
         }
     }

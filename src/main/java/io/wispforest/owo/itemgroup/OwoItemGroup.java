@@ -44,7 +44,8 @@ public abstract class OwoItemGroup extends CreativeModeTab {
 
     public static final BiConsumer<Item, Output> DEFAULT_STACK_GENERATOR = (item, stacks) -> stacks.accept(item.getDefaultInstance());
 
-    protected static final ItemGroupTab PLACEHOLDER_TAB = new ItemGroupTab(Icon.of(Items.AIR), Component.empty(), (br, uh) -> {}, ItemGroupTab.DEFAULT_TEXTURE, false);
+    protected static final ItemGroupTab PLACEHOLDER_TAB = new ItemGroupTab(Icon.of(Items.AIR), Component.empty(), (br, uh) -> {
+    }, ItemGroupTab.DEFAULT_TEXTURE, false);
 
     public final List<ItemGroupTab> tabs = new ArrayList<>();
     public final List<ItemGroupButton> buttons = new ArrayList<>();
@@ -69,7 +70,8 @@ public abstract class OwoItemGroup extends CreativeModeTab {
     private final boolean allowMultiSelect;
 
     protected OwoItemGroup(Identifier id, Consumer<OwoItemGroup> initializer, Supplier<Icon> iconSupplier, int tabStackHeight, int buttonStackHeight, @Nullable Identifier backgroundTexture, @Nullable ScrollerTextures scrollerTextures, @Nullable TabTextures tabTextures, boolean useDynamicTitle, boolean displaySingleTab, boolean allowMultiSelect) {
-        super(null, -1, Type.CATEGORY, Component.translatable("itemGroup.%s.%s".formatted(id.getNamespace(), id.getPath())), () -> ItemStack.EMPTY, (displayContext, entries) -> {});
+        super(null, -1, Type.CATEGORY, Component.translatable("itemGroup.%s.%s".formatted(id.getNamespace(), id.getPath())), () -> ItemStack.EMPTY, (displayContext, entries) -> {
+        });
         this.initializer = initializer;
         this.iconSupplier = iconSupplier;
         this.tabStackHeight = tabStackHeight;
@@ -152,7 +154,8 @@ public abstract class OwoItemGroup extends CreativeModeTab {
                 icon,
                 ButtonDefinition.tooltipFor(this, "tab", name),
                 contentTag == null
-                        ? (context, entries) -> {}
+                        ? (context, entries) -> {
+                }
                         : (context, entries) -> BuiltInRegistries.ITEM.stream().filter(item -> item.builtInRegistryHolder().is(contentTag)).forEach(entries::accept),
                 texture,
                 primary
@@ -353,7 +356,8 @@ public abstract class OwoItemGroup extends CreativeModeTab {
         private final Identifier id;
         private final Supplier<Icon> iconSupplier;
 
-        private Consumer<OwoItemGroup> initializer = owoItemGroup -> {};
+        private Consumer<OwoItemGroup> initializer = owoItemGroup -> {
+        };
         private int tabStackHeight = 4;
         private int buttonStackHeight = 4;
         private @Nullable Identifier backgroundTexture = null;
@@ -414,7 +418,8 @@ public abstract class OwoItemGroup extends CreativeModeTab {
         }
 
         public OwoItemGroup build() {
-            final var group = new OwoItemGroup(id, initializer, iconSupplier, tabStackHeight, buttonStackHeight, backgroundTexture, scrollerTextures, tabTextures, useDynamicTitle, displaySingleTab, allowMultiSelect) {};
+            final var group = new OwoItemGroup(id, initializer, iconSupplier, tabStackHeight, buttonStackHeight, backgroundTexture, scrollerTextures, tabTextures, useDynamicTitle, displaySingleTab, allowMultiSelect) {
+            };
             Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, this.id, group);
             return group;
         }
@@ -433,8 +438,13 @@ public abstract class OwoItemGroup extends CreativeModeTab {
         }
     }
 
-    public record ScrollerTextures(Identifier enabled, Identifier disabled) {}
-    public record TabTextures(Identifier topSelected, Identifier topSelectedFirstColumn, Identifier topUnselected, Identifier bottomSelected, Identifier bottomSelectedFirstColumn, Identifier bottomUnselected) {}
+    public record ScrollerTextures(Identifier enabled, Identifier disabled) {
+    }
+
+    public record TabTextures(Identifier topSelected, Identifier topSelectedFirstColumn, Identifier topUnselected,
+                              Identifier bottomSelected, Identifier bottomSelectedFirstColumn,
+                              Identifier bottomUnselected) {
+    }
 
     // Utility
 

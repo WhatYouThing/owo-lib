@@ -15,17 +15,24 @@ import java.util.stream.Stream;
 
 public class Focusable extends StatefulWidget {
 
-    @Nullable private KeyDownCallback keyDownCallback;
-    @Nullable private KeyUpCallback keyUpCallback;
-    @Nullable private CharCallback charCallback;
+    @Nullable
+    private KeyDownCallback keyDownCallback;
+    @Nullable
+    private KeyUpCallback keyUpCallback;
+    @Nullable
+    private CharCallback charCallback;
 
-    @Nullable private FocusGainedCallback focusGainedCallback;
-    @Nullable private FocusLostCallback focusLostCallback;
-    @Nullable private FocusLevelChangedCallback focusLevelChangedCallback;
+    @Nullable
+    private FocusGainedCallback focusGainedCallback;
+    @Nullable
+    private FocusLostCallback focusLostCallback;
+    @Nullable
+    private FocusLevelChangedCallback focusLevelChangedCallback;
 
     private boolean skipTraversal;
     private boolean autoFocus;
-    @Nullable private Boolean clickFocus;
+    @Nullable
+    private Boolean clickFocus;
 
     public final Widget child;
 
@@ -208,9 +215,9 @@ public class Focusable extends StatefulWidget {
 
         public Stream<State<?>> ancestors() {
             return Stream.iterate(
-                this.parent,
-                Objects::nonNull,
-                state -> state.parent
+                    this.parent,
+                    Objects::nonNull,
+                    state -> state.parent
             );
         }
 
@@ -239,8 +246,8 @@ public class Focusable extends StatefulWidget {
         void onFocusChange(@Nullable FocusLevel newLevel) {
             if (Owo.DEBUG) {
                 Preconditions.checkState(
-                    this.level != newLevel,
-                    String.format("_onFocusChange(%s) invoked on a state which is already at %s", newLevel, newLevel)
+                        this.level != newLevel,
+                        String.format("_onFocusChange(%s) invoked on a state which is already at %s", newLevel, newLevel)
                 );
             }
 
@@ -273,8 +280,8 @@ public class Focusable extends StatefulWidget {
         boolean onKeyDown(int keyCode, KeyModifiers modifiers) {
             if (Owo.DEBUG) {
                 Preconditions.checkState(
-                    this.level != null,
-                    "onKeyDown invoked on a state which is not focused"
+                        this.level != null,
+                        "onKeyDown invoked on a state which is not focused"
                 );
             }
 
@@ -284,8 +291,8 @@ public class Focusable extends StatefulWidget {
         boolean onKeyUp(int keyCode, KeyModifiers modifiers) {
             if (Owo.DEBUG) {
                 Preconditions.checkState(
-                    this.level != null,
-                    "onKeyUp invoked on a state which is not focused"
+                        this.level != null,
+                        "onKeyUp invoked on a state which is not focused"
                 );
             }
 
@@ -295,8 +302,8 @@ public class Focusable extends StatefulWidget {
         boolean onChar(int charCode, KeyModifiers modifiers) {
             if (Owo.DEBUG) {
                 Preconditions.checkState(
-                    this.level != null,
-                    "onChar invoked on a state which is not focused"
+                        this.level != null,
+                        "onChar invoked on a state which is not focused"
                 );
             }
 
@@ -325,13 +332,13 @@ public class Focusable extends StatefulWidget {
         @Override
         public Widget build(BuildContext context) {
             return new FocusClickArea(
-                this::onClick,
-                new FocusStateProvider<>(
-                    this,
-                    Focusable.State.class,
-                    this.level,
-                    this.widget().child
-                )
+                    this::onClick,
+                    new FocusStateProvider<>(
+                            this,
+                            Focusable.State.class,
+                            this.level,
+                            this.widget().child
+                    )
             );
         }
     }

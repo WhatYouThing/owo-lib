@@ -17,7 +17,8 @@ public record Alignment(double horizontal, double vertical) {
 
     @ApiStatus.Internal
     @Deprecated(forRemoval = true)
-    public Alignment {}
+    public Alignment {
+    }
 
     public static Alignment of(double horizontal, double vertical) {
         return new Alignment(horizontal, vertical);

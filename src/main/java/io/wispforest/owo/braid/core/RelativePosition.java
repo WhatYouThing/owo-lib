@@ -14,8 +14,8 @@ public record RelativePosition(BuildContext context, double x, double y) {
 
         if (Owo.DEBUG) {
             Preconditions.checkArgument(
-                contextInstance.ancestors().contains(ancestorInstance),
-                "a RelativePosition can only be converted to the coordinate system of an ancestor"
+                    contextInstance.ancestors().contains(ancestorInstance),
+                    "a RelativePosition can only be converted to the coordinate system of an ancestor"
             );
         }
 

@@ -76,9 +76,9 @@ public class ItemComponent extends BaseUIComponent {
             this.itemModelManager.appendItemLayers(state, this.stack, ItemDisplayContext.GUI, Minecraft.getInstance().level, Minecraft.getInstance().player, 0);
 
             graphics.guiRenderState.addPicturesInPictureState(new OwoItemElementRenderState(
-                state,
-                new ScreenRectangle(this.x, this.y, this.width, this.height),
-                graphics.scissorStack.peek()
+                    state,
+                    new ScreenRectangle(this.x, this.y, this.width, this.height),
+                    graphics.scissorStack.peek()
             ));
         }
 
@@ -149,15 +149,15 @@ public class ItemComponent extends BaseUIComponent {
 
         var tooltip = new ArrayList<ClientTooltipComponent>();
         stack.getTooltipLines(context, player, type)
-            .stream()
-            .map(Component::getVisualOrderText)
-            .map(ClientTooltipComponent::create)
-            .forEach(tooltip::add);
+                .stream()
+                .map(Component::getVisualOrderText)
+                .map(ClientTooltipComponent::create)
+                .forEach(tooltip::add);
 
         stack.getTooltipImage().ifPresent(data -> {
             tooltip.add(1, Objects.requireNonNullElseGet(
-                ClientTooltipComponentCallback.EVENT.invoker().getClientComponent(data),
-                () -> ClientTooltipComponent.create(data)
+                    ClientTooltipComponentCallback.EVENT.invoker().getClientComponent(data),
+                    () -> ClientTooltipComponent.create(data)
             ));
         });
 
@@ -180,7 +180,7 @@ public class ItemComponent extends BaseUIComponent {
         UIParsing.apply(children, "stack", $ -> $.getTextContent().strip(), stackString -> {
             try {
                 var result = new ItemParser(HolderLookup.Provider.create(Stream.of(BuiltInRegistries.ITEM)))
-                    .parse(new StringReader(stackString));
+                        .parse(new StringReader(stackString));
 
                 var stack = new ItemStack(result.item());
                 stack.applyComponentsAndValidate(result.components());

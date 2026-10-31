@@ -9,7 +9,8 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(GuiGraphicsExtractor.class)
 public abstract class GuiGraphicsMixin implements MatrixStackTransformer {
 
-    @Shadow public abstract Matrix3x2fStack pose();
+    @Shadow
+    public abstract Matrix3x2fStack pose();
 
     @Override
     public Matrix3x2fStack getMatrixStack() {

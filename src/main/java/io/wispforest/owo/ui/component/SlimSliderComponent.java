@@ -106,8 +106,8 @@ public class SlimSliderComponent extends BaseUIComponent {
 
     protected void setValueFromMouse(double mouseX, double mouseY) {
         this.value(this.axis == Axis.VERTICAL
-            ? this.min + (mouseY / this.height) * (this.max - this.min)
-            : this.min + (mouseX / this.width) * (this.max - this.min));
+                ? this.min + (mouseY / this.height) * (this.max - this.min)
+                : this.min + (mouseX / this.width) * (this.max - this.min));
     }
 
     @Override
@@ -195,8 +195,8 @@ public class SlimSliderComponent extends BaseUIComponent {
 
     public static UIComponent parse(Element element) {
         return element.getAttribute("direction").equals("vertical")
-            ? new SlimSliderComponent(Axis.VERTICAL)
-            : new SlimSliderComponent(Axis.HORIZONTAL);
+                ? new SlimSliderComponent(Axis.VERTICAL)
+                : new SlimSliderComponent(Axis.HORIZONTAL);
     }
 
     public static Function<Double, Component> valueTooltipSupplier(int decimalPlaces) {

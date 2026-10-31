@@ -8,8 +8,10 @@ import net.minecraft.client.player.LocalPlayer;
 
 public class ClientAccess implements OwoNetChannel.EnvironmentAccess<LocalPlayer, Minecraft, ClientPacketListener> {
 
-    @Environment(EnvType.CLIENT) private final ClientPacketListener packetListener;
-    @Environment(EnvType.CLIENT) private final Minecraft instance = Minecraft.getInstance();
+    @Environment(EnvType.CLIENT)
+    private final ClientPacketListener packetListener;
+    @Environment(EnvType.CLIENT)
+    private final Minecraft instance = Minecraft.getInstance();
 
     public ClientAccess(ClientPacketListener packetListener) {
         this.packetListener = packetListener;

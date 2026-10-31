@@ -18,6 +18,6 @@ public class KeyboardHandlerMixin {
     private boolean captureScreenCharTyped(Screen screen, CharacterEvent charInput, Operation<Boolean> original) {
         // TODO: @chyz fix modifiers for char events
         return BraidLayersBinding.tryHandleEvent(screen, new CharInputEvent((char) charInput.codepoint(), KeyModifiers.NONE))
-            || original.call(screen, charInput);
+                || original.call(screen, charInput);
     }
 }

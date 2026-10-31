@@ -29,7 +29,8 @@ public interface AutoRegistryContainer<T> extends FieldProcessingSubject<T> {
      * @param identifier The identifier the field was assigned, possibly overridden by an {@link AssignedName}
      *                   annotation and always fully lowercase
      */
-    default void postProcessField(String namespace, T value, String identifier, Field field) {}
+    default void postProcessField(String namespace, T value, String identifier, Field field) {
+    }
 
     /**
      * Convenience-alias for {@link FieldRegistrationHandler#register(Class, String, boolean)}

@@ -11,7 +11,7 @@ public interface OwoDataComponentTypeBuilder<T> {
 
     default DataComponentType.Builder<T> endec(Endec<T> endec, SerializationContext assumedContext) {
         return ((DataComponentType.Builder<T>) this)
-            .persistent(CodecUtils.toCodec(endec, assumedContext))
-            .networkSynchronized(CodecUtils.toPacketCodec(endec));
+                .persistent(CodecUtils.toCodec(endec, assumedContext))
+                .networkSynchronized(CodecUtils.toPacketCodec(endec));
     }
 }

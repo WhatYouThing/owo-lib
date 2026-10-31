@@ -71,10 +71,10 @@ public class Stack extends MultiChildInstanceWidget {
 
             for (var child : this.children) {
                 child.transform.setX(
-                    this.widget.alignment.alignHorizontal(selfSize.width(), child.transform.width())
+                        this.widget.alignment.alignHorizontal(selfSize.width(), child.transform.width())
                 );
                 child.transform.setY(
-                    this.widget.alignment.alignVertical(selfSize.height(), child.transform.height())
+                        this.widget.alignment.alignVertical(selfSize.height(), child.transform.height())
                 );
             }
 
@@ -84,18 +84,18 @@ public class Stack extends MultiChildInstanceWidget {
         @Override
         protected double measureIntrinsicWidth(double height) {
             return BraidUtils.fold(
-                this.children,
-                0.0,
-                (width, child) -> Math.max(child.getIntrinsicWidth(height), width)
+                    this.children,
+                    0.0,
+                    (width, child) -> Math.max(child.getIntrinsicWidth(height), width)
             );
         }
 
         @Override
         protected double measureIntrinsicHeight(double width) {
             return BraidUtils.fold(
-                this.children,
-                0.0,
-                (height, child) -> Math.max(child.getIntrinsicHeight(width), height)
+                    this.children,
+                    0.0,
+                    (height, child) -> Math.max(child.getIntrinsicHeight(width), height)
             );
         }
 

@@ -62,20 +62,20 @@ public class RotatedLayout extends SingleChildInstanceWidget {
         protected void doLayout(Constraints constraints) {
             var isVertical = this.isVertical();
             var childConstraints = isVertical
-                ? Constraints.of(constraints.minHeight(), constraints.minWidth(), constraints.maxHeight(), constraints.maxWidth())
-                : constraints;
+                    ? Constraints.of(constraints.minHeight(), constraints.minWidth(), constraints.maxHeight(), constraints.maxWidth())
+                    : constraints;
 
             var childSize = this.child.layout(childConstraints);
             var selfSize = isVertical
-                ? Size.of(childSize.height(), childSize.width())
-                : childSize;
+                    ? Size.of(childSize.height(), childSize.width())
+                    : childSize;
 
             this.transform.setSize(selfSize);
 
             var childTransform = new Matrix3x2f()
-                .translate((float) (selfSize.width() / 2), (float) (selfSize.height() / 2))
-                .rotate((float) (this.visualIncrements * Math.PI / 2))
-                .translate((float) (-childSize.width() / 2), (float) (-childSize.height() / 2));
+                    .translate((float) (selfSize.width() / 2), (float) (selfSize.height() / 2))
+                    .rotate((float) (this.visualIncrements * Math.PI / 2))
+                    .translate((float) (-childSize.width() / 2), (float) (-childSize.height() / 2));
 
             ((CustomWidgetTransform) this.transform).setMatrix(childTransform);
         }

@@ -32,7 +32,8 @@ public final class TagInjector {
         }
     };
 
-    private TagInjector() {}
+    private TagInjector() {
+    }
 
     /**
      * @return A view of all planned tag injections
@@ -119,6 +120,7 @@ public final class TagInjector {
         injectTagReference(registry, tag, Arrays.asList(values));
     }
 
-    public record TagLocation(String type, Identifier tagId) {}
+    public record TagLocation(String type, Identifier tagId) {
+    }
 
 }

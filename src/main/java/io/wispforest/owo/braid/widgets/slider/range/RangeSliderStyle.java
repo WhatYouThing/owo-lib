@@ -7,24 +7,24 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public record RangeSliderStyle(
-    @Nullable Widget track,
-    @Nullable Widget rangeIndicator,
-    @Nullable HandleBuilder minHandleBuilder,
-    @Nullable Double minHandleSize,
-    @Nullable HandleBuilder maxHandleBuilder,
-    @Nullable Double maxHandleSize,
-    @Nullable Optional<SoundEvent> confirmSound
+        @Nullable Widget track,
+        @Nullable Widget rangeIndicator,
+        @Nullable HandleBuilder minHandleBuilder,
+        @Nullable Double minHandleSize,
+        @Nullable HandleBuilder maxHandleBuilder,
+        @Nullable Double maxHandleSize,
+        @Nullable Optional<SoundEvent> confirmSound
 ) {
     public RangeSliderStyle overriding(RangeSliderStyle other) {
         //noinspection OptionalAssignedToNull
         return new RangeSliderStyle(
-            this.track != null ? this.track : other.track,
-            this.rangeIndicator != null ? this.rangeIndicator : other.rangeIndicator,
-            this.minHandleBuilder != null ? this.minHandleBuilder : other.minHandleBuilder,
-            this.minHandleSize != null ? this.minHandleSize : other.minHandleSize,
-            this.maxHandleBuilder != null ? this.maxHandleBuilder : other.maxHandleBuilder,
-            this.maxHandleSize != null ? this.maxHandleSize : other.maxHandleSize,
-            this.confirmSound != null ? this.confirmSound : other.confirmSound
+                this.track != null ? this.track : other.track,
+                this.rangeIndicator != null ? this.rangeIndicator : other.rangeIndicator,
+                this.minHandleBuilder != null ? this.minHandleBuilder : other.minHandleBuilder,
+                this.minHandleSize != null ? this.minHandleSize : other.minHandleSize,
+                this.maxHandleBuilder != null ? this.maxHandleBuilder : other.maxHandleBuilder,
+                this.maxHandleSize != null ? this.maxHandleSize : other.maxHandleSize,
+                this.confirmSound != null ? this.confirmSound : other.confirmSound
         );
     }
 

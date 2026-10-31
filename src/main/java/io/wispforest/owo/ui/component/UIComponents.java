@@ -29,7 +29,8 @@ import java.util.function.Supplier;
  */
 public final class UIComponents {
 
-    private UIComponents() {}
+    private UIComponents() {
+    }
 
     // -----------------------
     // Wrapped Vanilla Widgets

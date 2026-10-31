@@ -10,7 +10,8 @@ import java.util.function.Predicate;
 
 public final class NonNullListEndec {
 
-    private NonNullListEndec() {}
+    private NonNullListEndec() {
+    }
 
     public static <T> Endec<NonNullList<T>> forSize(Endec<T> elementEndec, T defaultValue, int size) {
         return forSize(elementEndec, defaultValue, element -> Objects.equals(defaultValue, element), size);
@@ -39,5 +40,6 @@ public final class NonNullListEndec {
         );
     }
 
-    private record Entry<T>(T element, int idx) {}
+    private record Entry<T>(T element, int idx) {
+    }
 }

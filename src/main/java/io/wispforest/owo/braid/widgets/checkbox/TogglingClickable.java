@@ -36,9 +36,9 @@ public class TogglingClickable extends StatelessWidget {
     @Override
     public Widget build(BuildContext context) {
         return new Clickable(
-            this.onUpdate != null ? Clickable.alwaysClick(() -> this.onUpdate.accept(!this.checked)) : null,
-            this.clickSound,
-            this.child
+                this.onUpdate != null ? Clickable.alwaysClick(() -> this.onUpdate.accept(!this.checked)) : null,
+                this.clickSound,
+                this.child
         );
     }
 

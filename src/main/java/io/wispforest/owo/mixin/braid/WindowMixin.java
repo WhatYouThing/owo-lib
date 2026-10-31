@@ -1,23 +1,21 @@
 package io.wispforest.owo.mixin.braid;
 
+import com.mojang.blaze3d.platform.DisplayData;
+import com.mojang.blaze3d.platform.MonitorManager;
 import com.mojang.blaze3d.platform.Window;
+import com.mojang.blaze3d.platform.WindowEventHandler;
+import com.mojang.renderpearl.api.device.GpuBackend;
 import io.wispforest.owo.braid.core.BraidWindow;
-import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Window.class)
 public class WindowMixin {
 
-    @ModifyArg(method = "createGlfwWindow", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwCreateWindow(IILjava/lang/CharSequence;JJ)J"), index = 4)
-    private static long injectContextShare(long original) {
-        if (!BraidWindow.SHARE_NEXT_WINDOW_INSTANCE.get()) {
-            return original;
-        }
-
-        BraidWindow.SHARE_NEXT_WINDOW_INSTANCE.set(false);
-        return Minecraft.getInstance().getWindow().handle();
+    @Inject(method = "<init>(Lcom/mojang/blaze3d/platform/WindowEventHandler;Lcom/mojang/blaze3d/platform/DisplayData;Ljava/lang/String;ZLjava/lang/String;Lcom/mojang/blaze3d/platform/MonitorManager;Lcom/mojang/renderpearl/api/device/GpuBackend;I)V", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/Window;createWindow(Lcom/mojang/renderpearl/api/device/GpuBackend;IILjava/lang/String;)J"))
+    private void onBeforeCreateWindow(WindowEventHandler eventHandler, DisplayData displayData, String fullscreenVideoModeString, boolean exclusiveFullscreen, String title, MonitorManager monitorManager, GpuBackend backend, int maximumSize, CallbackInfo ci) {
+        BraidWindow.GPU_BACKEND.set(backend);
     }
-
 }

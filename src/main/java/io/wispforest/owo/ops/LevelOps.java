@@ -22,7 +22,8 @@ import java.util.Set;
  */
 public final class LevelOps {
 
-    private LevelOps() {}
+    private LevelOps() {
+    }
 
     /**
      * Break the specified block with the given item

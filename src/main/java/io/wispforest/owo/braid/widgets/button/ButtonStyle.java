@@ -6,15 +6,15 @@ import net.minecraft.sounds.SoundEvent;
 import org.jetbrains.annotations.Nullable;
 
 public record ButtonStyle(
-    @Nullable ContentBuilder builder,
-    @Nullable Insets padding,
-    @Nullable SoundEvent clickSound
+        @Nullable ContentBuilder builder,
+        @Nullable Insets padding,
+        @Nullable SoundEvent clickSound
 ) {
     public ButtonStyle overriding(ButtonStyle other) {
         return new ButtonStyle(
-            this.builder != null ? this.builder : other.builder,
-            this.padding != null ? this.padding : other.padding,
-            this.clickSound != null ? this.clickSound : other.clickSound
+                this.builder != null ? this.builder : other.builder,
+                this.padding != null ? this.padding : other.padding,
+                this.clickSound != null ? this.clickSound : other.clickSound
         );
     }
 

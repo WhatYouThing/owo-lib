@@ -1,5 +1,6 @@
 package io.wispforest.owo.ui.core;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import io.wispforest.owo.Owo;
 import io.wispforest.owo.renderdoc.RenderDoc;
 import io.wispforest.owo.ui.util.CursorAdapter;
@@ -13,7 +14,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.CharacterEvent;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
-import org.lwjgl.glfw.GLFW;
+import org.jspecify.annotations.NonNull;
 
 import java.util.function.BiFunction;
 
@@ -220,7 +221,8 @@ public class OwoUIAdapter<R extends ParentUIComponent> implements GuiEventListen
     }
 
     @Override
-    public void setFocused(boolean focused) {}
+    public void setFocused(boolean focused) {
+    }
 
     @Override
     public boolean isFocused() {
@@ -228,12 +230,12 @@ public class OwoUIAdapter<R extends ParentUIComponent> implements GuiEventListen
     }
 
     @Override
-    public boolean mouseClicked(MouseButtonEvent click, boolean doubled) {
+    public boolean mouseClicked(@NonNull MouseButtonEvent click, boolean doubled) {
         return this.rootComponent.onMouseDown(click, doubled);
     }
 
     @Override
-    public boolean mouseReleased(MouseButtonEvent click) {
+    public boolean mouseReleased(@NonNull MouseButtonEvent click) {
         return this.rootComponent.onMouseUp(click);
     }
 
@@ -243,13 +245,13 @@ public class OwoUIAdapter<R extends ParentUIComponent> implements GuiEventListen
     }
 
     @Override
-    public boolean mouseDragged(MouseButtonEvent click, double deltaX, double deltaY) {
+    public boolean mouseDragged(@NonNull MouseButtonEvent click, double deltaX, double deltaY) {
         return this.rootComponent.onMouseDrag(click, deltaX, deltaY);
     }
 
     @Override
-    public boolean keyPressed(KeyEvent input) {
-        if (Owo.DEBUG && input.key() == GLFW.GLFW_KEY_LEFT_SHIFT) {
+    public boolean keyPressed(@NonNull KeyEvent input) {
+        if (Owo.DEBUG && input.key() == InputConstants.KEY_LSHIFT) {
             if (input.hasControlDown()) {
                 this.toggleInspector();
             } else if (input.hasAltDown()) {
@@ -257,7 +259,7 @@ public class OwoUIAdapter<R extends ParentUIComponent> implements GuiEventListen
             }
         }
 
-        if (Owo.DEBUG && input.key() == GLFW.GLFW_KEY_R && RenderDoc.isAvailable()) {
+        if (Owo.DEBUG && input.key() == InputConstants.KEY_R && RenderDoc.isAvailable()) {
             if (input.hasAltDown() && input.hasControlDown()) {
                 this.captureFrame = true;
             }
@@ -267,17 +269,18 @@ public class OwoUIAdapter<R extends ParentUIComponent> implements GuiEventListen
     }
 
     @Override
-    public boolean charTyped(CharacterEvent input) {
+    public boolean charTyped(@NonNull CharacterEvent input) {
         return this.rootComponent.onCharTyped(input);
     }
 
     @Override
-    public NarrationPriority narrationPriority() {
+    public @NonNull NarrationPriority narrationPriority() {
         return NarrationPriority.NONE;
     }
 
     @Override
-    public void updateNarration(NarrationElementOutput builder) {}
+    public void updateNarration(@NonNull NarrationElementOutput builder) {
+    }
 
     public static boolean isRendering() {
         return isRendering;

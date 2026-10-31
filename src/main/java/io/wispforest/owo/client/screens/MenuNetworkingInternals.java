@@ -44,9 +44,9 @@ public class MenuNetworkingInternals {
     public record LocalPacket(int packetId, FriendlyByteBuf payload) implements CustomPacketPayload {
         public static final Type<LocalPacket> ID = new Type<>(Owo.id("local_packet"));
         public static final Endec<LocalPacket> ENDEC = StructEndecBuilder.of(
-            Endec.VAR_INT.fieldOf("packetId", LocalPacket::packetId),
-            MinecraftEndecs.FRIENDLY_BYTE_BUF.fieldOf("payload", LocalPacket::payload),
-            LocalPacket::new
+                Endec.VAR_INT.fieldOf("packetId", LocalPacket::packetId),
+                MinecraftEndecs.FRIENDLY_BYTE_BUF.fieldOf("payload", LocalPacket::payload),
+                LocalPacket::new
         );
 
         @Override
@@ -58,8 +58,8 @@ public class MenuNetworkingInternals {
     public record SyncPropertiesPacket(FriendlyByteBuf payload) implements CustomPacketPayload {
         public static final Type<SyncPropertiesPacket> ID = new Type<>(SYNC_PROPERTIES);
         public static final Endec<SyncPropertiesPacket> ENDEC = StructEndecBuilder.of(
-            MinecraftEndecs.FRIENDLY_BYTE_BUF.fieldOf("payload", SyncPropertiesPacket::payload),
-            SyncPropertiesPacket::new
+                MinecraftEndecs.FRIENDLY_BYTE_BUF.fieldOf("payload", SyncPropertiesPacket::payload),
+                SyncPropertiesPacket::new
         );
 
         @Override

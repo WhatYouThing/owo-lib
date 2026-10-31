@@ -51,14 +51,14 @@ public class Cycler<T> extends StatelessWidget {
     @Override
     public Widget build(BuildContext context) {
         return this.builder.build(
-            this.values.get(this.currentIndex),
-            this.currentIndex,
-            amount -> {
-                var newIndex = this.wrap ? Mth.positiveModulo(this.currentIndex + amount, this.values.size()) : Mth.clamp(this.currentIndex + amount, 0, this.values.size() - 1);
-                if (newIndex == this.currentIndex) return false;
-                this.onChanged.cycle(this.values.get(newIndex), newIndex);
-                return true;
-            }
+                this.values.get(this.currentIndex),
+                this.currentIndex,
+                amount -> {
+                    var newIndex = this.wrap ? Mth.positiveModulo(this.currentIndex + amount, this.values.size()) : Mth.clamp(this.currentIndex + amount, 0, this.values.size() - 1);
+                    if (newIndex == this.currentIndex) return false;
+                    this.onChanged.cycle(this.values.get(newIndex), newIndex);
+                    return true;
+                }
         );
     }
 

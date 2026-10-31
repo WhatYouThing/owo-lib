@@ -1,6 +1,7 @@
 package io.wispforest.owo.braid.widgets.intents;
 
 import com.google.common.collect.Iterables;
+import com.mojang.datafixers.util.Pair;
 import io.wispforest.owo.braid.core.BraidUtils;
 import io.wispforest.owo.braid.core.KeyModifiers;
 import io.wispforest.owo.braid.core.cursor.CursorStyle;
@@ -11,7 +12,6 @@ import io.wispforest.owo.braid.framework.widget.Widget;
 import io.wispforest.owo.braid.framework.widget.WidgetSetupCallback;
 import io.wispforest.owo.braid.widgets.basic.MouseArea;
 import io.wispforest.owo.braid.widgets.focus.Focusable;
-import com.mojang.datafixers.util.Pair;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
@@ -36,8 +36,8 @@ public class ShortcutDecoder extends StatefulWidget {
     private final Widget child;
 
     public ShortcutDecoder(
-        WidgetSetupCallback<ShortcutDecoder> setupCallback,
-        Widget child
+            WidgetSetupCallback<ShortcutDecoder> setupCallback,
+            Widget child
     ) {
         this.child = child;
         setupCallback.setup(this);
@@ -151,7 +151,8 @@ public class ShortcutDecoder extends StatefulWidget {
         private List<ShortcutSequence> sequences = new ArrayList<>();
 
         private final List<ShortcutSequence> queuedSequences = new ArrayList<>();
-        @Nullable private Long callbackId;
+        @Nullable
+        private Long callbackId;
 
         @Override
         public void init() {
@@ -170,25 +171,26 @@ public class ShortcutDecoder extends StatefulWidget {
         @Override
         public Widget build(BuildContext context) {
             return new MouseArea(
-                widget -> widget
-                    .enterCallback(this.widget().enterCallback())
-                    .exitCallback(this.widget().exitCallback())
-                    .cursorStyleSupplier(this.widget().cursorStyleSupplier())
-                    .clickCallback((x, y, button, modifiers) -> stepShortcuts(trigger -> trigger.isTriggeredByMouseButton(button, modifiers)
-                        ? ShortcutTriggerResult.ACTIVATED
-                        : ShortcutTriggerResult.NOT_ACTIVATED, TriggerType.MOUSE)),
-                new Focusable(
                     widget -> widget
-                        .focusGainedCallback(this.widget().focusGainedCallback())
-                        .focusLostCallback(this.widget().focusLostCallback())
-                        .skipTraversal(this.widget().skipTraversal())
-                        .autoFocus(this.widget().autoFocus())
-                        .keyDownCallback((keyCode, modifiers) -> stepShortcuts(trigger -> {
-                            if (trigger.isTriggeredByKeyCode(keyCode, modifiers)) return ShortcutTriggerResult.ACTIVATED;
-                            return KeyModifiers.isModifier(keyCode) ? ShortcutTriggerResult.IGNORED : ShortcutTriggerResult.NOT_ACTIVATED;
-                        }, TriggerType.KEY)),
-                    this.widget().child
-                )
+                            .enterCallback(this.widget().enterCallback())
+                            .exitCallback(this.widget().exitCallback())
+                            .cursorStyleSupplier(this.widget().cursorStyleSupplier())
+                            .clickCallback((x, y, button, modifiers) -> stepShortcuts(trigger -> trigger.isTriggeredByMouseButton(button, modifiers)
+                                    ? ShortcutTriggerResult.ACTIVATED
+                                    : ShortcutTriggerResult.NOT_ACTIVATED, TriggerType.MOUSE)),
+                    new Focusable(
+                            widget -> widget
+                                    .focusGainedCallback(this.widget().focusGainedCallback())
+                                    .focusLostCallback(this.widget().focusLostCallback())
+                                    .skipTraversal(this.widget().skipTraversal())
+                                    .autoFocus(this.widget().autoFocus())
+                                    .keyDownCallback((keyCode, modifiers) -> stepShortcuts(trigger -> {
+                                        if (trigger.isTriggeredByKeyCode(keyCode, modifiers))
+                                            return ShortcutTriggerResult.ACTIVATED;
+                                        return KeyModifiers.isModifier(keyCode) ? ShortcutTriggerResult.IGNORED : ShortcutTriggerResult.NOT_ACTIVATED;
+                                    }, TriggerType.KEY)),
+                            this.widget().child
+                    )
             );
         }
 
@@ -214,9 +216,9 @@ public class ShortcutDecoder extends StatefulWidget {
             //   - negative (poisoned) trigger index:
             //     will not step
             var steppedSequences = sequences.stream()
-                .map(sequence -> Pair.of(sequence, sequence.step(test)))
-                .filter(pair -> pair.getSecond() != ShortcutSequenceStep.IGNORE)
-                .toList();
+                    .map(sequence -> Pair.of(sequence, sequence.step(test)))
+                    .filter(pair -> pair.getSecond() != ShortcutSequenceStep.IGNORE)
+                    .toList();
 
             // next, get the sequence to treat as completed on this iteration - if any
             // - if multiple sequences completed, pick the first one
@@ -225,13 +227,13 @@ public class ShortcutDecoder extends StatefulWidget {
             //   a non-singular sequence (user intent) and immediately complete a
             //   singular one (this would be an artifact)
             var completed = BraidUtils.fold(
-                Iterables.filter(steppedSequences, pair -> pair.getSecond() == ShortcutSequenceStep.COMPLETE),
-                (Pair<ShortcutSequence, ShortcutSequenceStep>) null,
-                (acc, element) -> {
-                    if (acc == null) return element;
-                    if (!element.getFirst().isSingular && acc.getFirst().isSingular) return element;
-                    return acc;
-                }
+                    Iterables.filter(steppedSequences, pair -> pair.getSecond() == ShortcutSequenceStep.COMPLETE),
+                    (Pair<ShortcutSequence, ShortcutSequenceStep>) null,
+                    (acc, element) -> {
+                        if (acc == null) return element;
+                        if (!element.getFirst().isSingular && acc.getFirst().isSingular) return element;
+                        return acc;
+                    }
             );
             //(I personally think this should've used stream.reduce but glisco said it was "not ideal" so here we are) -chyz
 
@@ -325,7 +327,8 @@ public class ShortcutDecoder extends StatefulWidget {
             /// - if the sequence activated its final trigger, return [ShortcutSequenceStep#COMPLETE]
             /// - if the sequence activated an intermediate trigger, return [ShortcutSequenceStep#ADVANCE]
             public ShortcutSequenceStep step(Function<ShortcutTrigger, ShortcutTriggerResult> test) {
-                if (this.nextTriggerIndex < 0 || this.nextTriggerIndex >= this.triggers.size()) return ShortcutSequenceStep.IGNORE;
+                if (this.nextTriggerIndex < 0 || this.nextTriggerIndex >= this.triggers.size())
+                    return ShortcutSequenceStep.IGNORE;
 
                 var result = test.apply(this.triggers.get(this.nextTriggerIndex));
                 if (result == ShortcutTriggerResult.ACTIVATED) {

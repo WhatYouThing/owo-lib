@@ -31,19 +31,21 @@ import java.util.function.BiConsumer;
 @Mixin(Language.class)
 public class LanguageMixin {
 
-    @Unique private static final String RICH_TRANSLATIONS_ENABLER = "rich_translations";
-    @Unique private static final String NESTED_LANG_ENABLER = "nested_lang";
+    @Unique
+    private static final String RICH_TRANSLATIONS_ENABLER = "rich_translations";
+    @Unique
+    private static final String NESTED_LANG_ENABLER = "nested_lang";
 
     @WrapOperation(
-        method = "loadFromJson(Ljava/io/InputStream;Ljava/util/function/BiConsumer;)V",
-        at = @At(value = "INVOKE", target = "Lcom/google/gson/JsonObject;entrySet()Ljava/util/Set;")
+            method = "loadFromJson(Ljava/io/InputStream;Ljava/util/function/BiConsumer;)V",
+            at = @At(value = "INVOKE", target = "Lcom/google/gson/JsonObject;entrySet()Ljava/util/Set;")
     )
     private static Set<Map.Entry<String, JsonElement>> deNestNestedKeys(
-        JsonObject instance,
-        Operation<Set<Map.Entry<String, JsonElement>>> original,
-        @Share(RICH_TRANSLATIONS_ENABLER) LocalBooleanRef richTranslationsEnabled,
-        @Share(NESTED_LANG_ENABLER) LocalBooleanRef nestedLangEnabled,
-        @Local(argsOnly = true) InputStream stream
+            JsonObject instance,
+            Operation<Set<Map.Entry<String, JsonElement>>> original,
+            @Share(RICH_TRANSLATIONS_ENABLER) LocalBooleanRef richTranslationsEnabled,
+            @Share(NESTED_LANG_ENABLER) LocalBooleanRef nestedLangEnabled,
+            @Local(argsOnly = true) InputStream stream
     ) {
         var enabledByDefault = featureEnabled(instance, "extended_lang", false) || stream instanceof DataExtensionUtil.CoercedByteArrayInputStream;
         richTranslationsEnabled.set(featureEnabled(instance, RICH_TRANSLATIONS_ENABLER, enabledByDefault));
@@ -61,21 +63,22 @@ public class LanguageMixin {
         return primitive.getAsBoolean();
     }
 
-    @Unique private static final String SKIP_NEXT = "skipNextKey";
+    @Unique
+    private static final String SKIP_NEXT = "skipNextKey";
 
     @WrapOperation(
-        method = "loadFromJson(Ljava/io/InputStream;Ljava/util/function/BiConsumer;)V", at = @At(
-        value = "INVOKE",
-        target = "Lnet/minecraft/util/GsonHelper;convertToString(Lcom/google/gson/JsonElement;Ljava/lang/String;)Ljava/lang/String;"
+            method = "loadFromJson(Ljava/io/InputStream;Ljava/util/function/BiConsumer;)V", at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/util/GsonHelper;convertToString(Lcom/google/gson/JsonElement;Ljava/lang/String;)Ljava/lang/String;"
     )
     )
     private static String handleRichTranslationsAndErrors(
-        JsonElement element,
-        String name,
-        Operation<String> original,
-        @Share(RICH_TRANSLATIONS_ENABLER) LocalBooleanRef richTranslationsEnabled,
-        @Share(NESTED_LANG_ENABLER) LocalBooleanRef nestedLangEnabled,
-        @Share(SKIP_NEXT) LocalBooleanRef skipNext
+            JsonElement element,
+            String name,
+            Operation<String> original,
+            @Share(RICH_TRANSLATIONS_ENABLER) LocalBooleanRef richTranslationsEnabled,
+            @Share(NESTED_LANG_ENABLER) LocalBooleanRef nestedLangEnabled,
+            @Share(SKIP_NEXT) LocalBooleanRef skipNext
     ) {
         skipNext.set(false);
         var rich = richTranslationsEnabled.get();
@@ -86,8 +89,8 @@ public class LanguageMixin {
                     skipNext.set(true);
 
                     MutableComponent text = (MutableComponent) ComponentSerialization.CODEC
-                        .parse(JsonOps.INSTANCE, element)
-                        .getOrThrow(JsonParseException::new);
+                            .parse(JsonOps.INSTANCE, element)
+                            .getOrThrow(JsonParseException::new);
                     consumer.accept(name, CursedTranslatableContents.unpackArgs(text));
 
                     return "";
@@ -100,9 +103,9 @@ public class LanguageMixin {
             } catch (Exception e) {
                 skipNext.set(true);
                 Owo.LOGGER.error(
-                    "Preventing language loading from failing due to invalid key \"{}\"\n{}",
-                    name,
-                    e.getMessage()
+                        "Preventing language loading from failing due to invalid key \"{}\"\n{}",
+                        name,
+                        e.getMessage()
                 );
                 return "";
             }
@@ -111,12 +114,12 @@ public class LanguageMixin {
     }
 
     @WrapWithCondition(
-        method = "loadFromJson(Ljava/io/InputStream;Ljava/util/function/BiConsumer;)V",
-        at = @At(value = "INVOKE", target = "Ljava/util/function/BiConsumer;accept(Ljava/lang/Object;Ljava/lang/Object;)V"))
+            method = "loadFromJson(Ljava/io/InputStream;Ljava/util/function/BiConsumer;)V",
+            at = @At(value = "INVOKE", target = "Ljava/util/function/BiConsumer;accept(Ljava/lang/Object;Ljava/lang/Object;)V"))
     private static boolean doSkip(
-        BiConsumer<Object, Object> biConsumer,
-        Object t, Object u,
-        @Share(SKIP_NEXT) LocalBooleanRef skipNext
+            BiConsumer<Object, Object> biConsumer,
+            Object t, Object u,
+            @Share(SKIP_NEXT) LocalBooleanRef skipNext
     ) {
         return !skipNext.get();
     }

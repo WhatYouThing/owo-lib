@@ -71,7 +71,8 @@ public class LinearProcess<T> {
      * @param client   {@code true} if the client instructions should be used
      */
     public void configureExecutor(LinearProcessExecutor<T> executor, boolean client) {
-        if (!finished) throw new IllegalStateException("Illegal attempt to configure executor using unfinished process");
+        if (!finished)
+            throw new IllegalStateException("Illegal attempt to configure executor using unfinished process");
 
         if (client) {
             executor.configure(clientEventTable, clientProcessStepTable);
