@@ -38,7 +38,6 @@ import java.util.Map;
 import java.util.Optional;
 
 public class WidgetEndec {
-
     private static final Map<String, StructEndec<? extends Widget>> REGISTRY = new HashMap<>();
     private static final Map<Class<? extends Widget>, String> WIDGET_TYPE_NAMES = new HashMap<>();
 
@@ -55,23 +54,6 @@ public class WidgetEndec {
             Endec.STRING,
             "@name"
     );
-
-
-    public static <W extends Widget> void register(Identifier key, Class<W> widgetClass, StructEndec<W> endec) {
-        register(key.toLanguageKey(), widgetClass, endec);
-    }
-
-    @ApiStatus.Internal
-    public static <W extends Widget> void register(String key, Class<W> widgetClass, StructEndec<W> endec) {
-        if (REGISTRY.containsKey(key)) {
-            throw new IllegalArgumentException("Duplicate widget endec key: " + key);
-        }
-
-        REGISTRY.put(key, endec);
-        WIDGET_TYPE_NAMES.put(widgetClass, key);
-    }
-
-    // ---
 
     static {
         register(
@@ -370,12 +352,11 @@ public class WidgetEndec {
                                 translateMessage
                                         ? Component.translatable(message)
                                         : Component.literal(message),
-                                handler.<Runnable>flatMap(o -> {
-                                    return Optional.of(() -> o.accept(handlerArg));
-                                }).orElse(null)
+                                //handler.<Runnable>flatMap(o -> Optional.of(() -> o.accept(handlerArg))).orElse(null)
+                                null
                         )
                 )
-        );
+        ); // TODO: not sure what happened here but these handlers are now broken
 
         register(
                 "button",
@@ -390,13 +371,28 @@ public class WidgetEndec {
                         ROOT.fieldOf("@child", s -> s.child),
                         (handler, handlerArg, child) -> {
                             return new Button(
-                                    handler.<Runnable>flatMap(o -> {
-                                        return Optional.of(() -> o.accept(handlerArg));
-                                    }).orElse(null),
+                                    //handler.<Runnable>flatMap(o -> Optional.of(() -> o.accept(handlerArg))).orElse(null),
+                                    () -> false,
                                     child
                             );
                         }
                 )
         );
+    }
+
+    public static <W extends Widget> void register(Identifier key, Class<W> widgetClass, StructEndec<W> endec) {
+        register(key.toLanguageKey(), widgetClass, endec);
+    }
+
+    // ---
+
+    @ApiStatus.Internal
+    public static <W extends Widget> void register(String key, Class<W> widgetClass, StructEndec<W> endec) {
+        if (REGISTRY.containsKey(key)) {
+            throw new IllegalArgumentException("Duplicate widget endec key: " + key);
+        }
+
+        REGISTRY.put(key, endec);
+        WIDGET_TYPE_NAMES.put(widgetClass, key);
     }
 }
