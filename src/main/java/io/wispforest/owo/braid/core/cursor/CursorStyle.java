@@ -6,7 +6,7 @@ import org.joml.Matrix3x2f;
 import org.lwjgl.sdl.SDLMouse;
 
 public sealed interface CursorStyle permits SystemCursorStyle {
-    CursorStyle NONE = new SystemCursorStyle(null);
+    CursorStyle NONE = new SystemCursorStyle(SDLMouse.SDL_SYSTEM_CURSOR_DEFAULT);
     CursorStyle POINTER = new SystemCursorStyle(SDLMouse.SDL_SYSTEM_CURSOR_DEFAULT);
     CursorStyle TEXT = new SystemCursorStyle(SDLMouse.SDL_SYSTEM_CURSOR_TEXT);
     CursorStyle HAND = new SystemCursorStyle(SDLMouse.SDL_SYSTEM_CURSOR_POINTER);

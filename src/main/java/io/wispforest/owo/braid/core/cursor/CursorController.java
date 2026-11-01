@@ -27,14 +27,13 @@ public class CursorController {
         if (this.disposed || this.lastCursorStyle == style) return;
 
         if (style == CursorStyle.NONE) {
-            SDLMouse.SDL_HideCursor();
+            SDLMouse.SDL_DestroyCursor(SDLMouse.SDL_GetCursor());
         } else {
             if (!this.cursors.containsKey(style)) {
                 this.cursors.put(style, style.allocate());
             }
 
             SDLMouse.SDL_SetCursor(this.cursors.get(style));
-            SDLMouse.SDL_ShowCursor();
         }
 
         this.lastCursorStyle = style;

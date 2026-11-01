@@ -43,10 +43,9 @@ public class CursorAdapter {
         if (this.disposed || this.lastCursorStyle == style) return;
 
         if (style == CursorStyle.NONE) {
-            SDLMouse.SDL_HideCursor();
+            SDLMouse.SDL_DestroyCursor(SDLMouse.SDL_GetCursor());
         } else {
             SDLMouse.SDL_SetCursor(this.cursors.getOrDefault(style, 0L));
-            SDLMouse.SDL_ShowCursor();
         }
         this.lastCursorStyle = style;
     }
