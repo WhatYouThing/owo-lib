@@ -8,4 +8,4 @@ pluginManagement {
     }
 }
 
-// include 'owo-sentinel' TODO: add back sentinel
+include 'owo-sentinel'
