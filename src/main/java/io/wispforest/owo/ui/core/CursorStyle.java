@@ -3,11 +3,7 @@ package io.wispforest.owo.ui.core;
 import org.lwjgl.sdl.SDLMouse;
 
 public enum CursorStyle {
-    /**
-     * The default cursor style defined by
-     * the operating system
-     */
-    NONE(SDLMouse.SDL_SYSTEM_CURSOR_DEFAULT), // TODO: these should be the same? not sure
+    NONE(null),
     /**
      * The default arrow-style pointing cursor
      */

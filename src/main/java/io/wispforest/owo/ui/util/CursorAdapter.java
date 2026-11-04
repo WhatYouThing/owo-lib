@@ -11,7 +11,6 @@ public class CursorAdapter {
 
     protected static final CursorStyle[] ACTIVE_STYLES = {CursorStyle.POINTER, CursorStyle.TEXT, CursorStyle.HAND, CursorStyle.CROSSHAIR, CursorStyle.MOVE, CursorStyle.HORIZONTAL_RESIZE, CursorStyle.VERTICAL_RESIZE, CursorStyle.NWSE_RESIZE, CursorStyle.NESW_RESIZE, CursorStyle.NOT_ALLOWED};
 
-    protected final EnumMap<CursorStyle, Long> cursors = new EnumMap<>(CursorStyle.class);
     protected final long windowHandle;
 
     protected CursorStyle lastCursorStyle = CursorStyle.POINTER;
@@ -19,12 +18,6 @@ public class CursorAdapter {
 
     protected CursorAdapter(long windowHandle) {
         this.windowHandle = windowHandle;
-        for (var style : ACTIVE_STYLES) {
-            var pointer = SDLMouse.SDL_CreateSystemCursor(style.shape);
-            if (pointer == 0) continue;
-
-            this.cursors.put(style, pointer);
-        }
     }
 
     public static CursorAdapter ofClientWindow() {
@@ -45,16 +38,13 @@ public class CursorAdapter {
         if (style == CursorStyle.NONE) {
             SDLMouse.SDL_DestroyCursor(SDLMouse.SDL_GetCursor());
         } else {
-            SDLMouse.SDL_SetCursor(this.cursors.getOrDefault(style, 0L));
+            SDLMouse.SDL_SetCursor(SDLMouse.SDL_CreateSystemCursor(style.shape));
         }
         this.lastCursorStyle = style;
     }
 
     public void dispose() {
         if (this.disposed) return;
-
-        this.cursors.values().forEach(SDLMouse::SDL_DestroyCursor);
         this.disposed = true;
     }
-
 }
